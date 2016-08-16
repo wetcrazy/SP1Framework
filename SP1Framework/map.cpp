@@ -1,7 +1,7 @@
 #include "map.h"
 
 static ifstream file;
-static string appender = "";
+static string appender[mapHeight] = {};
 
 void renderMap(Console *handle, MAP level, char ptr[][mapHeight]) {
 
@@ -57,21 +57,21 @@ void renderMap(Console *handle, MAP level, char ptr[][mapHeight]) {
 	while (file.good()) {
 
 		getline(file, buffer);
-		appender += (buffer + "\n");
+		appender[row] = buffer;
 
-		for (int i = 0; i < buffer.length(); i++) {
+		for (size_t i = 0; i < buffer.length(); i++) {
 			ptr[row][i] = buffer[i];
 		}
 		row++;
 	}
 
-	handle->writeToBuffer(0, 0, appender);
-	// TODO, find out how to new line with wincon.h
+	for (int i = 0; i < mapHeight; i++) {
+			handle->writeToBuffer(0, i, appender[i], 0x20);
+	}
 
 }
 
 // Closes the file stream
 void closeMap() {
-	appender = "";
 	file.close();
 }

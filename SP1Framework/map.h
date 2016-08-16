@@ -9,8 +9,8 @@
 
 using namespace std;
 
-const short mapWidth = 52;
-const short mapHeight = 34;
+const short mapWidth = 53;
+const short mapHeight = 33;
 
 enum MAP {
 
@@ -29,6 +29,7 @@ enum MAP {
 
 
 void renderMap(Console * handle, MAP level, char ptr[][mapHeight]);
+void closeMap();
 
 
 #endif

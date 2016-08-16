@@ -21,7 +21,7 @@ static char g_Map[mapWidth][mapHeight] = {};
 
 
 // Console object
-Console g_Console(80, 25, "SP1 Framework");
+Console g_Console(mapWidth, mapHeight, "Group 666");
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -31,6 +31,7 @@ Console g_Console(80, 25, "SP1 Framework");
 // Output   : void
 //--------------------------------------------------------------
 void init(void) {
+
 	// Set precision for floating point output
 	g_dElapsedTime = 0.0;
 	g_dBounceTime = 0.0;
@@ -62,7 +63,7 @@ void init(void) {
 void shutdown(void) {
 	// Reset to white text on black background
 	colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-
+	closeMap();
 	g_Console.clearBuffer();
 }
 
@@ -250,14 +251,14 @@ void renderFramerate() {
 	ss << std::fixed << std::setprecision(3);
 	ss << 1.0 / g_dDeltaTime << "fps";
 	c.X = g_Console.getConsoleSize().X - 9;
-	c.Y = 0;
+	c.Y = g_Console.getConsoleSize().Y - 1;
 	g_Console.writeToBuffer(c, ss.str());
 
 	// displays the elapsed time
 	ss.str("");
 	ss << g_dElapsedTime << "secs";
 	c.X = 0;
-	c.Y = 0;
+	c.Y = g_Console.getConsoleSize().Y - 1;
 	g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
 void renderToScreen() {
