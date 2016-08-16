@@ -7,37 +7,38 @@ extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
 // Enumeration to store the control keys that your game will have
-enum EKEYS
-{
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    K_SPACE,
-    K_COUNT
+enum EKEYS {
+	K_UP,
+	K_DOWN,
+	K_LEFT,
+	K_RIGHT,
+	K_ESCAPE,
+	K_SPACE,
+	K_COUNT
 };
 
 // Enumeration for the different screen states
-enum EGAMESTATES
-{
-    S_SPLASHSCREEN,
-    S_GAME,
-    S_COUNT
+enum EGAMESTATES {
+	S_SPLASHSCREEN,
+	S_GAME,
+	S_COUNT
 };
 
 // struct for the game character
-struct SGameChar
-{
-    COORD m_cLocation;
-    bool  m_bActive;
+struct SGameChar {
+	COORD m_cLocation;
+	bool  m_bActive;
+	char  xp;
+	char  xn;
+	char  yp;
+	char  yn;
 };
 
-void init        ( void );      // initialize your variables, allocate memory, etc
-void getInput    ( void );      // get input from player
-void update      ( double dt ); // update the game and the state of the game
-void render      ( void );      // renders the current state of the game to the console
-void shutdown    ( void );      // do clean up, free memory
+void init(void);      // initialize your variables, allocate memory, etc
+void getInput(void);      // get input from player
+void update(double dt); // update the game and the state of the game
+void render(void);      // renders the current state of the game to the console
+void shutdown(void);      // do clean up, free memory
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void gameplay();            // gameplay logic

@@ -3,9 +3,11 @@
 //
 #include "game.h"
 #include "Framework\console.h"
+#include "map.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -15,6 +17,8 @@ bool    g_abKeyPressed[K_COUNT];
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
+static char g_Map[mapWidth][mapHeight] = {};
+
 
 // Console object
 Console g_Console(80, 25, "SP1 Framework");
@@ -26,20 +30,26 @@ Console g_Console(80, 25, "SP1 Framework");
 // Input    : void
 // Output   : void
 //--------------------------------------------------------------
-void init( void )
-{
-    // Set precision for floating point output
-    g_dElapsedTime = 0.0;
-    g_dBounceTime = 0.0;
+void init(void) {
+	// Set precision for floating point output
+	g_dElapsedTime = 0.0;
+	g_dBounceTime = 0.0;
 
-    // sets the initial state for the game
-    g_eGameState = S_SPLASHSCREEN;
+	// sets the initial state for the game
+	g_eGameState = S_SPLASHSCREEN;
 
-    g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
-    g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
-    g_sChar.m_bActive = true;
-    // sets the width, height and the font name to use in the console
-    g_Console.setConsoleFont(0, 35, L"Consolas");
+	g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
+	g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
+	g_sChar.xn = ' ';
+	g_sChar.xp = ' ';
+	g_sChar.yn = ' ';
+	g_sChar.yp = ' ';
+
+	g_sChar.m_bActive = true;
+
+	// sets the width, height and the font name to use in the console
+	g_Console.setConsoleFont(0, 25, L"Consolas");
+
 }
 
 //--------------------------------------------------------------
@@ -49,12 +59,11 @@ void init( void )
 // Input    : Void
 // Output   : void
 //--------------------------------------------------------------
-void shutdown( void )
-{
-    // Reset to white text on black background
-    colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+void shutdown(void) {
+	// Reset to white text on black background
+	colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
-    g_Console.clearBuffer();
+	g_Console.clearBuffer();
 }
 
 //--------------------------------------------------------------
@@ -68,14 +77,13 @@ void shutdown( void )
 // Input    : Void
 // Output   : void
 //--------------------------------------------------------------
-void getInput( void )
-{    
-    g_abKeyPressed[K_UP]     = isKeyPressed(VK_UP);
-    g_abKeyPressed[K_DOWN]   = isKeyPressed(VK_DOWN);
-    g_abKeyPressed[K_LEFT]   = isKeyPressed(VK_LEFT);
-    g_abKeyPressed[K_RIGHT]  = isKeyPressed(VK_RIGHT);
-    g_abKeyPressed[K_SPACE]  = isKeyPressed(VK_SPACE);
-    g_abKeyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
+void getInput(void) {
+	g_abKeyPressed[K_UP] = isKeyPressed(VK_UP);
+	g_abKeyPressed[K_DOWN] = isKeyPressed(VK_DOWN);
+	g_abKeyPressed[K_LEFT] = isKeyPressed(VK_LEFT);
+	g_abKeyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
+	g_abKeyPressed[K_SPACE] = isKeyPressed(VK_SPACE);
+	g_abKeyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
 }
 
 //--------------------------------------------------------------
@@ -92,19 +100,17 @@ void getInput( void )
 // Input    : dt = deltatime
 // Output   : void
 //--------------------------------------------------------------
-void update(double dt)
-{
-    // get the delta time
-    g_dElapsedTime += dt;
-    g_dDeltaTime = dt;
+void update(double dt) {
+	// get the delta time
+	g_dElapsedTime += dt;
+	g_dDeltaTime = dt;
 
-    switch (g_eGameState)
-    {
-        case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
-            break;
-        case S_GAME: gameplay(); // gameplay logic when we are in the game
-            break;
-    }
+	switch (g_eGameState) {
+	case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
+		break;
+	case S_GAME: gameplay(); // gameplay logic when we are in the game
+		break;
+	}
 }
 //--------------------------------------------------------------
 // Purpose  : Render function is to update the console screen
@@ -114,159 +120,147 @@ void update(double dt)
 // Input    : void
 // Output   : void
 //--------------------------------------------------------------
-void render()
-{
-    clearScreen();      // clears the current screen and draw from scratch 
-    switch (g_eGameState)
-    {
-        case S_SPLASHSCREEN: renderSplashScreen();
-            break;
-        case S_GAME: renderGame();
-            break;
-    }
-    renderFramerate();  // renders debug information, frame rate, elapsed time, etc
-    renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
+void render() {
+	clearScreen();      // clears the current screen and draw from scratch 
+	switch (g_eGameState) {
+	case S_SPLASHSCREEN: renderSplashScreen();
+		break;
+	case S_GAME: renderGame();
+		break;
+	}
+	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
+	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
-    if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_GAME;
+	if (g_dElapsedTime > 1.0) // wait for 3 seconds to switch to game mode, else do nothing
+		g_eGameState = S_GAME;
 }
 
 void gameplay()            // gameplay logic
 {
-    processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
-    moveCharacter();    // moves the character, collision detection, physics, etc
-                        // sound can be played here too.
+	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
+	moveCharacter();    // moves the character, collision detection, physics, etc
+	// sound can be played here too.
 }
 
-void moveCharacter()
-{
-    bool bSomethingHappened = false;
-    if (g_dBounceTime > g_dElapsedTime)
-        return;
+void moveCharacter() {
 
-    // Updating the location of the character based on the key press
-    // providing a beep sound whenver we shift the character
-    if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0)
-    {
-        //Beep(1440, 30);
-        g_sChar.m_cLocation.Y--;
-        bSomethingHappened = true;
-    }
-    if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0)
-    {
-        //Beep(1440, 30);
-        g_sChar.m_cLocation.X--;
-        bSomethingHappened = true;
-    }
-    if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
-    {
-        //Beep(1440, 30);
-        g_sChar.m_cLocation.Y++;
-        bSomethingHappened = true;
-    }
-    if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
-    {
-        //Beep(1440, 30);
-        g_sChar.m_cLocation.X++;
-        bSomethingHappened = true;
-    }
-    if (g_abKeyPressed[K_SPACE])
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
-        bSomethingHappened = true;
-    }
+	// Collision Detection
+	//g_sChar.xn = g_Console;
 
-    if (bSomethingHappened)
-    {
-        // set the bounce time to some time in the future to prevent accidental triggers
-        g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
-    }
+	bool bSomethingHappened = false;
+	if (g_dBounceTime > g_dElapsedTime)
+		return;
+
+	// Updating the location of the character based on the key press
+	// providing a beep sound whenver we shift the character
+	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0) {
+		//Beep(1440, 30);
+		g_sChar.m_cLocation.Y--;
+		bSomethingHappened = true;
+	}
+	if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0) {
+		//Beep(1440, 30);
+		g_sChar.m_cLocation.X--;
+		bSomethingHappened = true;
+	}
+	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1) {
+		//Beep(1440, 30);
+		g_sChar.m_cLocation.Y++;
+		bSomethingHappened = true;
+	}
+	if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1) {
+		//Beep(1440, 30);
+		g_sChar.m_cLocation.X++;
+		bSomethingHappened = true;
+	}
+	if (g_abKeyPressed[K_SPACE]) {
+		g_sChar.m_bActive = !g_sChar.m_bActive;
+		bSomethingHappened = true;
+	}
+
+	if (bSomethingHappened) {
+		// set the bounce time to some time in the future to prevent accidental triggers
+		g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
+
+	}
 }
-void processUserInput()
-{
-    // quits the game if player hits the escape key
-    if (g_abKeyPressed[K_ESCAPE])
-        g_bQuitGame = true;    
+void processUserInput() {
+	// quits the game if player hits the escape key
+	if (g_abKeyPressed[K_ESCAPE])
+		g_bQuitGame = true;
 }
 
-void clearScreen()
-{
-    // Clears the buffer with this colour attribute
-    g_Console.clearBuffer(0x1F);
+void clearScreen() {
+	// Clears the buffer with this colour attribute
+	g_Console.clearBuffer(0x1F);
 }
 
 void renderSplashScreen()  // renders the splash screen
 {
-    COORD c = g_Console.getConsoleSize();
-    c.Y /= 3;
-    c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
-    c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 20;
-    g_Console.writeToBuffer(c, "Press <Space> to change character colour", 0x09);
-    c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
+	COORD c = g_Console.getConsoleSize();
+	c.Y /= 3;
+	c.X = c.X / 2 - 9;
+	g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
+	c.Y += 1;
+	c.X = g_Console.getConsoleSize().X / 2 - 20;
+	g_Console.writeToBuffer(c, "Press <Space> to change character colour", 0x09);
+	c.Y += 1;
+	c.X = g_Console.getConsoleSize().X / 2 - 9;
+	g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
 }
 
-void renderGame()
-{
-    renderMap();        // renders the map to the buffer first
-    renderCharacter();  // renders the character into the buffer
+void renderGame() {
+	renderMap(&g_Console, LEVEL_ONE, g_Map);        // renders the map to the buffer first
+	renderCharacter();  // renders the character into the buffer
 }
 
-void renderMap()
-{
-    // Set up sample colours, and output shadings
-    const WORD colors[] = {
-        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
-        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
-    };
+void renderMap() {
+	// Set up sample colours, and output shadings
+	const WORD colors[] = {
+		0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+		0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+	};
 
-    COORD c;
-    for (int i = 0; i < 12; ++i)
-    {
-        c.X = 5 * i;
-        c.Y = i + 1;
-        colour(colors[i]);
-        g_Console.writeToBuffer(c, " °±²Û", colors[i]);
-    }
+	COORD c;
+	for (int i = 0; i < 12; ++i) {
+		c.X = 5 * i;
+		c.Y = i + 1;
+		colour(colors[i]);
+		g_Console.writeToBuffer(c, " °±²Û", colors[i]);
+	}
+
 }
 
-void renderCharacter()
-{
-    // Draw the location of the character
-    WORD charColor = 0x0C;
-    if (g_sChar.m_bActive)
-    {
-        charColor = 0x0A;
-    }
-    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+void renderCharacter() {
+	// Draw the location of the character
+	WORD charColor = 0x0C;
+	if (g_sChar.m_bActive) {
+		charColor = 0x0A;
+	}
+	g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
 }
 
-void renderFramerate()
-{
-    COORD c;
-    // displays the framerate
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
-    ss << 1.0 / g_dDeltaTime << "fps";
-    c.X = g_Console.getConsoleSize().X - 9;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str());
+void renderFramerate() {
+	COORD c;
+	// displays the framerate
+	std::ostringstream ss;
+	ss << std::fixed << std::setprecision(3);
+	ss << 1.0 / g_dDeltaTime << "fps";
+	c.X = g_Console.getConsoleSize().X - 9;
+	c.Y = 0;
+	g_Console.writeToBuffer(c, ss.str());
 
-    // displays the elapsed time
-    ss.str("");
-    ss << g_dElapsedTime << "secs";
-    c.X = 0;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str(), 0x59);
+	// displays the elapsed time
+	ss.str("");
+	ss << g_dElapsedTime << "secs";
+	c.X = 0;
+	c.Y = 0;
+	g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
-void renderToScreen()
-{
-    // Writes the buffer to the console, hence you will see what you have written
-    g_Console.flushBufferToConsole();
+void renderToScreen() {
+	// Writes the buffer to the console, hence you will see what you have written
+	g_Console.flushBufferToConsole();
 }
