@@ -10,6 +10,7 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 	if (!file.is_open()) {
 		switch (level) {
 
+		case LEVEL_TITLE:
 		case LEVEL_ONE:
 		case LEVEL_TWO:
 		case LEVEL_THREE:

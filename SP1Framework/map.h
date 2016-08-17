@@ -16,6 +16,7 @@ const short mapHeight = 35;
 
 enum MAP {
 
+	LEVEL_TITLE = 255,
 	LEVEL_MENU = 0,
 	LEVEL_ONE = 1,
 	LEVEL_TWO = 2,
