@@ -40,7 +40,7 @@ const char PASSABLES[20] = {
 
 
 void renderMap(Console * handle, MAP level, vector< vector<char> > * ptr);
-void closeMap();
+void closeMap(vector< vector<char> > * map);
 bool isPassable(char c);
 
 

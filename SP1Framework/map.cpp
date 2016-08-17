@@ -63,4 +63,5 @@ bool isPassable(char c) {
 		if (c == ch)
 			return true;
 	}
+	return false;
 }
