@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include "Framework\console.h"
+#include <vector>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ enum MAP {
 };
 
 
-void renderMap(Console * handle, MAP level, char ptr[][mapHeight]);
+void renderMap(Console * handle, MAP level, vector< vector<char> > * ptr);
 void closeMap();
 
 

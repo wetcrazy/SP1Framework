@@ -17,7 +17,7 @@ bool    g_abKeyPressed[K_COUNT];
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
-static char g_Map[mapWidth][mapHeight] = {};
+vector< vector<char> > g_Map;
 
 
 // Console object
@@ -47,6 +47,8 @@ void init(void) {
 	g_sChar.yN = ' ';
 
 	g_sChar.m_bActive = true;
+
+
 
 	// sets the width, height and the font name to use in the console
 	g_Console.setConsoleFont(0, 25, L"Consolas");
@@ -148,11 +150,12 @@ void gameplay()            // gameplay logic
 
 void moveCharacter() {
 
-	// Collision Detection
-	g_sChar.xP = g_Map[g_sChar.m_cLocation.X + 1][g_sChar.m_cLocation.Y];
-	g_sChar.xN = g_Map[g_sChar.m_cLocation.X - 1][g_sChar.m_cLocation.Y];
-	g_sChar.yP = g_Map[g_sChar.m_cLocation.X][g_sChar.m_cLocation.Y - 1];
-	g_sChar.yN = g_Map[g_sChar.m_cLocation.X][g_sChar.m_cLocation.Y + 1];
+		// Collision Detection
+		g_sChar.xP = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1];
+		g_sChar.xN = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1];
+		g_sChar.yP = g_Map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X];
+		g_sChar.yN = g_Map[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X];
+
 
 	bool bSomethingHappened = false;
 	if (g_dBounceTime > g_dElapsedTime)
@@ -170,7 +173,7 @@ void moveCharacter() {
 		g_sChar.m_cLocation.X--;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1  && g_sChar.yN == ' ') {
+	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && g_sChar.yN == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.Y++;
 		bSomethingHappened = true;
@@ -188,8 +191,8 @@ void moveCharacter() {
 	if (bSomethingHappened) {
 		// set the bounce time to some time in the future to prevent accidental triggers
 		g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
-
 	}
+
 }
 void processUserInput() {
 	// quits the game if player hits the escape key
@@ -217,7 +220,7 @@ void renderSplashScreen()  // renders the splash screen
 }
 
 void renderGame() {
-	renderMap(&g_Console, LEVEL_ONE, g_Map);        // renders the map to the buffer first
+	renderMap(&g_Console, LEVEL_ONE, &g_Map);        // renders the map to the buffer first
 	renderCharacter();  // renders the character into the buffer
 }
 
