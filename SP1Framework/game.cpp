@@ -15,7 +15,7 @@ bool    g_abKeyPressed[K_COUNT];
 
 // Game specific variables here
 SGameChar   g_sChar;
-EGAMESTATES g_eGameState = S_SPLASHSCREEN;
+EGAMESTATES g_eGameState = S_TITLESCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
 vector< vector<char> > g_Map;
 
@@ -37,7 +37,7 @@ void init(void) {
 	g_dBounceTime = 0.0;
 
 	// sets the initial state for the game
-	g_eGameState = S_SPLASHSCREEN;
+	g_eGameState = S_TITLESCREEN;
 
 	g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
 	g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
@@ -65,7 +65,7 @@ void init(void) {
 void shutdown(void) {
 	// Reset to white text on black background
 	colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-	closeMap();
+	closeMap(&g_Map);
 	g_Console.clearBuffer();
 }
 
@@ -109,6 +109,8 @@ void update(double dt) {
 	g_dDeltaTime = dt;
 
 	switch (g_eGameState) {
+	case S_TITLESCREEN: titleScreenWait(); // game logic for the splash screen
+		break;
 	case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
@@ -126,6 +128,8 @@ void update(double dt) {
 void render() {
 	clearScreen();      // clears the current screen and draw from scratch 
 	switch (g_eGameState) {
+	case S_TITLESCREEN: renderTitleScreen();
+		break;
 	case S_SPLASHSCREEN: renderSplashScreen();
 		break;
 	case S_GAME: renderGame();
@@ -134,11 +138,21 @@ void render() {
 	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
+void titleScreenWait()
+{
+	if (g_dElapsedTime > 2.0)
+	{
+		g_eGameState = S_SPLASHSCREEN;
+	}
+}
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
-	if (g_dElapsedTime > 1.0) // wait for 3 seconds to switch to game mode, else do nothing
+		if (g_dElapsedTime > 4.0) // wait for 3 seconds to switch to game mode, else do nothing
+		{
 		g_eGameState = S_GAME;
+		closeMap(&g_Map);
+	}
 }
 
 void gameplay()            // gameplay logic
@@ -204,9 +218,14 @@ void clearScreen() {
 	// Clears the buffer with this colour attribute
 	g_Console.clearBuffer(0x1F);
 }
+void renderTitleScreen()
+{
+	renderMap(&g_Console, LEVEL_TITLE, &g_Map);
 
+}
 void renderSplashScreen()  // renders the splash screen
 {
+	
 	COORD c = g_Console.getConsoleSize();
 	c.Y /= 3;
 	c.X = c.X / 2 - 9;
@@ -217,6 +236,7 @@ void renderSplashScreen()  // renders the splash screen
 	c.Y += 1;
 	c.X = g_Console.getConsoleSize().X / 2 - 9;
 	g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
+	
 }
 
 void renderGame() {
@@ -224,22 +244,8 @@ void renderGame() {
 	renderCharacter();  // renders the character into the buffer
 }
 
-void renderMap() {
-	// Set up sample colours, and output shadings
-	const WORD colors[] = {
-		0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
-		0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
-	};
 
-	COORD c;
-	for (int i = 0; i < 12; ++i) {
-		c.X = 5 * i;
-		c.Y = i + 1;
-		colour(colors[i]);
-		g_Console.writeToBuffer(c, " °±²Û", colors[i]);
-	}
 
-}
 
 void renderCharacter() {
 	// Draw the location of the character
