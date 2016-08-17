@@ -3,7 +3,7 @@
 static ifstream file;
 static string appender[mapHeight];
 
-void renderMap(Console *handle, MAP level, char ptr[][mapHeight]) {
+void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 	string buffer;
 
@@ -25,21 +25,28 @@ void renderMap(Console *handle, MAP level, char ptr[][mapHeight]) {
 
 		}
 	}
-	int row = 0;
+
+	int r = 0;
 
 	while (file.good()) {
 
 		getline(file, buffer);
-		appender[row] = buffer;
+		appender[r] = buffer;
+
+		vector<char> row;
 
 		for (size_t i = 0; i < buffer.length(); i++) {
-			ptr[row][i] = buffer[i];
+			row.push_back(buffer[i]);
 		}
-		row++;
+
+		ptr->push_back(row);
+
+		r++;
+
 	}
 
 	for (int i = 0; i < mapHeight; i++) {
-			handle->writeToBuffer(0, i, appender[i], 0x20);
+		handle->writeToBuffer(0, i, appender[i], 0x20);
 	}
 
 }
