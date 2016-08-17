@@ -11,8 +11,8 @@
 using namespace std;
 
 // Original dimension is 83 x 35
-const short mapWidth = 83;
-const short mapHeight = 35;
+const short mapWidth = 82;
+const short mapHeight = 36;
 
 enum MAP {
 

@@ -21,7 +21,7 @@ vector< vector<char> > g_Map;
 
 
 // Console object
-Console g_Console(mapWidth, mapHeight, "Group 666");
+Console g_Console(mapWidth, mapHeight, "Group 6");
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -51,7 +51,7 @@ void init(void) {
 
 
 	// sets the width, height and the font name to use in the console
-	g_Console.setConsoleFont(0, 25, L"Consolas");
+	g_Console.setConsoleFont(0, 24, L"Consolas");
 
 }
 
@@ -140,7 +140,7 @@ void render() {
 }
 void titleScreenWait()
 {
-	if (g_dElapsedTime > 2.0)
+	if (g_dElapsedTime > 2.0 || g_abKeyPressed[K_SPACE])
 	{
 		g_eGameState = S_SPLASHSCREEN;
 	}
@@ -148,7 +148,7 @@ void titleScreenWait()
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
-		if (g_dElapsedTime > 4.0) // wait for 3 seconds to switch to game mode, else do nothing
+	if (g_dElapsedTime > 4.0 || g_abKeyPressed[K_SPACE]) // wait for x seconds to switch to game mode, else do nothing
 		{
 		g_eGameState = S_GAME;
 		closeMap(&g_Map);
@@ -204,7 +204,7 @@ void moveCharacter() {
 
 	 if (bSomethingHappened) {
 		// set the bounce time to some time in the future to prevent accidental triggers
-		g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
+		g_dBounceTime = g_dElapsedTime + 0.070; // 125ms should be enough
 	}
 
 }
@@ -253,7 +253,7 @@ void renderCharacter() {
 	if (g_sChar.m_bActive) {
 		charColor = 0x0A;
 	}
-	g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+	g_Console.writeToBuffer(g_sChar.m_cLocation, '&', charColor);
 }
 
 void renderFramerate() {

@@ -1,7 +1,6 @@
 #include "map.h"
 
 static ifstream file;
-static string appender[mapHeight];
 
 void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
@@ -32,11 +31,10 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 	while (file.good()) {
 
 		getline(file, buffer);
-		appender[r] = buffer;
 
 		vector<char> row;
 
-		for (size_t i = 0; i < buffer.length(); i++) {
+		for (size_t i = 0; i < buffer.length() + 1; i++) {
 			row.push_back(buffer[i]);
 		}
 
@@ -46,8 +44,12 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 	}
 
-	for (int i = 0; i < mapHeight; i++) {
-		handle->writeToBuffer(0, i, appender[i], 0x20);
+	for (int i = 0; i < ptr->size(); i++) {
+		string s = "";
+		for (int k = 0; k < ptr->at(i).size(); k++) {
+			s += ptr->at(i).at(k);
+		}
+		handle->writeToBuffer(0, i, s, 0x20);
 	}
 
 }
@@ -55,9 +57,6 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 // Closes the file stream
 void closeMap(vector< vector<char> > * map) {
 	map->clear(); // Release and reset map
-	for each (string s in appender) {
-		s.clear();
-	}
 	file.close();
 }
 
