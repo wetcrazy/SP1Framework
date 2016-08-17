@@ -52,6 +52,15 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 }
 
 // Closes the file stream
-void closeMap() {
+void closeMap(vector< vector<char> > * map) {
+	map = new vector<vector<char>>; // Release and reset map
 	file.close();
+}
+
+// Test if the argument is a passable ASCII character
+bool isPassable(char c) {
+	for each (char ch in PASSABLES) {
+		if (c == ch)
+			return true;
+	}
 }

@@ -30,9 +30,18 @@ enum MAP {
 
 };
 
+// ASCII Characters that the player can walk through
+const char PASSABLES[20] = {
+
+	' ',
+	'+',
+
+};
+
 
 void renderMap(Console * handle, MAP level, vector< vector<char> > * ptr);
 void closeMap();
+bool isPassable(char c);
 
 
 #endif
