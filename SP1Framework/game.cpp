@@ -168,27 +168,27 @@ void moveCharacter() {
 		g_sChar.m_cLocation.Y--;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && g_sChar.xN == ' ') {
+	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && g_sChar.xN == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.X--;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && g_sChar.yN == ' ') {
+	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && g_sChar.yN == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.Y++;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && g_sChar.xP == ' ') {
+	 else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && g_sChar.xP == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.X++;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_SPACE]) {
+	 if (g_abKeyPressed[K_SPACE]) {
 		g_sChar.m_bActive = !g_sChar.m_bActive;
 		bSomethingHappened = true;
 	}
 
-	if (bSomethingHappened) {
+	 if (bSomethingHappened) {
 		// set the bounce time to some time in the future to prevent accidental triggers
 		g_dBounceTime = g_dElapsedTime + 0.125; // 125ms should be enough
 	}
