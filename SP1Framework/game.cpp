@@ -41,10 +41,10 @@ void init(void) {
 
 	g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
 	g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
-	g_sChar.xn = ' ';
-	g_sChar.xp = ' ';
-	g_sChar.yn = ' ';
-	g_sChar.yp = ' ';
+	g_sChar.xP = ' ';
+	g_sChar.xN = ' ';
+	g_sChar.yP = ' ';
+	g_sChar.yN = ' ';
 
 	g_sChar.m_bActive = true;
 
@@ -149,7 +149,10 @@ void gameplay()            // gameplay logic
 void moveCharacter() {
 
 	// Collision Detection
-	//g_sChar.xn = g_Console;
+	g_sChar.xP = g_Map[g_sChar.m_cLocation.X + 1][g_sChar.m_cLocation.Y];
+	g_sChar.xN = g_Map[g_sChar.m_cLocation.X - 1][g_sChar.m_cLocation.Y];
+	g_sChar.yP = g_Map[g_sChar.m_cLocation.X][g_sChar.m_cLocation.Y - 1];
+	g_sChar.yN = g_Map[g_sChar.m_cLocation.X][g_sChar.m_cLocation.Y + 1];
 
 	bool bSomethingHappened = false;
 	if (g_dBounceTime > g_dElapsedTime)
@@ -157,22 +160,22 @@ void moveCharacter() {
 
 	// Updating the location of the character based on the key press
 	// providing a beep sound whenver we shift the character
-	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0) {
+	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && g_sChar.yP == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.Y--;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0) {
+	if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && g_sChar.xN == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.X--;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1) {
+	if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1  && g_sChar.yN == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.Y++;
 		bSomethingHappened = true;
 	}
-	if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1) {
+	if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && g_sChar.xP == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.X++;
 		bSomethingHappened = true;

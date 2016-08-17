@@ -9,21 +9,23 @@
 
 using namespace std;
 
-const short mapWidth = 53;
-const short mapHeight = 33;
+// Original dimension is 83 x 35
+const short mapWidth = 83;
+const short mapHeight = 35;
 
 enum MAP {
 
-	LEVEL_ONE,
-	LEVEL_TWO,
-	LEVEL_THREE,
-	LEVEL_FOUR,
-	LEVEL_FIVE,
-	LEVEL_SIX,
-	LEVEL_SEVEN,
-	LEVEL_EIGHT,
-	LEVEL_NINE,
-	LEVEL_TEN
+	LEVEL_MENU = 0,
+	LEVEL_ONE = 1,
+	LEVEL_TWO = 2,
+	LEVEL_THREE = 3,
+	LEVEL_FOUR = 4,
+	LEVEL_FIVE = 5,
+	LEVEL_SIX = 6,
+	LEVEL_SEVEN = 7,
+	LEVEL_EIGHT = 8,
+	LEVEL_NINE = 9,
+	LEVEL_TEN = 10
 
 };
 

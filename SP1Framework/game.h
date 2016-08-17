@@ -28,10 +28,10 @@ enum EGAMESTATES {
 struct SGameChar {
 	COORD m_cLocation;
 	bool  m_bActive;
-	char  xp;
-	char  xn;
-	char  yp;
-	char  yn;
+	char  xP;
+	char  xN;
+	char  yP;
+	char  yN;
 };
 
 void init(void);      // initialize your variables, allocate memory, etc

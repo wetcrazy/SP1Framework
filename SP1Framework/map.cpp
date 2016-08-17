@@ -1,7 +1,7 @@
 #include "map.h"
 
 static ifstream file;
-static string appender[mapHeight] = {};
+static string appender[mapHeight];
 
 void renderMap(Console *handle, MAP level, char ptr[][mapHeight]) {
 
@@ -11,43 +11,16 @@ void renderMap(Console *handle, MAP level, char ptr[][mapHeight]) {
 		switch (level) {
 
 		case LEVEL_ONE:
-			file.open("level_one.txt");
-			break;
-
 		case LEVEL_TWO:
-
-			break;
-
 		case LEVEL_THREE:
-
-			break;
-
 		case LEVEL_FOUR:
-
-			break;
-
 		case LEVEL_FIVE:
-
-			break;
-
 		case LEVEL_SIX:
-
-			break;
-
 		case LEVEL_SEVEN:
-
-			break;
-
 		case LEVEL_EIGHT:
-
-			break;
-
 		case LEVEL_NINE:
-
-			break;
-
 		case LEVEL_TEN:
-
+			file.open("level_" + to_string(level) + ".txt");
 			break;
 
 		}
