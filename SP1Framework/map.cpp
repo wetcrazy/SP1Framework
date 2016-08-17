@@ -55,6 +55,9 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 // Closes the file stream
 void closeMap(vector< vector<char> > * map) {
 	map = new vector<vector<char>>; // Release and reset map
+	for each (string s in appender) {
+		s.clear();
+	}
 	file.close();
 }
 
