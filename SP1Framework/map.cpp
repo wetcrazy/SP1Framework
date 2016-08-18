@@ -2,10 +2,11 @@
 
 static ifstream file;
 
+MAP current_level;
+
 void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 	string buffer;
-
 	if (!file.is_open()) {
 		switch (level) {
 
@@ -21,6 +22,7 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 		case LEVEL_NINE:
 		case LEVEL_TEN:
 			file.open("level_" + to_string(level) + ".txt");
+			current_level = level;
 			break;
 
 		}

@@ -2,13 +2,14 @@
 #define _dialogue_H
 
 
-#include <string>
-#include <iostream>
-#include <fstream>
 #include "Framework\console.h"
-#include <vector>
-using namespace std;
+#include "map.h"
 
-void dialogue(Console * handle  );
+
+void dialogue(Console * handle);
+
+
+
+
 
 #endif

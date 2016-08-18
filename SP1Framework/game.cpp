@@ -4,6 +4,7 @@
 #include "game.h"
 #include "Framework\console.h"
 #include "map.h"
+#include "dialogue.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -21,7 +22,7 @@ vector< vector<char> > g_Map;
 
 
 // Console object
-Console g_Console(mapWidth, mapHeight, "Group 6");
+Console g_Console(mapWidth, mapHeight+footer_offset, "Group 6");
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -158,6 +159,7 @@ void gameplay()            // gameplay logic
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
 	moveCharacter();    // moves the character, collision detection, physics, etc
 	// sound can be played here too.
+	
 }
 
 void moveCharacter() {
@@ -240,6 +242,7 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame() {
 	renderMap(&g_Console, LEVEL_ONE, &g_Map);        // renders the map to the buffer first
 	renderCharacter();  // renders the character into the buffer
+	dialogue(&g_Console);
 }
 
 

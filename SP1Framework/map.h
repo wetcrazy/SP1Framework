@@ -8,6 +8,7 @@
 #include "Framework\console.h"
 #include <vector>
 
+
 using namespace std;
 
 // Original dimension is 83 x 35
@@ -15,6 +16,7 @@ const short mapWidth = 82;
 const short mapHeight = 36;
 
 const short header_offset = 1;
+const short footer_offset = 1;
 
 enum MAP {
 
@@ -33,6 +35,8 @@ enum MAP {
 
 };
 
+
+extern MAP current_level;
 
 void renderMap(Console * handle, MAP level, vector< vector<char> > * ptr);
 void closeMap(vector< vector<char> > * map);
