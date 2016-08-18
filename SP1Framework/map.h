@@ -13,9 +13,8 @@ using namespace std;
 // Original dimension is 83 x 35
 const short mapWidth = 82;
 const short mapHeight = 36;
-const short header_offset = 1;
 
-static MAP _Current_Map;
+const short header_offset = 1;
 
 enum MAP {
 
@@ -33,6 +32,7 @@ enum MAP {
 	LEVEL_TEN = 10
 
 };
+
 
 void renderMap(Console * handle, MAP level, vector< vector<char> > * ptr);
 void closeMap(vector< vector<char> > * map);

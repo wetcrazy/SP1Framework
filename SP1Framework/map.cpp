@@ -1,11 +1,8 @@
 #include "map.h"
 
 static ifstream file;
-static MAP _Current_Map;
 
 void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
-
-	_Current_Map = level;
 
 	string buffer;
 
@@ -31,7 +28,6 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 	int r = 0;
 
-	// Write to pointer
 	while (file.good()) {
 
 		getline(file, buffer);
@@ -39,7 +35,7 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 		vector<char> row;
 
 		for (size_t i = 0; i < buffer.length() + 1; i++) {
-				row.push_back(buffer[i]);
+			row.push_back(buffer[i]);
 		}
 
 		ptr->push_back(row);
@@ -48,13 +44,12 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 	}
 
-	// Print out the data from the pointer vector
 	for (int i = 0; i < ptr->size(); i++) {
 		string s = "";
 		for (int k = 0; k < ptr->at(i).size(); k++) {
 			s += ptr->at(i).at(k);
 		}
-		handle->writeToBuffer(0, i + header_offset, s, 0x20); // offset Y by 1 for the fps
+		handle->writeToBuffer(0, i + header_offset, s, 0x20);
 	}
 
 }
@@ -64,4 +59,3 @@ void closeMap(vector< vector<char> > * map) {
 	map->clear(); // Release and reset map
 	file.close();
 }
-

@@ -9,7 +9,7 @@ struct BOULDER {
 
 	COORD pos;
 	void interact() {
-		
+
 		if (isKeyPressed(VK_SPACE)) {
 
 			if (isKeyPressed(VK_LEFT)) {
