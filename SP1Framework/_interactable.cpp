@@ -1,7 +1,8 @@
 #include "_interactable.h"
+#include "game.h"
+#include "map.h"
 
-
-
+vector<STAR> _OBJ_COLLECTION_STAR;
 
 
 // Test if the argument is a passable ASCII character
@@ -13,7 +14,17 @@ bool isPassable(char c) {
 	return false;
 }
 
-void renderObjects(MAP map) {
+bool isInteractable(char c) {
+	for each (char ch in INTERACTABLES) {
+		if (c == ch)
+			return true;
+	}
+	return false;
+}
+
+
+// Object logic goes here
+void updateObjects(MAP map) {
 
 	switch (map) {
 	case LEVEL_TITLE:
@@ -21,7 +32,9 @@ void renderObjects(MAP map) {
 	case LEVEL_MENU:
 		break;
 	case LEVEL_ONE:
-		
+		if (g_sChar.below == '*') {
+			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = 'A';
+		}
 		break;
 	case LEVEL_TWO:
 		break;

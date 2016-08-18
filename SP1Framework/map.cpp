@@ -1,9 +1,11 @@
 #include "map.h"
+#include "_interactable.h"
+#include "Framework\console.h"
 
 static ifstream file;
 
 MAP current_level;
-extern vector< vector<char> > g_Map;
+vector< vector<char> > g_Map;
 
 void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
@@ -39,6 +41,24 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 		for (size_t i = 0; i < buffer.length() + 1; i++) {
 			row.push_back(buffer[i]);
+
+			// Is the character an interactable object?
+			if (isInteractable(buffer[i])) {
+
+				COORD pos = { r, i };
+
+				switch (current_level) {
+
+				case LEVEL_ONE:
+					_OBJ_COLLECTION_STAR.push_back(STAR{
+						pos
+					});
+					break;
+
+				}
+
+			}
+
 		}
 
 		ptr->push_back(row);
@@ -47,9 +67,9 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 	}
 
-	for (int i = 0; i < ptr->size(); i++) {
+	for (size_t i = 0; i < ptr->size(); i++) {
 		string s = "";
-		for (int k = 0; k < ptr->at(i).size(); k++) {
+		for (size_t k = 0; k < ptr->at(i).size(); k++) {
 			s += ptr->at(i).at(k);
 		}
 		handle->writeToBuffer(0, i + header_offset, s, 0x20);

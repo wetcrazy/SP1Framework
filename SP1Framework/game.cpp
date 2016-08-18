@@ -12,10 +12,9 @@ double  g_dDeltaTime;
 bool    g_abKeyPressed[K_COUNT];
 
 // Game specific variables here
-SGameChar   g_sChar;
+SGameChar g_sChar;
 EGAMESTATES g_eGameState = S_TITLESCREEN;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
-vector< vector<char> > g_Map;
 
 
 // Console object
@@ -155,8 +154,8 @@ void splashScreenWait()    // waits for time to pass in splash screen
 void gameplay()            // gameplay logic
 {
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
-	moveCharacter();    // moves the character, collision detection, physics, etc
-	// sound can be played here too.
+	moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
+	updateObjects(current_level); // update logic for the objects in game
 
 }
 
@@ -167,7 +166,7 @@ void moveCharacter() {
 	g_sChar.xN = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1];
 	g_sChar.yP = g_Map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X];
 	g_sChar.yN = g_Map[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X];
-	g_sChar.below = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.Y];
+	g_sChar.below = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X];
 
 
 	bool bSomethingHappened = false;

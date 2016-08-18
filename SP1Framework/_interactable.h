@@ -4,22 +4,29 @@
 #include "map.h"
 #include "boulder.h"
 #include "star.h"
-#include "boulder.h"
-#include <list>
-
 
 // Characters that the player can walk through
 const char PASSABLES[20] = {
 
 	' ',
-	'+',
+	'*',
 
 };
 
-extern STAR _OBJ_STARS[];
+// Interactables objects
+const char INTERACTABLES[20] = {
+
+	'*',
+
+};
+
+extern vector<STAR> _OBJ_COLLECTION_STAR;
 
 bool isPassable(char c);
-void renderObjects(MAP map);
+bool isInteractable(char c);
+void updateObjects(MAP map);
 void destroyObjects();
+size_t findStarAt(COORD pos);
+
 
 #endif // !_INTERACTABLE_H
