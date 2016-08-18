@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Framework">
       <UniqueIdentifier>{37c19c94-9502-4b2b-b3f1-70fa908b49af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{a8547c79-7a01-4b8b-a43e-577e9b76b08c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{f62df6e2-06d2-49f6-be5a-0a88f06c6004}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,6 +42,9 @@
     <ClCompile Include="map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="_interactable.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -49,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="map.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_interactable.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

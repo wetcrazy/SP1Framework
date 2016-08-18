@@ -7,7 +7,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-
+#include <stdexcept>
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -138,10 +138,8 @@ void render() {
 	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
-void titleScreenWait()
-{
-	if (g_dElapsedTime > 2.0 || g_abKeyPressed[K_SPACE])
-	{
+void titleScreenWait() {
+	if (g_dElapsedTime > 2.0 || g_abKeyPressed[K_SPACE]) {
 		g_eGameState = S_SPLASHSCREEN;
 	}
 }
@@ -149,7 +147,7 @@ void titleScreenWait()
 void splashScreenWait()    // waits for time to pass in splash screen
 {
 	if (g_dElapsedTime > 4.0 || g_abKeyPressed[K_SPACE]) // wait for x seconds to switch to game mode, else do nothing
-		{
+	{
 		g_eGameState = S_GAME;
 		closeMap(&g_Map);
 	}
@@ -164,11 +162,11 @@ void gameplay()            // gameplay logic
 
 void moveCharacter() {
 
-		// Collision Detection
-		g_sChar.xP = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1];
-		g_sChar.xN = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1];
-		g_sChar.yP = g_Map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X];
-		g_sChar.yN = g_Map[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X];
+	// Collision Detection
+	g_sChar.xP = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1];
+	g_sChar.xN = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1];
+	g_sChar.yP = g_Map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X];
+	g_sChar.yN = g_Map[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X];
 
 
 	bool bSomethingHappened = false;
@@ -192,17 +190,18 @@ void moveCharacter() {
 		g_sChar.m_cLocation.Y++;
 		bSomethingHappened = true;
 	}
-	 else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && g_sChar.xP == ' ') {
+	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && g_sChar.xP == ' ') {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.X++;
 		bSomethingHappened = true;
 	}
-	 if (g_abKeyPressed[K_SPACE]) {
+	if (g_abKeyPressed[K_SPACE]) {
 		g_sChar.m_bActive = !g_sChar.m_bActive;
 		bSomethingHappened = true;
 	}
 
-	 if (bSomethingHappened) {
+
+	if (bSomethingHappened) {
 		// set the bounce time to some time in the future to prevent accidental triggers
 		g_dBounceTime = g_dElapsedTime + 0.070; // 125ms should be enough
 	}
@@ -218,14 +217,13 @@ void clearScreen() {
 	// Clears the buffer with this colour attribute
 	g_Console.clearBuffer(0x1F);
 }
-void renderTitleScreen()
-{
+void renderTitleScreen() {
 	renderMap(&g_Console, LEVEL_TITLE, &g_Map);
 
 }
 void renderSplashScreen()  // renders the splash screen
 {
-	
+
 	COORD c = g_Console.getConsoleSize();
 	c.Y /= 3;
 	c.X = c.X / 2 - 9;
@@ -236,7 +234,7 @@ void renderSplashScreen()  // renders the splash screen
 	c.Y += 1;
 	c.X = g_Console.getConsoleSize().X / 2 - 9;
 	g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
-	
+
 }
 
 void renderGame() {
@@ -253,7 +251,7 @@ void renderCharacter() {
 	if (g_sChar.m_bActive) {
 		charColor = 0x0A;
 	}
-	g_Console.writeToBuffer(g_sChar.m_cLocation, '&', charColor);
+	g_Console.writeToBuffer(g_sChar.m_cLocation.X , g_sChar.m_cLocation.Y + header_offset, '&', charColor);
 }
 
 void renderFramerate() {
@@ -263,15 +261,15 @@ void renderFramerate() {
 	ss << std::fixed << std::setprecision(3);
 	ss << 1.0 / g_dDeltaTime << "fps";
 	c.X = g_Console.getConsoleSize().X - 9;
-	c.Y = g_Console.getConsoleSize().Y - 1;
+	c.Y = 0;
 	g_Console.writeToBuffer(c, ss.str());
 
 	// displays the elapsed time
 	ss.str("");
 	ss << g_dElapsedTime << "secs";
 	c.X = 0;
-	c.Y = g_Console.getConsoleSize().Y - 1;
-	g_Console.writeToBuffer(c, ss.str(), 0x59);
+	c.Y = 0;
+	g_Console.writeToBuffer(c, ss.str());
 }
 void renderToScreen() {
 	// Writes the buffer to the console, hence you will see what you have written

@@ -13,6 +13,9 @@ using namespace std;
 // Original dimension is 83 x 35
 const short mapWidth = 82;
 const short mapHeight = 36;
+const short header_offset = 1;
+
+static MAP _Current_Map;
 
 enum MAP {
 
@@ -31,18 +34,8 @@ enum MAP {
 
 };
 
-// ASCII Characters that the player can walk through
-const char PASSABLES[20] = {
-
-	' ',
-	'+',
-
-};
-
-
 void renderMap(Console * handle, MAP level, vector< vector<char> > * ptr);
 void closeMap(vector< vector<char> > * map);
-bool isPassable(char c);
 
 
 #endif
