@@ -176,24 +176,37 @@ void moveCharacter() {
 	// Updating the location of the character based on the key press
 	// providing a beep sound whenver we shift the character
 	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && isPassable(g_sChar.yP)) {
-		//Beep(1440, 30);
 		g_sChar.m_cLocation.Y--;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
-		//Beep(1440, 30);
+	else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP))
+	{
+		Beep(1500, 100);
+	}
+	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {	
 		g_sChar.m_cLocation.X--;
 		bSomethingHappened = true;
 	}
+	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN))
+	{
+		Beep(1500, 100);
+	}
 	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
-		//Beep(1440, 30);
+		
 		g_sChar.m_cLocation.Y++;
 		bSomethingHappened = true;
 	}
+	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN))
+	{
+		Beep(1500, 100);
+	}
 	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
-		//Beep(1440, 30);
 		g_sChar.m_cLocation.X++;
 		bSomethingHappened = true;
+	}
+	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP))
+	{
+		Beep(1500, 100);
 	}
 	if (g_abKeyPressed[K_SPACE]) {
 		g_sChar.m_bActive = !g_sChar.m_bActive;
@@ -203,7 +216,7 @@ void moveCharacter() {
 
 	if (bSomethingHappened) {
 		// set the bounce time to some time in the future to prevent accidental triggers
-		g_dBounceTime = g_dElapsedTime + 0.070; // 125ms should be enough
+		g_dBounceTime = g_dElapsedTime + 0.1; // 125ms should be enough
 	}
 
 }
