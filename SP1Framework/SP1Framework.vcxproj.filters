@@ -42,8 +42,13 @@
     <ClCompile Include="map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
     <ClCompile Include="_interactable.cpp">
       <Filter>Source Files\Objects</Filter>
+=======
+    <ClCompile Include="dialogue.cpp">
+      <Filter>Source Files</Filter>
+>>>>>>> Stashed changes
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +64,13 @@
     <ClInclude Include="map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="_interactable.h">
       <Filter>Header Files\Objects</Filter>
+=======
+    <ClInclude Include="dialogue.h">
+      <Filter>Header Files</Filter>
+>>>>>>> Stashed changes
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

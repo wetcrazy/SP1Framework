@@ -7,7 +7,11 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+<<<<<<< Updated upstream
 #include <stdexcept>
+=======
+#include "dialogue.h"
+>>>>>>> Stashed changes
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -240,6 +244,7 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame() {
 	renderMap(&g_Console, LEVEL_ONE, &g_Map);        // renders the map to the buffer first
 	renderCharacter();  // renders the character into the buffer
+	dialogue(&g_Console);
 }
 
 
