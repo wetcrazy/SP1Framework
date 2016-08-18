@@ -84,6 +84,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="score.cpp" />
     <ClCompile Include="star.cpp" />
     <ClCompile Include="_interactable.cpp" />
   </ItemGroup>
@@ -94,6 +95,7 @@
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="star.h" />
     <ClInclude Include="_interactable.h" />
   </ItemGroup>

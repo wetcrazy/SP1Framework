@@ -1,4 +1,5 @@
 #include "dialogue.h"
+#include "score.h"
 
 
 
@@ -11,7 +12,8 @@ void dialogue(Console * handle)
 	{
 
 	case LEVEL_ONE:
-		str = "Collect the '*'";
+		str = "Collect the '*'                    Asterisks left: " + to_string(_POINTS_ASTERISK);
+		// TODO: If asterisk reaches 0, open door
 		break;
 	case LEVEL_TWO:
 		str = "Solve the puzzle";

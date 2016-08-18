@@ -1,6 +1,7 @@
 #include "_interactable.h"
 #include "game.h"
 #include "map.h"
+#include "score.h"
 
 vector<STAR> _OBJ_COLLECTION_STAR;
 
@@ -33,7 +34,8 @@ void updateObjects(MAP map) {
 		break;
 	case LEVEL_ONE:
 		if (g_sChar.below == '*') {
-			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = 'A';
+			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
+			_POINTS_ASTERISK--;
 		}
 		break;
 	case LEVEL_TWO:
