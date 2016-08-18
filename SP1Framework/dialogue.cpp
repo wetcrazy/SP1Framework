@@ -41,9 +41,6 @@ void dialogue(Console * handle)
 		str = "";
 		break;
 
-
-
-
 	}
 
 

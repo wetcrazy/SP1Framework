@@ -3,9 +3,12 @@
 
 #include "map.h"
 #include "boulder.h"
+#include "star.h"
+#include "boulder.h"
+#include <list>
 
 
-// ASCII Characters that the player can walk through
+// Characters that the player can walk through
 const char PASSABLES[20] = {
 
 	' ',
@@ -13,6 +16,7 @@ const char PASSABLES[20] = {
 
 };
 
+extern STAR _OBJ_STARS[];
 
 bool isPassable(char c);
 void renderObjects(MAP map);

@@ -12,10 +12,6 @@ struct BOULDER {
 
 		if (isKeyPressed(VK_SPACE)) {
 
-			if (isKeyPressed(VK_LEFT)) {
-
-			}
-
 		}
 
 	}

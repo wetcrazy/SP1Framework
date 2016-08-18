@@ -13,3 +13,35 @@ bool isPassable(char c) {
 	return false;
 }
 
+void renderObjects(MAP map) {
+
+	switch (map) {
+	case LEVEL_TITLE:
+		break;
+	case LEVEL_MENU:
+		break;
+	case LEVEL_ONE:
+		
+		break;
+	case LEVEL_TWO:
+		break;
+	case LEVEL_THREE:
+		break;
+	case LEVEL_FOUR:
+		break;
+	case LEVEL_FIVE:
+		break;
+	case LEVEL_SIX:
+		break;
+	case LEVEL_SEVEN:
+		break;
+	case LEVEL_EIGHT:
+		break;
+	case LEVEL_NINE:
+		break;
+	case LEVEL_TEN:
+		break;
+	}
+
+
+}

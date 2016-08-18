@@ -74,6 +74,9 @@
     <ClInclude Include="dialogue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="star.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="level_255.txt">

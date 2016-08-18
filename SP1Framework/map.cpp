@@ -3,6 +3,7 @@
 static ifstream file;
 
 MAP current_level;
+extern vector< vector<char> > g_Map;
 
 void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 

@@ -5,10 +5,7 @@
 #include "Framework\console.h"
 #include "map.h"
 #include "dialogue.h"
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <stdexcept>
+#include "_interactable.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -22,7 +19,7 @@ vector< vector<char> > g_Map;
 
 
 // Console object
-Console g_Console(mapWidth, mapHeight+footer_offset, "Group 6");
+Console g_Console(mapWidth, mapHeight + footer_offset, "Group 6");
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -46,6 +43,7 @@ void init(void) {
 	g_sChar.xN = ' ';
 	g_sChar.yP = ' ';
 	g_sChar.yN = ' ';
+	g_sChar.below = ' ';
 
 	g_sChar.m_bActive = true;
 
@@ -159,7 +157,7 @@ void gameplay()            // gameplay logic
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
 	moveCharacter();    // moves the character, collision detection, physics, etc
 	// sound can be played here too.
-	
+
 }
 
 void moveCharacter() {
@@ -169,6 +167,7 @@ void moveCharacter() {
 	g_sChar.xN = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1];
 	g_sChar.yP = g_Map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X];
 	g_sChar.yN = g_Map[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X];
+	g_sChar.below = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.Y];
 
 
 	bool bSomethingHappened = false;
@@ -177,22 +176,22 @@ void moveCharacter() {
 
 	// Updating the location of the character based on the key press
 	// providing a beep sound whenver we shift the character
-	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && g_sChar.yP == ' ') {
+	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && isPassable(g_sChar.yP)) {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.Y--;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && g_sChar.xN == ' ') {
+	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.X--;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && g_sChar.yN == ' ') {
+	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.Y++;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && g_sChar.xP == ' ') {
+	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
 		//Beep(1440, 30);
 		g_sChar.m_cLocation.X++;
 		bSomethingHappened = true;

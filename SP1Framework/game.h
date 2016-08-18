@@ -2,6 +2,12 @@
 #define _GAME_H
 
 #include "Framework\timer.h"
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <stdexcept>
+
+using namespace std;
 
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
@@ -33,6 +39,7 @@ struct SGameChar {
 	char  xN;
 	char  yP;
 	char  yN;
+	char  below;
 };
 
 void init(void);      // initialize your variables, allocate memory, etc
