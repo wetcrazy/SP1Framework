@@ -256,8 +256,19 @@ void renderGame() {
 	if (current_level != LEVEL_TITLE) {
 		renderCharacter();  // renders the character into the buffer
 		dialogue(&g_Console);
-	}
-	
+	}	
+}
+
+void renderSplashScreen()
+{
+	// open file and render splash
+	splashScreenWait();
+}
+
+void renderTitleScreen()
+{
+	// open file and render splash
+	titleScreenWait();
 }
 
 void renderCharacter() {
