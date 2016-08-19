@@ -1,4 +1,4 @@
-#include "map.h"
+﻿#include "map.h"
 #include "_interactable.h"
 #include "Framework\console.h"
 
@@ -8,6 +8,8 @@ MAP current_level = LEVEL_TITLE;
 vector< vector<char> > g_Map;
 
 void renderMap(Console *handle) {
+
+	WORD color = 0xF0;
 
 	string buffer;
 	if (!file.is_open()) {
@@ -69,9 +71,15 @@ void renderMap(Console *handle) {
 	for (size_t i = 0; i < g_Map.size(); i++) {
 		string s = "";
 		for (size_t k = 0; k < g_Map.at(i).size(); k++) {
-			s += g_Map.at(i).at(k);
+			if (g_Map.at(i).at(k) == '8') {
+				s += 219;
+			}
+			else {
+				s += g_Map.at(i).at(k);
+			}
+			
 		}
-		handle->writeToBuffer(0, i + header_offset, s, 0x20);
+		handle->writeToBuffer(0, i + header_offset, s, color);
 	}
 
 }

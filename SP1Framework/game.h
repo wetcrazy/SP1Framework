@@ -11,6 +11,9 @@ using namespace std;
 
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
+const char g_PlayerIcon = '@';
+const WORD g_PlayerColor = 0xF0;
+const WORD g_PlayerColorActive = 0xF0;
 
 // Enumeration to store the control keys that your game will have
 enum EKEYS {

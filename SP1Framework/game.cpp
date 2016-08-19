@@ -258,16 +258,13 @@ void renderGame() {
 	
 }
 
-
-
-
 void renderCharacter() {
 	// Draw the location of the character
-	WORD charColor = 0x0C;
+	WORD charColor = g_PlayerColor;
 	if (g_sChar.m_bActive) {
-		charColor = 0x0A;
+		charColor = g_PlayerColorActive;
 	}
-	g_Console.writeToBuffer(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y + header_offset, '&', charColor);
+	g_Console.writeToBuffer(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y + header_offset, (char)g_PlayerIcon, charColor);
 }
 
 void renderFramerate() {

@@ -6,7 +6,7 @@
 void dialogue(Console * handle)
 {
 
-	WORD dialogColor = 0x03;
+	WORD dialogColor = 0x1F;
 
 	string strLeft;
 	string strCenter;
@@ -63,8 +63,8 @@ void dialogue(Console * handle)
 	cRight.Y -= 1;
 
 	// Output to console
-	handle->writeToBuffer(cLeft, strLeft, dialogColor);
-	handle->writeToBuffer(cCenter, strCenter, dialogColor);
-	handle->writeToBuffer(cRight, strRight, dialogColor);
+	handle->writeToBuffer(cLeft, strLeft);
+	handle->writeToBuffer(cCenter, strCenter);
+	handle->writeToBuffer(cRight, strRight);
 
 }
