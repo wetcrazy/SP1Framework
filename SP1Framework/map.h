@@ -15,6 +15,7 @@ using namespace std;
 const short mapWidth = 82;
 const short mapHeight = 36;
 
+// Offset to apppend information on the Top and Bottom of the console
 const short header_offset = 1;
 const short footer_offset = 1;
 
