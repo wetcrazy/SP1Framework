@@ -119,7 +119,7 @@ void update(double dt) {
 	g_dDeltaTime = dt;
 
 	switch (g_eGameState) {
-	case S_TITLESCREEN: titleScreenWait(); // game logic for the splash screen
+	case S_TITLESCREEN: renderTitleScreen(); // game logic for the splash screen
 		break;
 	case S_SPLASHSCREEN: // game logic for the splash screen
 		break;
@@ -147,19 +147,19 @@ void render() {
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
 void titleScreenWait() {
-	if (g_dElapsedTime > 2.0 || g_abKeyPressed[K_SPACE]) {
+	if (g_abKeyPressed[K_SPACE]) {
 		closeMap();
-		g_eGameState = S_GAME;
-		current_level = LEVEL_ONE;
+		g_eGameState = S_SPLASHSCREEN;	
 	}
 }
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
-	if (g_dElapsedTime > 4.0 || g_abKeyPressed[K_SPACE]) // wait for x seconds to switch to game mode, else do nothing
+	if (g_abKeyPressed[K_SPACE]) // wait for x seconds to switch to game mode, else do nothing
 	{
-		g_eGameState = S_GAME;
 		closeMap();
+		g_eGameState = S_GAME;
+		current_level = LEVEL_ONE;
 	}
 }
 
@@ -261,13 +261,15 @@ void renderGame() {
 
 void renderSplashScreen()
 {
-	// open file and render splash
+	static ifstream file;
+	file.open("level_" + to_string(256) + ".txt");
 	splashScreenWait();
 }
 
 void renderTitleScreen()
 {
-	// open file and render splash
+	static ifstream file;
+	file.open("level_" + to_string(255) + ".txt");
 	titleScreenWait();
 }
 
