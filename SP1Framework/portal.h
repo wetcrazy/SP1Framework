@@ -7,11 +7,13 @@
 
 struct PORTAL {
 
+	int index;
 	COORD pos;
 	bool active;
 
 };
 
-
+// Make all portals active again
+void resetPortals();
 
 #endif

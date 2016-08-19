@@ -11,7 +11,7 @@ using namespace std;
 
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
-const char g_PlayerIcon = '@';
+const char g_PlayerIcon = (char)1;
 const WORD g_PlayerColor = 0xF0;
 const WORD g_PlayerColorActive = 0xF0;
 

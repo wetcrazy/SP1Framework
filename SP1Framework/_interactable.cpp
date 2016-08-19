@@ -61,17 +61,15 @@ void updateObjects(MAP map) {
 			// Is portal active?
 			if (findPortalAt(g_sChar.m_cLocation).active) {
 
-				// Choose a random portal to teleport to
-				for (size_t i = 0; i < _OBJ_COLLECTION_PORTAL.size(); i++) {
+				// Reset all portals to active
+				resetPortals();
 
-					// Teleport to a random portal at a 50% chance
-					srand(time(NULL));
-					if ((rand() % 2) == 0) {
-						g_sChar.m_cLocation = _OBJ_COLLECTION_PORTAL[i].pos;
-						_OBJ_COLLECTION_PORTAL[i].active = false;
-						break;
-					}
-				}
+				// Teleport to a random portal at a 50% chance
+				srand(time(NULL));
+				int portalIndex = (rand() % _OBJ_COLLECTION_PORTAL.size());
+				g_sChar.m_cLocation = _OBJ_COLLECTION_PORTAL[portalIndex].pos;
+				_OBJ_COLLECTION_PORTAL[portalIndex].active = false;
+				// TODO: Change player color on teleport!
 
 			}
 

@@ -65,7 +65,7 @@ void renderMap(Console *handle) {
 					}
 					if (buffer[col] == I_PORTAL) {
 						_OBJ_COLLECTION_PORTAL.push_back(PORTAL{
-							pos, true
+							_OBJ_COLLECTION_PORTAL.size(), pos, true
 						});
 					}
 

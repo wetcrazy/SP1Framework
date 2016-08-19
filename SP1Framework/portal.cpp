@@ -15,3 +15,11 @@ PORTAL findPortalAt(COORD pos) {
 	return PORTAL{};
 
 }
+
+void resetPortals() {
+
+	for (int i = 0; i < _OBJ_COLLECTION_PORTAL.size(); i++) {
+		_OBJ_COLLECTION_PORTAL[i].active = true;
+	}
+
+}
