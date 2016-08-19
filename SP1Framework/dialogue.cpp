@@ -16,9 +16,9 @@ void dialogue(Console * handle)
 	{
 
 	case LEVEL_ONE:
+		strLeft = "Level 1";
 		strCenter = "Collect the '*'";
 		strRight = "Asterisks left : " + to_string(_POINTS_ASTERISK);
-		// TODO: If asterisk reaches 0, open door
 		break;
 	case LEVEL_TWO:
 		strCenter = "Solve the puzzle";

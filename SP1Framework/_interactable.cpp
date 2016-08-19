@@ -36,6 +36,19 @@ void updateObjects(MAP map) {
 		if (g_sChar.below == '*') {
 			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
 			_POINTS_ASTERISK--;
+
+			if (_POINTS_ASTERISK <= 0) {
+				for (int r = 0; r < g_Map.size(); r++) {
+
+					for (int c = 0; c < g_Map[r].size(); c++) {
+						if (g_Map[r][c] == '#') {
+							g_Map[r][c] = ' ';
+						}
+					}
+
+				}
+			}
+
 		}
 		break;
 	case LEVEL_TWO:

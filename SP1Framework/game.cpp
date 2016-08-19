@@ -172,13 +172,23 @@ void gameplay()            // gameplay logic
 
 void moveCharacter() {
 
-	// Collision Detection
-	g_sChar.xP = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X + 1];
-	g_sChar.xN = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X - 1];
-	g_sChar.yP = g_Map[g_sChar.m_cLocation.Y - 1][g_sChar.m_cLocation.X];
-	g_sChar.yN = g_Map[g_sChar.m_cLocation.Y + 1][g_sChar.m_cLocation.X];
-	g_sChar.below = g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X];
+	try {
 
+		// Collision Detection
+		g_sChar.xP = g_Map.at(g_sChar.m_cLocation.Y).at(g_sChar.m_cLocation.X + 1);
+		g_sChar.xN = g_Map.at(g_sChar.m_cLocation.Y).at(g_sChar.m_cLocation.X - 1);
+		g_sChar.yP = g_Map.at(g_sChar.m_cLocation.Y - 1).at(g_sChar.m_cLocation.X);
+		g_sChar.yN = g_Map.at(g_sChar.m_cLocation.Y + 1).at(g_sChar.m_cLocation.X);
+		g_sChar.below = g_Map.at(g_sChar.m_cLocation.Y).at(g_sChar.m_cLocation.X);
+
+	}
+	catch (out_of_range ex) {
+
+		// Go next level
+		closeMap();
+		current_level = LEVEL_TITLE;
+
+	}
 
 	bool bSomethingHappened = false;
 	if (g_dBounceTime > g_dElapsedTime)
