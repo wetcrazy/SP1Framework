@@ -122,7 +122,6 @@ void update(double dt) {
 	case S_TITLESCREEN: renderTitleScreen(); // game logic for the splash screen
 		break;
 	case S_SPLASHSCREEN: // game logic for the splash screen
-		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
 	}
@@ -150,6 +149,7 @@ void titleScreenWait() {
 	if (g_abKeyPressed[K_SPACE]) {
 		closeMap();
 		g_eGameState = S_SPLASHSCREEN;	
+		current_level = LEVEL_MENU;
 	}
 }
 
@@ -166,9 +166,16 @@ void splashScreenWait()    // waits for time to pass in splash screen
 void gameplay()            // gameplay logic
 {
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
-	moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
-	updateObjects(current_level); // update logic for the objects in game
-	processcheat(g_abKeyPressed);
+
+	if (current_level != LEVEL_MENU) {
+		moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
+		updateObjects(current_level); // update logic for the objects in game
+		processcheat(g_abKeyPressed);
+	}
+	else {
+		// Do menu logic here
+		// processMenu(&g_Console);
+	}
 
 }
 
@@ -253,10 +260,11 @@ void clearScreen() {
 void renderGame() {
 	renderMap(&g_Console);        // renders the map to the buffer first
 
-	if (current_level != LEVEL_TITLE) {
+	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU) {
 		renderCharacter();  // renders the character into the buffer
 		dialogue(&g_Console);
-	}	
+	}
+
 }
 
 void renderSplashScreen()

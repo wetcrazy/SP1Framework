@@ -45,9 +45,6 @@
     <ClCompile Include="_interactable.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="boulder.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="dialogue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -59,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="cheat.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="portal.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +77,6 @@
     <ClInclude Include="_interactable.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="boulder.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="dialogue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -92,10 +89,8 @@
     <ClInclude Include="cheat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="level_255.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <ClInclude Include="portal.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

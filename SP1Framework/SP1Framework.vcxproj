@@ -77,7 +77,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="boulder.cpp" />
     <ClCompile Include="cheat.cpp" />
     <ClCompile Include="dialogue.cpp" />
     <ClCompile Include="Framework\console.cpp" />
@@ -85,24 +84,22 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="portal.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="star.cpp" />
     <ClCompile Include="_interactable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="boulder.h" />
     <ClInclude Include="cheat.h" />
     <ClInclude Include="dialogue.h" />
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="portal.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="star.h" />
     <ClInclude Include="_interactable.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="level_255.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

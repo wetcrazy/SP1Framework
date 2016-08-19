@@ -16,6 +16,7 @@ void renderMap(Console *handle) {
 		switch (current_level) {
 
 		case LEVEL_TITLE:
+		case LEVEL_MENU:
 		case LEVEL_ONE:
 		case LEVEL_TWO:
 		case LEVEL_THREE:
@@ -32,26 +33,30 @@ void renderMap(Console *handle) {
 		}
 	}
 
-	int r = 0;
+	int row = 0;
 
 	while (file.good()) {
 
 		getline(file, buffer);
 
-		vector<char> row;
+		vector<char> vecRowBuffer;
 
-		for (size_t i = 0; i < buffer.length() + 1; i++) {
-			row.push_back(buffer[i]);
+		for (size_t col = 0; col < buffer.length() + 1; col++) {
+			vecRowBuffer.push_back(buffer[col]);
 
 			// Is the character an interactable object?
-			if (isInteractable(buffer[i])) {
+			if (isInteractable(buffer[col])) {
 
-				COORD pos = { r, i };
+				COORD pos = { row, col };
 
 				switch (current_level) {
 
 				case LEVEL_ONE:
+				case LEVEL_TWO:
 					_OBJ_COLLECTION_STAR.push_back(STAR{
+						pos
+					});
+					_OBJ_COLLECTION_PORTAL.push_back(PORTAL{
 						pos
 					});
 					break;
@@ -62,24 +67,24 @@ void renderMap(Console *handle) {
 
 		}
 
-		g_Map.push_back(row);
+		g_Map.push_back(vecRowBuffer);
 
-		r++;
+		row++;
 
 	}
 
-	for (size_t i = 0; i < g_Map.size(); i++) {
+	for (size_t col = 0; col < g_Map.size(); col++) {
 		string s = "";
-		for (size_t k = 0; k < g_Map.at(i).size(); k++) {
-			if (g_Map.at(i).at(k) == '8') {
+		for (size_t k = 0; k < g_Map.at(col).size(); k++) {
+			if (g_Map.at(col).at(k) == '8') {
 				s += 219;
 			}
 			else {
-				s += g_Map.at(i).at(k);
+				s += g_Map.at(col).at(k);
 			}
 			
 		}
-		handle->writeToBuffer(0, i + header_offset, s, color);
+		handle->writeToBuffer(0, col + header_offset, s, color);
 	}
 
 }

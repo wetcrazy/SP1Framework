@@ -17,8 +17,8 @@ void dialogue(Console * handle)
 
 	case LEVEL_ONE:
 		strLeft = "Level 1";
-		strCenter = "Collect the '*'";
-		strRight = "Asterisks left : " + to_string(_POINTS_ASTERISK);
+		strCenter = "Collect the Stars";
+		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 		break;
 	case LEVEL_TWO:
 		strCenter = "Solve the puzzle";

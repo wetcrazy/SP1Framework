@@ -4,6 +4,7 @@
 #include "score.h"
 
 vector<STAR> _OBJ_COLLECTION_STAR;
+vector<PORTAL> _OBJ_COLLECTION_PORTAL;
 
 
 // Test if the argument is a passable ASCII character

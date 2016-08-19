@@ -22,7 +22,7 @@ const short footer_offset = 1;
 enum MAP {
 
 	LEVEL_TITLE = 255,
-	LEVEL_MENU = 0,
+	LEVEL_MENU = 256,
 	LEVEL_ONE = 1,
 	LEVEL_TWO = 2,
 	LEVEL_THREE = 3,

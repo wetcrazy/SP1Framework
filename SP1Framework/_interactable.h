@@ -2,14 +2,15 @@
 #define _INTERACTABLE_H
 
 #include "map.h"
-#include "boulder.h"
 #include "star.h"
+#include "portal.h"
 
 // Characters that the player can walk through
 const char PASSABLES[20] = {
 
 	' ',
 	'*',
+	'O',
 
 };
 
@@ -21,6 +22,7 @@ const char INTERACTABLES[20] = {
 };
 
 extern vector<STAR> _OBJ_COLLECTION_STAR;
+extern vector<PORTAL> _OBJ_COLLECTION_PORTAL;
 
 bool isPassable(char c);
 bool isInteractable(char c);
