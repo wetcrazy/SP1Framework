@@ -50,7 +50,7 @@ void init(void) {
 
 
 	// sets the width, height and the font name to use in the console
-	g_Console.setConsoleFont(0, 24, L"Consolas");
+	g_Console.setConsoleFont(10, 18, L"raster font");
 
 }
 

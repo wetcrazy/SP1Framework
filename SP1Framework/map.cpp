@@ -6,12 +6,15 @@ static ifstream file;
 
 MAP current_level = LEVEL_TITLE;
 vector< vector<char> > g_Map;
+WORD mapColor = 0xF0;
+unsigned char mapWalls = 0xDB;
 
 void renderMap(Console *handle) {
 
-	WORD color = 0xF0;
 
-	string buffer;
+
+	string buffer; // Buffer that contains the line of string that we read from the text file
+
 	if (!file.is_open()) {
 		switch (current_level) {
 
@@ -35,6 +38,7 @@ void renderMap(Console *handle) {
 
 	int row = 0;
 
+	// Did map changed?
 	while (file.good()) {
 
 		getline(file, buffer);
@@ -47,18 +51,24 @@ void renderMap(Console *handle) {
 			// Is the character an interactable object?
 			if (isInteractable(buffer[col])) {
 
-				COORD pos = { row, col };
+				COORD pos = { col, row };
 
 				switch (current_level) {
 
 				case LEVEL_ONE:
 				case LEVEL_TWO:
-					_OBJ_COLLECTION_STAR.push_back(STAR{
-						pos
-					});
-					_OBJ_COLLECTION_PORTAL.push_back(PORTAL{
-						pos
-					});
+
+					if (buffer[col] == I_STAR) {
+						_OBJ_COLLECTION_STAR.push_back(STAR{
+							pos
+						});
+					}
+					if (buffer[col] == I_PORTAL) {
+						_OBJ_COLLECTION_PORTAL.push_back(PORTAL{
+							pos, true
+						});
+					}
+
 					break;
 
 				}
@@ -68,23 +78,23 @@ void renderMap(Console *handle) {
 		}
 
 		g_Map.push_back(vecRowBuffer);
-
 		row++;
 
 	}
 
-	for (size_t col = 0; col < g_Map.size(); col++) {
+	// Output everything in g_Map to Console
+	for (size_t row = 0; row < g_Map.size(); row++) {
 		string s = "";
-		for (size_t k = 0; k < g_Map.at(col).size(); k++) {
-			if (g_Map.at(col).at(k) == '8') {
-				s += 219;
+		for (size_t col = 0; col < g_Map.at(row).size(); col++) {
+			if (g_Map.at(row).at(col) == '8') {
+				s += mapWalls;
 			}
 			else {
-				s += g_Map.at(col).at(k);
+				s += g_Map.at(row).at(col);
 			}
-			
+
 		}
-		handle->writeToBuffer(0, col + header_offset, s, color);
+		handle->writeToBuffer(0, row + header_offset, s, mapColor);
 	}
 
 }

@@ -8,10 +8,9 @@
 struct PORTAL {
 
 	COORD pos;
-
+	bool active;
 
 };
-
 
 
 

@@ -4,6 +4,16 @@
 #include "map.h"
 #include "star.h"
 #include "portal.h"
+#include <random>
+#include <time.h>
+
+
+enum INTERACTABLES {
+
+	I_STAR = '*',
+	I_PORTAL = 'O'
+
+};
 
 // Characters that the player can walk through
 const char PASSABLES[20] = {
@@ -18,6 +28,7 @@ const char PASSABLES[20] = {
 const char INTERACTABLES[20] = {
 
 	'*',
+	'O',
 
 };
 
@@ -28,7 +39,7 @@ bool isPassable(char c);
 bool isInteractable(char c);
 void updateObjects(MAP map);
 void destroyObjects();
-size_t findStarAt(COORD pos);
-
+STAR findStarAt(COORD pos);
+PORTAL findPortalAt(COORD pos);
 
 #endif // !_INTERACTABLE_H

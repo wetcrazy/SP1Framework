@@ -33,15 +33,19 @@ void updateObjects(MAP map) {
 		break;
 	case LEVEL_MENU:
 		break;
+
 	case LEVEL_ONE:
-		if (g_sChar.below == '*') {
+	case LEVEL_TWO:
+
+		if (g_sChar.below == I_STAR) {
 			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
 			_POINTS_ASTERISK--;
 
+			// If all stars are collected, open the gate
 			if (_POINTS_ASTERISK <= 0) {
-				for (int r = 0; r < g_Map.size(); r++) {
+				for (size_t r = 0; r < g_Map.size(); r++) {
 
-					for (int c = 0; c < g_Map[r].size(); c++) {
+					for (size_t c = 0; c < g_Map[r].size(); c++) {
 						if (g_Map[r][c] == '#') {
 							g_Map[r][c] = ' ';
 						}
@@ -51,9 +55,30 @@ void updateObjects(MAP map) {
 			}
 
 		}
+
+		if (g_sChar.below == I_PORTAL) {
+
+			// Is portal active?
+			if (findPortalAt(g_sChar.m_cLocation).active) {
+
+				// Choose a random portal to teleport to
+				for (size_t i = 0; i < _OBJ_COLLECTION_PORTAL.size(); i++) {
+
+					// Teleport to a random portal at a 50% chance
+					srand(time(NULL));
+					if ((rand() % 2) == 0) {
+						g_sChar.m_cLocation = _OBJ_COLLECTION_PORTAL[i].pos;
+						_OBJ_COLLECTION_PORTAL[i].active = false;
+						break;
+					}
+				}
+
+			}
+
+		}
+
 		break;
-	case LEVEL_TWO:
-		break;
+
 	case LEVEL_THREE:
 		break;
 	case LEVEL_FOUR:
