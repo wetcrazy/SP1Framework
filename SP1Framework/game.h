@@ -20,7 +20,6 @@ enum EKEYS {
 	K_RIGHT,
 	K_ESCAPE,
 	K_SPACE,
-	K_COUNT,
 	K_F1,
 	K_F2,
 	K_F3,
@@ -30,7 +29,8 @@ enum EKEYS {
 	K_F7,
 	K_F8,
 	K_F9,
-	K_F10
+	K_F10,
+	K_COUNT
 
 };
 
