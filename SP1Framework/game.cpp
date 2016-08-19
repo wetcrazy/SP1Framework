@@ -13,7 +13,7 @@ bool    g_abKeyPressed[K_COUNT];
 
 // Game specific variables here
 SGameChar g_sChar;
-EGAMESTATES g_eGameState = S_TITLESCREEN;
+EGAMESTATES g_eGameState;
 double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
 
 
@@ -63,7 +63,7 @@ void init(void) {
 void shutdown(void) {
 	// Reset to white text on black background
 	colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-	closeMap(&g_Map);
+	closeMap();
 	g_Console.clearBuffer();
 }
 
@@ -95,7 +95,7 @@ void getInput(void) {
 	g_abKeyPressed[K_F8] = isKeyPressed(VK_F8);
 	g_abKeyPressed[K_F9] = isKeyPressed(VK_F9);
 	g_abKeyPressed[K_F10] = isKeyPressed(VK_F10);
-	
+
 }
 
 //--------------------------------------------------------------
@@ -120,7 +120,7 @@ void update(double dt) {
 	switch (g_eGameState) {
 	case S_TITLESCREEN: titleScreenWait(); // game logic for the splash screen
 		break;
-	case S_SPLASHSCREEN: splashScreenWait(); // game logic for the splash screen
+	case S_SPLASHSCREEN: // game logic for the splash screen
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
@@ -137,10 +137,8 @@ void update(double dt) {
 void render() {
 	clearScreen();      // clears the current screen and draw from scratch 
 	switch (g_eGameState) {
-	case S_TITLESCREEN: renderTitleScreen();
-		break;
-	case S_SPLASHSCREEN: renderSplashScreen();
-		break;
+	case S_TITLESCREEN:
+	case S_SPLASHSCREEN:
 	case S_GAME: renderGame();
 		break;
 	}
@@ -149,7 +147,9 @@ void render() {
 }
 void titleScreenWait() {
 	if (g_dElapsedTime > 2.0 || g_abKeyPressed[K_SPACE]) {
-		g_eGameState = S_SPLASHSCREEN;
+		closeMap();
+		g_eGameState = S_GAME;
+		current_level = LEVEL_ONE;
 	}
 }
 
@@ -158,7 +158,7 @@ void splashScreenWait()    // waits for time to pass in splash screen
 	if (g_dElapsedTime > 4.0 || g_abKeyPressed[K_SPACE]) // wait for x seconds to switch to game mode, else do nothing
 	{
 		g_eGameState = S_GAME;
-		closeMap(&g_Map);
+		closeMap();
 	}
 }
 
@@ -190,33 +190,29 @@ void moveCharacter() {
 		g_sChar.m_cLocation.Y--;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP))
-	{
+	else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP)) {
 		Beep(1500, 100);
 	}
-	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {	
+	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
 		g_sChar.m_cLocation.X--;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN))
-	{
+	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN)) {
 		Beep(1500, 100);
 	}
 	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
-		
+
 		g_sChar.m_cLocation.Y++;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN))
-	{
+	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN)) {
 		Beep(1500, 100);
 	}
 	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
 		g_sChar.m_cLocation.X++;
 		bSomethingHappened = true;
 	}
-	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP))
-	{
+	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP)) {
 		Beep(1500, 100);
 	}
 	if (g_abKeyPressed[K_SPACE]) {
@@ -241,30 +237,15 @@ void clearScreen() {
 	// Clears the buffer with this colour attribute
 	g_Console.clearBuffer(0x1F);
 }
-void renderTitleScreen() {
-	renderMap(&g_Console, LEVEL_TITLE, &g_Map);
-
-}
-void renderSplashScreen()  // renders the splash screen
-{
-
-	COORD c = g_Console.getConsoleSize();
-	c.Y /= 3;
-	c.X = c.X / 2 - 9;
-	g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
-	c.Y += 1;
-	c.X = g_Console.getConsoleSize().X / 2 - 20;
-	g_Console.writeToBuffer(c, "Press <Space> to change character colour", 0x09);
-	c.Y += 1;
-	c.X = g_Console.getConsoleSize().X / 2 - 9;
-	g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
-
-}
 
 void renderGame() {
-	renderMap(&g_Console, LEVEL_ONE, &g_Map);        // renders the map to the buffer first
-	renderCharacter();  // renders the character into the buffer
-	dialogue(&g_Console);
+	renderMap(&g_Console);        // renders the map to the buffer first
+
+	if (current_level != LEVEL_TITLE) {
+		renderCharacter();  // renders the character into the buffer
+		dialogue(&g_Console);
+	}
+	
 }
 
 

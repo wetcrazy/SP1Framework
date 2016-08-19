@@ -4,14 +4,14 @@
 
 static ifstream file;
 
-MAP current_level;
+MAP current_level = LEVEL_TITLE;
 vector< vector<char> > g_Map;
 
-void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
+void renderMap(Console *handle) {
 
 	string buffer;
 	if (!file.is_open()) {
-		switch (level) {
+		switch (current_level) {
 
 		case LEVEL_TITLE:
 		case LEVEL_ONE:
@@ -24,8 +24,7 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 		case LEVEL_EIGHT:
 		case LEVEL_NINE:
 		case LEVEL_TEN:
-			file.open("level_" + to_string(level) + ".txt");
-			current_level = level;
+			file.open("level_" + to_string(current_level) + ".txt");
 			break;
 
 		}
@@ -61,16 +60,16 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 
 		}
 
-		ptr->push_back(row);
+		g_Map.push_back(row);
 
 		r++;
 
 	}
 
-	for (size_t i = 0; i < ptr->size(); i++) {
+	for (size_t i = 0; i < g_Map.size(); i++) {
 		string s = "";
-		for (size_t k = 0; k < ptr->at(i).size(); k++) {
-			s += ptr->at(i).at(k);
+		for (size_t k = 0; k < g_Map.at(i).size(); k++) {
+			s += g_Map.at(i).at(k);
 		}
 		handle->writeToBuffer(0, i + header_offset, s, 0x20);
 	}
@@ -78,7 +77,7 @@ void renderMap(Console *handle, MAP level, vector< vector<char> > * ptr) {
 }
 
 // Closes the file stream
-void closeMap(vector< vector<char> > * map) {
-	map->clear(); // Release and reset map
+void closeMap() {
+	g_Map.clear(); // Release and reset map
 	file.close();
 }
