@@ -85,6 +85,17 @@ void getInput(void) {
 	g_abKeyPressed[K_RIGHT] = isKeyPressed(VK_RIGHT);
 	g_abKeyPressed[K_SPACE] = isKeyPressed(VK_SPACE);
 	g_abKeyPressed[K_ESCAPE] = isKeyPressed(VK_ESCAPE);
+	g_abKeyPressed[K_F1] = isKeyPressed(VK_F1);
+	g_abKeyPressed[K_F2] = isKeyPressed(VK_F2);
+	g_abKeyPressed[K_F3] = isKeyPressed(VK_F3);
+	g_abKeyPressed[K_F4] = isKeyPressed(VK_F4);
+	g_abKeyPressed[K_F5] = isKeyPressed(VK_F5);
+	g_abKeyPressed[K_F6] = isKeyPressed(VK_F6);
+	g_abKeyPressed[K_F7] = isKeyPressed(VK_F7);
+	g_abKeyPressed[K_F8] = isKeyPressed(VK_F8);
+	g_abKeyPressed[K_F9] = isKeyPressed(VK_F9);
+	g_abKeyPressed[K_F10] = isKeyPressed(VK_F10);
+	
 }
 
 //--------------------------------------------------------------
