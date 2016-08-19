@@ -6,6 +6,7 @@
 #include "map.h"
 #include "dialogue.h"
 #include "_interactable.h"
+#include "cheat.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -167,6 +168,7 @@ void gameplay()            // gameplay logic
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
 	moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
 	updateObjects(current_level); // update logic for the objects in game
+	processcheat(g_abKeyPressed);
 
 }
 
