@@ -148,8 +148,8 @@ void render() {
 void titleScreenWait() {
 	if (g_abKeyPressed[K_SPACE]) {
 		closeMap();
-		g_eGameState = S_SPLASHSCREEN;	
-		current_level = LEVEL_MENU;
+		g_eGameState = S_GAME;	
+		current_level = LEVEL_ONE;
 	}
 }
 
