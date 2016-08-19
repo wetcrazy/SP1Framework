@@ -6,51 +6,65 @@
 void dialogue(Console * handle)
 {
 
-	string str;
+	WORD dialogColor = 0x03;
+
+	string strLeft;
+	string strCenter;
+	string strRight;
 
 	switch (current_level)
 	{
 
 	case LEVEL_ONE:
-		str = "Collect the '*'                    Asterisks left: " + to_string(_POINTS_ASTERISK);
+		strCenter = "Collect the '*'";
+		strRight = "Asterisks left : " + to_string(_POINTS_ASTERISK);
 		// TODO: If asterisk reaches 0, open door
 		break;
 	case LEVEL_TWO:
-		str = "Solve the puzzle";
+		strCenter = "Solve the puzzle";
 		break;
 	case LEVEL_THREE:
-		str = "";
+		strCenter = "";
 		break;
 	case LEVEL_FOUR:
-		str = "";
+		strCenter = "";
 		break;
 	case LEVEL_FIVE:
-		str = "";
+		strCenter = "";
 		break;
 	case LEVEL_SIX:
-		str = "";
+		strCenter = "";
 		break;
 	case LEVEL_SEVEN:
-		str = "";
+		strCenter = "";
 		break;
 	case LEVEL_EIGHT:
-		str = "";
+		strCenter = "";
 		break;
 	case LEVEL_NINE:
-		str = "";
+		strCenter = "";
 		break;
 	case LEVEL_TEN:
-		str = "";
+		strCenter = "";
 		break;
 
 	}
 
 
-	COORD c = handle->getConsoleSize();
-	
-	c.Y --;
-	c.X = (c.X / 2) - (str.length() / 2);
+	// Alignment for the strings
+	COORD cLeft = handle->getConsoleSize();
+	cLeft.X = 0;
+	cLeft.Y -= 1;
+	COORD cCenter = handle->getConsoleSize();
+	cCenter.X  = (cCenter.X / 2) - (strCenter.length() / 2);
+	cCenter.Y -= 1;
+	COORD cRight = handle->getConsoleSize();
+	cRight.X -= (strRight.length());
+	cRight.Y -= 1;
 
-	handle->writeToBuffer(c, str, 0x03);
+	// Output to console
+	handle->writeToBuffer(cLeft, strLeft, dialogColor);
+	handle->writeToBuffer(cCenter, strCenter, dialogColor);
+	handle->writeToBuffer(cRight, strRight, dialogColor);
 
 }
