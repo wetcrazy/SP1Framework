@@ -6,6 +6,7 @@
 #include "map.h"
 #include "dialogue.h"
 #include "_interactable.h"
+#include "_AI.h"
 #include "cheat.h"
 
 double  g_dElapsedTime;
@@ -46,8 +47,6 @@ void init(void) {
 	g_sChar.below = ' ';
 
 	g_sChar.m_bActive = true;
-
-
 
 	// sets the width, height and the font name to use in the console
 	g_Console.setConsoleFont(10, 18, L"raster font");
@@ -170,6 +169,7 @@ void gameplay()            // gameplay logic
 	if (current_level != LEVEL_MENU) {
 		moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
 		updateObjects(current_level); // update logic for the objects in game
+		updateAI(); // processs AI logic
 		processcheat(g_abKeyPressed);
 	}
 	else {
@@ -234,11 +234,6 @@ void moveCharacter() {
 	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP)) {
 		Beep(1500, 100);
 	}
-	if (g_abKeyPressed[K_SPACE]) {
-		g_sChar.m_bActive = !g_sChar.m_bActive;
-		bSomethingHappened = true;
-	}
-
 
 	if (bSomethingHappened) {
 		// set the bounce time to some time in the future to prevent accidental triggers

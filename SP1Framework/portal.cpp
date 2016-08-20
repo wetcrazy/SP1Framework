@@ -3,11 +3,11 @@
 
 PORTAL findPortalAt(COORD pos) {
 
-	for (size_t i = 0; i < _OBJ_COLLECTION_PORTAL.size(); i++) {
+	for (size_t i = 0; i < _COLLECTION_OBJ_PORTAL.size(); i++) {
 
 		// If position matches, return current iterator
-		if (_OBJ_COLLECTION_PORTAL[i].pos.X == pos.X && _OBJ_COLLECTION_PORTAL[i].pos.Y == pos.Y) {
-			return _OBJ_COLLECTION_PORTAL[i];
+		if (_COLLECTION_OBJ_PORTAL[i].pos.X == pos.X && _COLLECTION_OBJ_PORTAL[i].pos.Y == pos.Y) {
+			return _COLLECTION_OBJ_PORTAL[i];
 		}
 
 	}
@@ -18,8 +18,8 @@ PORTAL findPortalAt(COORD pos) {
 
 void resetPortals() {
 
-	for (int i = 0; i < _OBJ_COLLECTION_PORTAL.size(); i++) {
-		_OBJ_COLLECTION_PORTAL[i].active = true;
+	for (int i = 0; i < _COLLECTION_OBJ_PORTAL.size(); i++) {
+		_COLLECTION_OBJ_PORTAL[i].active = true;
 	}
 
 }

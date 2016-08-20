@@ -4,11 +4,11 @@
 
 STAR findStarAt(COORD pos) {
 
-	for (size_t i = 0; i < _OBJ_COLLECTION_STAR.size(); i++) {
+	for (size_t i = 0; i < _COLLECTION_OBJ_STAR.size(); i++) {
 
 		// If position matches, return current iterator
-		if (_OBJ_COLLECTION_STAR[i].pos.X == pos.X && _OBJ_COLLECTION_STAR[i].pos.Y == pos.Y) {
-			return _OBJ_COLLECTION_STAR[i];
+		if (_COLLECTION_OBJ_STAR[i].pos.X == pos.X && _COLLECTION_OBJ_STAR[i].pos.Y == pos.Y) {
+			return _COLLECTION_OBJ_STAR[i];
 		}
 
 	}

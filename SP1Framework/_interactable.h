@@ -32,8 +32,8 @@ const char INTERACTABLES[20] = {
 
 };
 
-extern vector<STAR> _OBJ_COLLECTION_STAR;
-extern vector<PORTAL> _OBJ_COLLECTION_PORTAL;
+extern vector<STAR> _COLLECTION_OBJ_STAR;
+extern vector<PORTAL> _COLLECTION_OBJ_PORTAL;
 
 bool isPassable(char c);
 bool isInteractable(char c);

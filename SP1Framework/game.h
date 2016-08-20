@@ -9,11 +9,13 @@
 
 using namespace std;
 
+extern double  g_dElapsedTime;
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 const char g_PlayerIcon = (char)1;
 const WORD g_PlayerColor = 0xF0;
-const WORD g_PlayerColorActive = 0xF0;
+const WORD g_PlayerColorActive = 0x50;
+const WORD g_PlayerColorDamaged = 0x40;
 
 // Enumeration to store the control keys that your game will have
 enum EKEYS {

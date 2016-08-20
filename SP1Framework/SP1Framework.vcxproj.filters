@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{e5275a7c-8af5-438f-897e-db3d77830c30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AI">
+      <UniqueIdentifier>{bfb489f4-da83-4c97-a182-a6e95ae2f541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AI">
+      <UniqueIdentifier>{76c4a9aa-0af8-49a3-8238-33af0478e22a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,6 +66,12 @@
     <ClCompile Include="portal.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ghost.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="_AI.cpp">
+      <Filter>Source Files\AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -91,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="portal.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost.h">
+      <Filter>Header Files\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="_AI.h">
+      <Filter>Header Files\AI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

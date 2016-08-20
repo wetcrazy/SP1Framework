@@ -3,11 +3,11 @@
 #include "map.h"
 #include "score.h"
 
-vector<STAR> _OBJ_COLLECTION_STAR;
-vector<PORTAL> _OBJ_COLLECTION_PORTAL;
+vector<STAR> _COLLECTION_OBJ_STAR;
+vector<PORTAL> _COLLECTION_OBJ_PORTAL;
 
 
-// Test if the argument is a passable ASCII character
+// Test if the argument is an passable ASCII character
 bool isPassable(char c) {
 	for each (char ch in PASSABLES) {
 		if (c == ch)
@@ -16,6 +16,7 @@ bool isPassable(char c) {
 	return false;
 }
 
+// Test if the argument is an interactable object
 bool isInteractable(char c) {
 	for each (char ch in INTERACTABLES) {
 		if (c == ch)
@@ -36,6 +37,10 @@ void updateObjects(MAP map) {
 
 	case LEVEL_ONE:
 	case LEVEL_TWO:
+
+		if (g_sChar.below == ' ') {
+			g_sChar.m_bActive = false;
+		}
 
 		if (g_sChar.below == I_STAR) {
 			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
@@ -58,18 +63,26 @@ void updateObjects(MAP map) {
 
 		if (g_sChar.below == I_PORTAL) {
 
+			g_sChar.m_bActive = true;
+
+			PORTAL port = findPortalAt(g_sChar.m_cLocation);
+
 			// Is portal active?
-			if (findPortalAt(g_sChar.m_cLocation).active) {
+			if (port.active) {
 
 				// Reset all portals to active
 				resetPortals();
 
-				// Teleport to a random portal at a 50% chance
+				// Teleport to a random portal
 				srand(time(NULL));
-				int portalIndex = (rand() % _OBJ_COLLECTION_PORTAL.size());
-				g_sChar.m_cLocation = _OBJ_COLLECTION_PORTAL[portalIndex].pos;
-				_OBJ_COLLECTION_PORTAL[portalIndex].active = false;
-				// TODO: Change player color on teleport!
+				int teleportIndex;
+
+				// Keep randomizing if we get teleported to the portal that we stepped on
+				while ((teleportIndex = (rand() % _COLLECTION_OBJ_PORTAL.size())) == port.index) {
+				}
+
+				g_sChar.m_cLocation = _COLLECTION_OBJ_PORTAL[teleportIndex].pos;
+				_COLLECTION_OBJ_PORTAL[teleportIndex].active = false;
 
 			}
 

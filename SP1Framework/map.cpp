@@ -53,19 +53,20 @@ void renderMap(Console *handle) {
 
 				COORD pos = { col, row };
 
+				// Store the objects to the vector collection
 				switch (current_level) {
 
 				case LEVEL_ONE:
 				case LEVEL_TWO:
 
 					if (buffer[col] == I_STAR) {
-						_OBJ_COLLECTION_STAR.push_back(STAR{
+						_COLLECTION_OBJ_STAR.push_back(STAR{
 							pos
 						});
 					}
 					if (buffer[col] == I_PORTAL) {
-						_OBJ_COLLECTION_PORTAL.push_back(PORTAL{
-							_OBJ_COLLECTION_PORTAL.size(), pos, true
+						_COLLECTION_OBJ_PORTAL.push_back(PORTAL{
+							_COLLECTION_OBJ_PORTAL.size(), pos, true
 						});
 					}
 

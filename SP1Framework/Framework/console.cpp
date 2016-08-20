@@ -158,6 +158,13 @@ void Console::setConsoleFont(SHORT width, SHORT height, LPCWSTR lpcwFontName)
     cfi.FontWeight = FW_NORMAL;
     wcscpy_s(cfi.FaceName, lpcwFontName);
     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+
+	// Resize window
+	HWND handle = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(handle, &r);
+	MoveWindow(handle, r.left, r.top, 850, 725, TRUE);
+
 }
 
 void Console::shutDownConsole()
@@ -204,6 +211,7 @@ void Console::setConsoleWindowSize()
 		bSuccess = SetConsoleWindowInfo(hConsole, TRUE, &windowSize);    
 		PERR( bSuccess, "SetConsoleWindowInfo" );
 	}
+
 }
 void Console::clearBuffer(WORD attribute)
 {
