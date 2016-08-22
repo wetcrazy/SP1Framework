@@ -7,13 +7,10 @@ struct AI_GHOST {
 
 	unsigned int index;
 	COORD pos;
-	char  xP;
-	char  xN;
-	char  yP;
-	char  yN;
-	char  below;
 
 };
+
+const double movementSpeed_GHOST = 0.75; // Moves 1 character every X seconds
 
 
 #endif

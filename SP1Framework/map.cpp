@@ -1,6 +1,7 @@
 ﻿#include "map.h"
 #include "_interactable.h"
 #include "Framework\console.h"
+#include "_AI.h"
 
 static ifstream file;
 
@@ -36,10 +37,6 @@ void renderMap(Console *handle) {
 		}
 	}
 
-	// clear existing object before loading new map
-	if (file.good()) {
-		destroyObjects(); 
-	}
 
 	int row = 0;
 
@@ -51,10 +48,9 @@ void renderMap(Console *handle) {
 		vector<char> vecRowBuffer;
 
 		for (size_t col = 0; col < buffer.length() + 1; col++) {
-			vecRowBuffer.push_back(buffer[col]);
 
 			// Is the character an interactable object?
-			if (isInteractable(buffer[col])) {
+			if (isInteractable(buffer[col]) || isNPC(buffer[col])) {
 
 				COORD pos = { col, row };
 
@@ -69,9 +65,19 @@ void renderMap(Console *handle) {
 							pos
 						});
 					}
+
 					if (buffer[col] == I_PORTAL) {
 						_COLLECTION_OBJ_PORTAL.push_back(PORTAL{
 							_COLLECTION_OBJ_PORTAL.size(), pos, true
+						});
+					}
+
+					if (buffer[col] == AI::GHOST) {
+
+						buffer[col] = ' '; // Remove the ghost so we can control it manually from AI.cpp
+
+						_COLLECTION_AI_GHOST.push_back(AI_GHOST{
+							_COLLECTION_AI_GHOST.size(), pos
 						});
 					}
 
@@ -80,6 +86,8 @@ void renderMap(Console *handle) {
 				}
 
 			}
+
+			vecRowBuffer.push_back(buffer[col]);
 
 		}
 
@@ -92,6 +100,7 @@ void renderMap(Console *handle) {
 	for (size_t row = 0; row < g_Map.size(); row++) {
 		string s = "";
 		for (size_t col = 0; col < g_Map.at(row).size(); col++) {
+			// Change '8' to a mazey character
 			if (g_Map.at(row).at(col) == '8') {
 				s += mapWalls;
 			}
@@ -107,6 +116,8 @@ void renderMap(Console *handle) {
 
 // Closes the file stream
 void closeMap() {
+	destroyGhosts();
+	destroyObjects();
 	g_Map.clear(); // Release and reset map
 	file.close();
 }

@@ -81,7 +81,7 @@ void updateObjects(MAP map) {
 				srand(time(NULL));
 				int teleportIndex;
 
-				// Keep randomizing if we get teleported to the portal that we stepped on
+				// Keep randomizing if we get teleported to the same portal that we stepped on
 				while ((teleportIndex = (rand() % _COLLECTION_OBJ_PORTAL.size())) == port.index) {
 				}
 
