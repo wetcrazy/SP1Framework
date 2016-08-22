@@ -25,6 +25,10 @@ bool isInteractable(char c) {
 	return false;
 }
 
+void destroyObjects() {
+	_COLLECTION_OBJ_STAR.clear();
+	_COLLECTION_OBJ_PORTAL.clear();
+}
 
 // Object logic goes here
 void updateObjects(MAP map) {

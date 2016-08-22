@@ -41,6 +41,8 @@ void renderMap(Console *handle) {
 	// Did map changed?
 	while (file.good()) {
 
+		destroyObjects(); // clear existing object before loading new map
+
 		getline(file, buffer);
 
 		vector<char> vecRowBuffer;
