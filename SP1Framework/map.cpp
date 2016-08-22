@@ -36,12 +36,15 @@ void renderMap(Console *handle) {
 		}
 	}
 
+	// clear existing object before loading new map
+	if (file.good()) {
+		destroyObjects(); 
+	}
+
 	int row = 0;
 
 	// Did map changed?
 	while (file.good()) {
-
-		destroyObjects(); // clear existing object before loading new map
 
 		getline(file, buffer);
 
