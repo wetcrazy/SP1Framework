@@ -4,7 +4,7 @@
 #include "_AI.h"
 
 static ifstream file;
-
+MAP LEVEL_restart;
 MAP current_level = LEVEL_TITLE;
 vector< vector<char> > g_Map;
 WORD mapColor = 0xF0;

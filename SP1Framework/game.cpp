@@ -95,7 +95,12 @@ void getInput(void) {
 	g_abKeyPressed[K_F8] = isKeyPressed(VK_F8);
 	g_abKeyPressed[K_F9] = isKeyPressed(VK_F9);
 	g_abKeyPressed[K_F10] = isKeyPressed(VK_F10);
-
+	g_abKeyPressed[K_F11] = isKeyPressed(VK_F11);
+	g_abKeyPressed[K_1] = isKeyPressed(0x31);
+	g_abKeyPressed[K_2] = isKeyPressed(0x32);
+	g_abKeyPressed[K_3] = isKeyPressed(0x33);
+	
+	
 }
 
 //--------------------------------------------------------------
@@ -120,8 +125,11 @@ void update(double dt) {
 	switch (g_eGameState) {
 	case S_TITLESCREEN: renderTitleScreen(); // game logic for the splash screen
 		break;
-	case S_SPLASHSCREEN: // game logic for the splash screen
+	case S_MENU: renderMenuScreen();// game logic for the splash screen
+		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
+		break;
+	case S_GAMEOVER: gameover();
 		break;
 	}
 }
@@ -137,7 +145,7 @@ void render() {
 	clearScreen();      // clears the current screen and draw from scratch 
 	switch (g_eGameState) {
 	case S_TITLESCREEN:
-	case S_SPLASHSCREEN:
+	case S_MENU:
 	case S_GAME: renderGame();
 		break;
 	}
@@ -147,14 +155,14 @@ void render() {
 void titleScreenWait() {
 	if (g_abKeyPressed[K_SPACE]) {
 		closeMap();
-		g_eGameState = S_GAME;	
-		current_level = LEVEL_ONE;
+		g_eGameState = S_MENU;	
+		current_level = LEVEL_MENU;
 	}
 }
 
-void splashScreenWait()    // waits for time to pass in splash screen
+void MenuScreenWait()    // waits for time to pass in splash screen
 {
-	if (g_abKeyPressed[K_SPACE]) // wait for x seconds to switch to game mode, else do nothing
+	if (g_abKeyPressed[K_F11]) // wait for x seconds to switch to game mode, else do nothing
 	{
 		closeMap();
 		g_eGameState = S_GAME;
@@ -169,7 +177,7 @@ void gameplay()            // gameplay logic
 	if (current_level != LEVEL_MENU) {
 		moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
 		updateObjects(current_level); // update logic for the objects in game
-		updateAI(); // processs AI logic
+		updateAI(g_dDeltaTime); // processs AI logic
 		processcheat(g_abKeyPressed);
 	}
 	else {
@@ -179,6 +187,26 @@ void gameplay()            // gameplay logic
 
 }
 
+void gameover()
+{
+	if (g_abKeyPressed[K_1])
+	{
+		closeMap();
+		g_eGameState = S_GAME;
+		current_level = LEVEL_restart;
+	}
+	else if (g_abKeyPressed[K_2])
+	{
+		closeMap();
+		g_eGameState = S_MENU;
+		current_level = LEVEL_MENU;
+	}
+	else if (g_abKeyPressed[K_3])
+	{
+		closeMap();
+		g_bQuitGame = true;
+	}
+}
 void moveCharacter() {
 
 	try {
@@ -257,16 +285,24 @@ void renderGame() {
 
 	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU) {
 		renderCharacter();  // renders the character into the buffer
+		renderAI(&g_Console);
 		dialogue(&g_Console);
 	}
 
 }
 
-void renderSplashScreen()
+void renderGameOverScreen()
+{
+	static ifstream file;
+	file.open("level_" + to_string(254) + ".txt");
+
+}
+void renderMenuScreen()
 {
 	static ifstream file;
 	file.open("level_" + to_string(256) + ".txt");
-	splashScreenWait();
+
+	MenuScreenWait();
 }
 
 void renderTitleScreen()
@@ -284,6 +320,7 @@ void renderCharacter() {
 	}
 	g_Console.writeToBuffer(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y + header_offset, (char)g_PlayerIcon, charColor);
 }
+
 
 void renderFramerate() {
 	COORD c;

@@ -36,7 +36,7 @@ enum MAP {
 
 };
 
-
+extern MAP LEVEL_restart;
 extern MAP current_level;
 extern vector< vector<char> > g_Map;
 
