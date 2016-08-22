@@ -162,7 +162,7 @@ void titleScreenWait() {
 
 void MenuScreenWait()    // waits for time to pass in splash screen
 {
-	if (g_abKeyPressed[K_F11]) // wait for x seconds to switch to game mode, else do nothing
+	if (g_abKeyPressed[K_F1]) // wait for x seconds to switch to game mode, else do nothing
 	{
 		closeMap();
 		g_eGameState = S_GAME;
@@ -271,7 +271,7 @@ void moveCharacter() {
 }
 void processUserInput() {
 	// quits the game if player hits the escape key
-	if (g_abKeyPressed[K_ESCAPE])
+	if (g_abKeyPressed[K_3])
 		g_bQuitGame = true;
 }
 
