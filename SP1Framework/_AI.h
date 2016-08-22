@@ -23,11 +23,17 @@ const char AI[] = {
 // Is this a non playable character?
 bool isNPC(char c);
 
+// Stuns all ghost
+void stunGhosts();
+
+// Un-stuns all ghost
+void unstunGhosts();
+
 // Despawn all ghosts
 void destroyGhosts();
 
 // Destroy all AI objects
-void destroy_AI();
+void destroyAI();
 
 // Spawn the amount of ghosts at random location
 void spawn_ghosts(unsigned int count);

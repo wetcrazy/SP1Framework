@@ -77,7 +77,7 @@ void renderMap(Console *handle) {
 						buffer[col] = ' '; // Remove the ghost so we can control it manually from AI.cpp
 
 						_COLLECTION_AI_GHOST.push_back(AI_GHOST{
-							_COLLECTION_AI_GHOST.size(), pos
+							_COLLECTION_AI_GHOST.size(), pos, true
 						});
 					}
 
@@ -116,7 +116,7 @@ void renderMap(Console *handle) {
 
 // Closes the file stream
 void closeMap() {
-	destroyGhosts();
+	destroyAI();
 	destroyObjects();
 	g_Map.clear(); // Release and reset map
 	file.close();

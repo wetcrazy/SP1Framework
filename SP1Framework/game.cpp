@@ -8,6 +8,7 @@
 #include "_interactable.h"
 #include "_AI.h"
 #include "cheat.h"
+#include "skills.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -182,6 +183,7 @@ void gameplay()            // gameplay logic
 
 	if (current_level != LEVEL_MENU) {
 		moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
+		processSkill(g_dDeltaTime);
 		updateObjects(current_level); // update logic for the objects in game
 		updateAI(g_dDeltaTime); // processs AI logic
 		processcheat(g_abKeyPressed);
