@@ -41,6 +41,7 @@ extern MAP current_level;
 extern vector< vector<char> > g_Map;
 
 void renderMap(Console * handle);
+void renderFog(Console * handle);
 void closeMap();
 
 

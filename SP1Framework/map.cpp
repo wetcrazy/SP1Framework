@@ -4,11 +4,19 @@
 #include "_AI.h"
 
 static ifstream file;
+
 MAP LEVEL_restart;
 MAP current_level = LEVEL_TITLE;
+
 vector< vector<char> > g_Map;
-WORD mapColor = 0xF0;
-unsigned char mapWalls = 0xDB;
+
+const short fogWidth = 8;
+const short fogHeight = 4;
+
+const WORD mapColor = 0xF8;
+const WORD fogColor = 0x0F;
+
+const unsigned char mapWalls = 0xDB;
 
 void renderMap(Console *handle) {
 
@@ -110,6 +118,29 @@ void renderMap(Console *handle) {
 
 		}
 		handle->writeToBuffer(0, row + header_offset, s, mapColor);
+	}
+
+}
+
+void renderFog(Console * handle) {
+
+	string str = " ";
+
+	for (int row = 0; row < g_Map.size(); row++) {
+
+		for (int col = 0; col < g_Map[row].size(); col++) {
+
+			COORD playerPos = g_sChar.m_cLocation;
+
+			// Skip printing of fog if it falls within the player's vision radius
+			if (playerPos.X >= (col - fogWidth) && playerPos.X <= (col + fogWidth) && playerPos.Y <= (row + fogHeight) && playerPos.Y >= (row - fogHeight)) {
+				continue;
+			}
+
+			handle->writeToBuffer(col, row + header_offset, str, fogColor);
+
+		}
+
 	}
 
 }

@@ -18,7 +18,7 @@ PORTAL findPortalAt(COORD pos) {
 
 void resetPortals() {
 
-	for (int i = 0; i < _COLLECTION_OBJ_PORTAL.size(); i++) {
+	for (unsigned int i = 0; i < _COLLECTION_OBJ_PORTAL.size(); i++) {
 		_COLLECTION_OBJ_PORTAL[i].active = true;
 	}
 

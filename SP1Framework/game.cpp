@@ -293,6 +293,7 @@ void renderGame() {
 
 	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU) {
 		renderCharacter();  // renders the character into the buffer
+		renderFog(&g_Console);
 		renderAI(&g_Console);
 		dialogue(&g_Console);
 	}

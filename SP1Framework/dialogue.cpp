@@ -24,7 +24,7 @@ void dialogue(Console * handle) {
 			strTopCenter += " Empty";
 		}
 		else {
-			for (unsigned int i = 0; i < getSkillStunCharges(); i++) {
+			for (short i = 0; i < getSkillStunCharges(); i++) {
 				strTopCenter += "#";
 			}
 		}

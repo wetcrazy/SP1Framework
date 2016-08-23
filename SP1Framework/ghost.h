@@ -11,10 +11,10 @@ struct AI_GHOST {
 
 };
 
-const double movementSpeed_GHOST = 0.75; // Moves 1 character every X seconds
+const double movementSpeed_GHOST = 1.0; // Moves 1 character every X seconds
 const short stun_GHOST_DURATION = 3;
-const WORD color_GHOST_ACTIVE = 0xFC;
-const WORD color_GHOST_INACTIVE = 0xF8;
+const WORD color_GHOST_ACTIVE = 0x0C;
+const WORD color_GHOST_INACTIVE = 0x08;
 
 
 #endif
