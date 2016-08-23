@@ -12,6 +12,7 @@ using namespace std;
 extern double  g_dElapsedTime;
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
+extern enum EGAMESTATES g_eGameState;
 const char g_PlayerIcon = (char)1;
 const WORD g_PlayerColor = 0xF0;
 const WORD g_PlayerColorActive = 0x50;

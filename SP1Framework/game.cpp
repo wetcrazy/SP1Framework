@@ -183,12 +183,10 @@ void menuScreenWait()    // waits for time to pass in splash screen
 void gameoverWait() {
 	if (g_abKeyPressed[K_1]) {
 		closeMap();
-		g_eGameState = S_GAME;
 		current_level = LEVEL_restart;
 	}
 	else if (g_abKeyPressed[K_2]) {
 		closeMap();
-		g_eGameState = S_MENU;
 		current_level = LEVEL_MENU;
 	}
 	else if (g_abKeyPressed[K_3]) {
