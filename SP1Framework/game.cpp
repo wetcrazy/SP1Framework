@@ -224,9 +224,19 @@ void moveCharacter() {
 	catch (out_of_range ex) {
 
 		// Go next level
-		closeMap();
-		current_level = LEVEL_TITLE;
-
+		closeMap(); 
+		if (current_level == LEVEL_ONE)
+		{
+			current_level = LEVEL_TWO;
+		}
+		else if (current_level == LEVEL_TWO)
+		{
+			current_level = LEVEL_TEN;
+		}
+		else
+		{
+			current_level = LEVEL_TITLE;
+		}
 	}
 
 	bool bSomethingHappened = false;
