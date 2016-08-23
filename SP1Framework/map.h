@@ -42,7 +42,7 @@ extern vector< vector<char> > g_Map;
 
 void renderMap(Console * handle);
 void renderFog(Console * handle);
-void closeMap();
+void closeMap(); // Closes the file stream & resets all variables upon changing map
 
 
 #endif

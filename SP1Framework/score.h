@@ -4,5 +4,6 @@
 
 extern int _POINTS_ASTERISK;
 
+void resetScoreSystem();
 
 #endif

@@ -5,6 +5,7 @@
 
 vector<STAR> _COLLECTION_OBJ_STAR;
 vector<PORTAL> _COLLECTION_OBJ_PORTAL;
+vector<EXIT> _COLLECTION_OBJ_EXIT;
 
 
 // Test if the argument is an passable ASCII character
@@ -28,10 +29,11 @@ bool isInteractable(char c) {
 void destroyObjects() {
 	_COLLECTION_OBJ_STAR.clear();
 	_COLLECTION_OBJ_PORTAL.clear();
+	_COLLECTION_OBJ_EXIT.clear();
 }
 
 // Object logic goes here
-void updateObjects(MAP map) {
+void updateObjects(Console * handle, MAP map) {
 
 	switch (map) {
 	case LEVEL_TITLE:
@@ -48,19 +50,9 @@ void updateObjects(MAP map) {
 
 		if (g_sChar.below == I_STAR) {
 			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
-			_POINTS_ASTERISK--;
 
-			// If all stars are collected, open the gate
-			if (_POINTS_ASTERISK <= 0) {
-				for (size_t r = 0; r < g_Map.size(); r++) {
-
-					for (size_t c = 0; c < g_Map[r].size(); c++) {
-						if (g_Map[r][c] == '#') {
-							g_Map[r][c] = ' ';
-						}
-					}
-
-				}
+			if (_POINTS_ASTERISK > 0) {
+				_POINTS_ASTERISK--; // Decrement stars left by 1
 			}
 
 		}
@@ -90,6 +82,16 @@ void updateObjects(MAP map) {
 
 			}
 
+		}
+
+		if (_POINTS_ASTERISK <= 0) {
+			for (size_t i = 0; i < _COLLECTION_OBJ_EXIT.size(); i++) {
+
+				COORD pos = _COLLECTION_OBJ_EXIT[i].pos;
+
+				g_Map[pos.Y][pos.X] = I_EXIT_ACTIVE;
+
+			}
 		}
 
 		break;

@@ -116,5 +116,8 @@
     <ClInclude Include="skills.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="exit.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

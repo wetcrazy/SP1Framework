@@ -3,6 +3,7 @@
 #include "Framework\console.h"
 #include "_AI.h"
 #include "skills.h"
+#include "score.h"
 
 static ifstream file;
 
@@ -25,6 +26,7 @@ void renderMap(Console *handle) {
 
 	string buffer; // Buffer that contains the line of string that we read from the text file
 
+	// Load map if it is not currently loaded
 	if (!file.is_open()) {
 		switch (current_level) {
 		case LEVEL_OVER:
@@ -41,6 +43,9 @@ void renderMap(Console *handle) {
 			break;
 		case LEVEL_ONE:
 		case LEVEL_TWO:
+			g_sChar.m_cLocation = handle->getConsoleSize(); // Spawn player at middle
+			g_sChar.m_cLocation.X /= 2;
+			g_sChar.m_cLocation.Y /= 2;
 		case LEVEL_THREE:
 		case LEVEL_FOUR:
 		case LEVEL_FIVE:
@@ -89,9 +94,15 @@ void renderMap(Console *handle) {
 						});
 					}
 
+					if (buffer[col] == I_EXIT_INACTIVE) {
+						_COLLECTION_OBJ_EXIT.push_back(EXIT{
+							pos, false
+						});
+					}
+
 					if (buffer[col] == AI::GHOST) {
 
-						buffer[col] = ' '; // Remove the ghost so we can control it manually from AI.cpp
+						buffer[col] = ' '; // Remove the ghost and let AI.cpp manually control it
 
 						_COLLECTION_AI_GHOST.push_back(AI_GHOST{
 							_COLLECTION_AI_GHOST.size(), pos, true
@@ -135,9 +146,9 @@ void renderFog(Console * handle) {
 
 	string str = " ";
 
-	for (int row = 0; row < g_Map.size(); row++) {
+	for (short row = 0; row < g_Map.size(); row++) {
 
-		for (int col = 0; col < g_Map[row].size(); col++) {
+		for (short col = 0; col < g_Map[row].size(); col++) {
 
 			COORD playerPos = g_sChar.m_cLocation;
 
@@ -146,7 +157,8 @@ void renderFog(Console * handle) {
 				continue;
 			}
 
-			if (g_Map[row][col] == '#') {
+			// Dont apply fog to the exit
+			if (g_Map[row][col] == I_EXIT_INACTIVE || g_Map[row][col] == I_EXIT_ACTIVE) {
 				continue;
 			}
 
@@ -158,11 +170,12 @@ void renderFog(Console * handle) {
 
 }
 
-// Closes the file stream
+// Closes the file stream & resets all variables upon changing map
 void closeMap() {
 	destroyAI();
 	destroyObjects();
-	resetSkillStunCharges();	
-	g_Map.clear(); // Release and reset map
+	resetSkillStunCharges();
+	resetScoreSystem();
+	g_Map.clear();
 	file.close();
 }

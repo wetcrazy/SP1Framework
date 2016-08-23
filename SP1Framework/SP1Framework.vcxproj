@@ -95,6 +95,7 @@
   <ItemGroup>
     <ClInclude Include="cheat.h" />
     <ClInclude Include="dialogue.h" />
+    <ClInclude Include="exit.h" />
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />

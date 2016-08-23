@@ -195,15 +195,15 @@ void gameoverWait() {
 	}
 }
 
-void gameplay()            // gameplay logic
+void gameplay() // gameplay logic
 {
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
 
 	if (current_level != LEVEL_MENU) {
+		updateAI(g_dDeltaTime); // processs AI logic
 		moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
 		processSkill(g_dDeltaTime);
-		updateObjects(current_level); // update logic for the objects in game
-		updateAI(g_dDeltaTime); // processs AI logic
+		updateObjects(&g_Console, current_level); // update logic for the objects in game
 		processcheat(g_abKeyPressed);
 	}
 
@@ -224,17 +224,14 @@ void moveCharacter() {
 	catch (out_of_range ex) {
 
 		// Go next level
-		closeMap(); 
-		if (current_level == LEVEL_ONE)
-		{
+		closeMap();
+		if (current_level == LEVEL_ONE) {
 			current_level = LEVEL_TWO;
 		}
-		else if (current_level == LEVEL_TWO)
-		{
+		else if (current_level == LEVEL_TWO) {
 			current_level = LEVEL_TEN;
 		}
-		else
-		{
+		else {
 			current_level = LEVEL_TITLE;
 		}
 	}
