@@ -26,7 +26,7 @@ void renderMap(Console *handle) {
 
 	if (!file.is_open()) {
 		switch (current_level) {
-
+		case LEVEL_OVER:
 		case LEVEL_TITLE:
 		case LEVEL_MENU:
 		case LEVEL_ONE:
