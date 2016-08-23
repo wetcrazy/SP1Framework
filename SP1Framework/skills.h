@@ -4,4 +4,5 @@
 
 
 void processSkill(double dTime);
+void resetSkillStunCharges();
 short getSkillStunCharges();

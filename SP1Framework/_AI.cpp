@@ -61,9 +61,6 @@ void updateAI(double dTime) {
 					return;
 				}
 
-				COORD ghostPos = _COLLECTION_AI_GHOST[i].pos;
-				COORD playerPos = g_sChar.m_cLocation;
-
 				// Continue movement
 				if (_COLLECTION_AI_GHOST[i].pos.X > g_sChar.m_cLocation.X) {
 					_COLLECTION_AI_GHOST[i].pos.X--;
@@ -79,6 +76,10 @@ void updateAI(double dTime) {
 				else if (_COLLECTION_AI_GHOST[i].pos.Y < g_sChar.m_cLocation.Y) {
 					_COLLECTION_AI_GHOST[i].pos.Y++;
 				}
+
+
+				COORD ghostPos = _COLLECTION_AI_GHOST[i].pos;
+				COORD playerPos = g_sChar.m_cLocation;
 
 				if (ghostPos.X == playerPos.X && ghostPos.Y == playerPos.Y) {
 					closeMap();

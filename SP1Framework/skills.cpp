@@ -44,3 +44,7 @@ void processSkill(double dTime) {
 short getSkillStunCharges() {
 	return SKILL_STUN_CHARGES;
 }
+
+void resetSkillStunCharges() {
+	SKILL_STUN_CHARGES = 3;
+}

@@ -2,6 +2,7 @@
 #include "_interactable.h"
 #include "Framework\console.h"
 #include "_AI.h"
+#include "skills.h"
 
 static ifstream file;
 
@@ -145,6 +146,10 @@ void renderFog(Console * handle) {
 				continue;
 			}
 
+			if (g_Map[row][col] == '#') {
+				continue;
+			}
+
 			handle->writeToBuffer(col, row + header_offset, str, fogColor);
 
 		}
@@ -157,6 +162,7 @@ void renderFog(Console * handle) {
 void closeMap() {
 	destroyAI();
 	destroyObjects();
+	resetSkillStunCharges();	
 	g_Map.clear(); // Release and reset map
 	file.close();
 }
