@@ -30,21 +30,70 @@ void renderMap(Console *handle) {
 		case LEVEL_TITLE:
 		case LEVEL_MENU:
 		case LEVEL_ONE:
+			if (current_level == LEVEL_ONE)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_TWO:
+			if (current_level == LEVEL_TWO)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_THREE:
+			if (current_level == LEVEL_THREE)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_FOUR:
+			if (current_level == LEVEL_FOUR)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_FIVE:
+			if (current_level == LEVEL_FIVE)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_SIX:
+			if (current_level == LEVEL_SIX)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_SEVEN:
+			if (current_level == LEVEL_SEVEN)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_EIGHT:
+			if (current_level == LEVEL_EIGHT)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_NINE:
+			if (current_level == LEVEL_NINE)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X / 2;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y / 2;
+			}
 		case LEVEL_TEN:
+			if (current_level == LEVEL_TEN)
+			{
+				g_sChar.m_cLocation.X = handle->getConsoleSize().X - 44;
+				g_sChar.m_cLocation.Y = handle->getConsoleSize().Y - 36;
+			}
+		default:
 			file.open("level_" + to_string(current_level) + ".txt");
 			break;
-
 		}
 	}
-
 
 	int row = 0;
 
