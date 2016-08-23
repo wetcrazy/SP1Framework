@@ -130,7 +130,7 @@ void update(double dt) {
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
-	case S_GAMEOVER: gameover();
+	case S_GAMEOVER: renderGameOverScreen();// game logic for gameover
 		break;
 	}
 }
@@ -147,6 +147,7 @@ void render() {
 	switch (g_eGameState) {
 	case S_TITLESCREEN:
 	case S_MENU:
+	case S_GAMEOVER:
 	case S_GAME: renderGame();
 		break;
 	}
@@ -304,7 +305,7 @@ void renderGameOverScreen()
 {
 	static ifstream file;
 	file.open("level_" + to_string(254) + ".txt");
-
+	gameover();
 }
 void renderMenuScreen()
 {
