@@ -100,7 +100,7 @@ void getInput(void) {
 	g_abKeyPressed[K_1] = isKeyPressed(0x31);
 	g_abKeyPressed[K_2] = isKeyPressed(0x32);
 	g_abKeyPressed[K_3] = isKeyPressed(0x33);
-	
+	g_abKeyPressed[K_P] = isKeyPressed(0x80);
 	
 }
 
@@ -352,3 +352,4 @@ void renderToScreen() {
 	// Writes the buffer to the console, hence you will see what you have written
 	g_Console.flushBufferToConsole();
 }
+
