@@ -77,6 +77,14 @@ void updateAI(double dTime) {
 					_COLLECTION_AI_GHOST[i].pos.Y++;
 				}
 
+				COORD ghostPos = _COLLECTION_AI_GHOST[i].pos;
+				COORD playerPos = g_sChar.m_cLocation;
+
+				if (ghostPos.X == playerPos.X && ghostPos.Y == playerPos.Y) {
+					closeMap();
+					current_level = LEVEL_OVER;
+				}
+
 			}
 			ghostDeltaMoved = 0;
 		}

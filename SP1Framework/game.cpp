@@ -38,6 +38,7 @@ void init(void) {
 
 	// sets the initial state for the game
 	g_eGameState = S_TITLESCREEN;
+	current_level = LEVEL_TITLE;
 
 	g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
 	g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
@@ -101,7 +102,7 @@ void getInput(void) {
 	g_abKeyPressed[K_2] = isKeyPressed(0x32);
 	g_abKeyPressed[K_3] = isKeyPressed(0x33);
 	g_abKeyPressed[K_P] = isKeyPressed(0x80);
-	
+
 }
 
 //--------------------------------------------------------------
@@ -124,13 +125,13 @@ void update(double dt) {
 	g_dDeltaTime = dt;
 
 	switch (g_eGameState) {
-	case S_TITLESCREEN: renderTitleScreen(); // game logic for the splash screen
+	case S_TITLESCREEN: titleScreenWait();
 		break;
-	case S_MENU: renderMenuScreen();// game logic for the splash screen
+	case S_MENU: menuScreenWait();
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
-	case S_GAMEOVER: renderGameOverScreen();// game logic for gameover
+	case S_GAMEOVER: gameoverWait();// game logic for gameover
 		break;
 	}
 }
@@ -147,8 +148,9 @@ void render() {
 	switch (g_eGameState) {
 	case S_TITLESCREEN:
 	case S_MENU:
+	case S_GAME:
 	case S_GAMEOVER:
-	case S_GAME: renderGame();
+		renderGame();
 		break;
 	}
 	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
@@ -157,12 +159,12 @@ void render() {
 void titleScreenWait() {
 	if (g_abKeyPressed[K_SPACE]) {
 		closeMap();
-		g_eGameState = S_MENU;	
+		g_eGameState = S_MENU;
 		current_level = LEVEL_MENU;
 	}
 }
 
-void MenuScreenWait()    // waits for time to pass in splash screen
+void menuScreenWait()    // waits for time to pass in splash screen
 {
 	if (g_abKeyPressed[K_1]) // wait for x seconds to switch to game mode, else do nothing
 	{
@@ -178,6 +180,23 @@ void MenuScreenWait()    // waits for time to pass in splash screen
 	}
 }
 
+void gameoverWait() {
+	if (g_abKeyPressed[K_1]) {
+		closeMap();
+		g_eGameState = S_GAME;
+		current_level = LEVEL_restart;
+	}
+	else if (g_abKeyPressed[K_2]) {
+		closeMap();
+		g_eGameState = S_MENU;
+		current_level = LEVEL_MENU;
+	}
+	else if (g_abKeyPressed[K_3]) {
+		closeMap();
+		g_bQuitGame = true;
+	}
+}
+
 void gameplay()            // gameplay logic
 {
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
@@ -189,33 +208,9 @@ void gameplay()            // gameplay logic
 		updateAI(g_dDeltaTime); // processs AI logic
 		processcheat(g_abKeyPressed);
 	}
-	else {
-		// Do menu logic here
-		// processMenu(&g_Console);
-	}
 
 }
 
-void gameover()
-{
-	if (g_abKeyPressed[K_1])
-	{
-		closeMap();
-		g_eGameState = S_GAME;
-		current_level = LEVEL_restart;
-	}
-	else if (g_abKeyPressed[K_2])
-	{
-		closeMap();
-		g_eGameState = S_MENU;
-		current_level = LEVEL_MENU;
-	}
-	else if (g_abKeyPressed[K_3])
-	{
-		closeMap();
-		g_bQuitGame = true;
-	}
-}
 void moveCharacter() {
 
 	try {
@@ -292,35 +287,15 @@ void clearScreen() {
 void renderGame() {
 	renderMap(&g_Console);        // renders the map to the buffer first
 
-	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU) {
+	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU && current_level != LEVEL_OVER) {
 		renderCharacter();  // renders the character into the buffer
-		renderFog(&g_Console);
-		renderAI(&g_Console);
-		dialogue(&g_Console);
+		renderFog(&g_Console); // fog on 2nd layer
+		renderAI(&g_Console); // we can still see AI even if they are in the fog
+		dialogue(&g_Console); // HUD interface
 	}
 
 }
 
-void renderGameOverScreen()
-{
-	static ifstream file;
-	file.open("level_" + to_string(254) + ".txt");
-	gameover();
-}
-void renderMenuScreen()
-{
-	static ifstream file;
-	file.open("level_" + to_string(256) + ".txt");
-
-	MenuScreenWait();
-}
-
-void renderTitleScreen()
-{
-	static ifstream file;
-	file.open("level_" + to_string(255) + ".txt");
-	titleScreenWait();
-}
 
 void renderCharacter() {
 	// Draw the location of the character

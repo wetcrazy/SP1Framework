@@ -6,7 +6,7 @@
 static ifstream file;
 
 MAP LEVEL_restart;
-MAP current_level = LEVEL_TITLE;
+MAP current_level;
 
 vector< vector<char> > g_Map;
 

@@ -67,27 +67,25 @@ struct SGameChar {
 
 extern SGameChar g_sChar;
 
-void gameover();
 void renderArrow(void);// arrow for menu
 void init(void);      // initialize your variables, allocate memory, etc
 void getInput(void);      // get input from player
 void update(double dt); // update the game and the state of the game
 void render(void);      // renders the current state of the game to the console
 void shutdown(void);      // do clean up, free memory
-void titleScreenWait();// wait for time to pass in title screen
-void MenuScreenWait();    // waits for time to pass in splash screen
+void titleScreenWait();// wait for input in title screen
+void menuScreenWait();    // waits for input in screen
+void gameoverWait();	// waits for input in game over screen
 void gameplay();            // gameplay logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void clearScreen();         // clears the current screen and draw from scratch 
-void renderTitleScreen() ;//renders the title screen
-void renderMenuScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
 void renderMap();           // renders the map to the buffer first
 void renderCharacter();     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
+void renderGameOverScreen(); // renders game over screen
 void pauseMenu();
-void renderGameOverScreen();
 
 #endif // _GAME_H
