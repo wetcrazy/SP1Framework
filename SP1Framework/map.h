@@ -21,6 +21,7 @@ const short header_offset = 1;
 const short footer_offset = 1;
 
 enum MAP {
+	LEVEL_PAUSE = 253,
 	LEVEL_OVER = 254,
 	LEVEL_TITLE = 255,
 	LEVEL_MENU = 256,

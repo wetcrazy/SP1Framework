@@ -51,7 +51,7 @@ void init(void) {
 	g_sChar.m_bActive = true;
 
 	// sets the width, height and the font name to use in the console
-	g_Console.setConsoleFont(10, 18, L"raster font");
+	g_Console.setConsoleFont(10, 18, L"Raster");
 
 }
 
@@ -101,7 +101,7 @@ void getInput(void) {
 	g_abKeyPressed[K_1] = isKeyPressed(0x31);
 	g_abKeyPressed[K_2] = isKeyPressed(0x32);
 	g_abKeyPressed[K_3] = isKeyPressed(0x33);
-	g_abKeyPressed[K_P] = isKeyPressed(0x80);
+	g_abKeyPressed[K_4] = isKeyPressed(0x34);
 
 }
 
@@ -121,10 +121,12 @@ void getInput(void) {
 //--------------------------------------------------------------
 void update(double dt) {
 	// get the delta time
-	g_dElapsedTime += dt;
+ 	g_dElapsedTime += dt;
 	g_dDeltaTime = dt;
 
 	switch (g_eGameState) {
+	case S_PAUSE: pauseWait();
+		break;
 	case S_TITLESCREEN: titleScreenWait();
 		break;
 	case S_MENU: menuScreenWait();
@@ -146,6 +148,7 @@ void update(double dt) {
 void render() {
 	clearScreen();      // clears the current screen and draw from scratch 
 	switch (g_eGameState) {
+	case S_PAUSE:
 	case S_TITLESCREEN:
 	case S_MENU:
 	case S_GAME:
@@ -156,10 +159,27 @@ void render() {
 	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
+
+void pauseWait() {
+	if (g_abKeyPressed[K_1]) {
+		// TODO: resume
+	}
+	else if (g_abKeyPressed[K_2]) {
+		closeMap();
+		current_level = LEVEL_restart;
+	}
+	else if (g_abKeyPressed[K_3]) {
+		closeMap();
+		current_level = LEVEL_MENU;
+	}
+	else if (g_abKeyPressed[K_4]) {
+		g_bQuitGame = true;
+	}
+}
+
 void titleScreenWait() {
 	if (g_abKeyPressed[K_SPACE]) {
 		closeMap();
-		g_eGameState = S_MENU;
 		current_level = LEVEL_MENU;
 	}
 }
@@ -169,7 +189,6 @@ void menuScreenWait()    // waits for time to pass in splash screen
 	if (g_abKeyPressed[K_1]) // wait for x seconds to switch to game mode, else do nothing
 	{
 		closeMap();
-		g_eGameState = S_GAME;
 		current_level = LEVEL_ONE;
 	}
 	else if (g_abKeyPressed[K_2]) {
@@ -199,7 +218,7 @@ void gameplay() // gameplay logic
 {
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
 
-	if (current_level != LEVEL_MENU) {
+	if (current_level != LEVEL_MENU && current_level != LEVEL_PAUSE) {
 		updateAI(g_dDeltaTime); // processs AI logic
 		if (current_level != LEVEL_OVER) {
 			moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
@@ -282,9 +301,12 @@ void moveCharacter() {
 
 }
 void processUserInput() {
-	// quits the game if player hits the escape key
-	if (g_abKeyPressed[K_ESCAPE])
-		g_bQuitGame = true;
+	if (g_abKeyPressed[K_ESCAPE]){
+		closeMap();
+		LEVEL_restart = current_level;
+		current_level = LEVEL_PAUSE;
+	}
+
 }
 
 void clearScreen() {
@@ -295,7 +317,7 @@ void clearScreen() {
 void renderGame() {
 	renderMap(&g_Console);        // renders the map to the buffer first
 
-	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU && current_level != LEVEL_OVER) {
+	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU && current_level != LEVEL_OVER && current_level != LEVEL_PAUSE) {
 		renderCharacter();  // renders the character into the buffer
 		renderFog(&g_Console); // fog on 2nd layer
 		renderAI(&g_Console); // we can still see AI even if they are in the fog
@@ -336,4 +358,3 @@ void renderToScreen() {
 	// Writes the buffer to the console, hence you will see what you have written
 	g_Console.flushBufferToConsole();
 }
-

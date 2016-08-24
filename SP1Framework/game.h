@@ -40,7 +40,7 @@ enum EKEYS {
 	K_1,
 	K_2,
 	K_3,
-	K_P,
+	K_4,
 	K_COUNT
 	
 
@@ -48,10 +48,12 @@ enum EKEYS {
 
 // Enumeration for the different screen states
 enum EGAMESTATES {
+	S_NONE,
 	S_TITLESCREEN,
 	S_MENU,
 	S_GAME,
 	S_GAMEOVER,
+	S_PAUSE,
 	S_COUNT
 };
 
@@ -87,6 +89,6 @@ void renderCharacter();     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderGameOverScreen(); // renders game over screen
-void pauseMenu();
+void pauseWait();
 
 #endif // _GAME_H
