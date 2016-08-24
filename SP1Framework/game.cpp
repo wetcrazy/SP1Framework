@@ -9,6 +9,7 @@
 #include "_AI.h"
 #include "cheat.h"
 #include "skills.h"
+#include "uicontrol.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -121,15 +122,15 @@ void getInput(void) {
 //--------------------------------------------------------------
 void update(double dt) {
 	// get the delta time
- 	g_dElapsedTime += dt;
+	g_dElapsedTime += dt;
 	g_dDeltaTime = dt;
 
 	switch (g_eGameState) {
-	case S_PAUSE: pauseWait();
+	case S_PAUSE: updatePauseMenu(g_dElapsedTime, dt);
 		break;
 	case S_TITLESCREEN: titleScreenWait();
 		break;
-	case S_MENU: menuScreenWait();
+	case S_MENU: updateMainMenu(g_dElapsedTime, dt);
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
@@ -160,42 +161,10 @@ void render() {
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
 
-void pauseWait() {
-	if (g_abKeyPressed[K_1]) {
-		// TODO: resume
-	}
-	else if (g_abKeyPressed[K_2]) {
-		closeMap();
-		current_level = LEVEL_restart;
-	}
-	else if (g_abKeyPressed[K_3]) {
-		closeMap();
-		current_level = LEVEL_MENU;
-	}
-	else if (g_abKeyPressed[K_4]) {
-		g_bQuitGame = true;
-	}
-}
-
 void titleScreenWait() {
 	if (g_abKeyPressed[K_SPACE]) {
 		closeMap();
 		current_level = LEVEL_MENU;
-	}
-}
-
-void menuScreenWait()    // waits for time to pass in splash screen
-{
-	if (g_abKeyPressed[K_1]) // wait for x seconds to switch to game mode, else do nothing
-	{
-		closeMap();
-		current_level = LEVEL_ONE;
-	}
-	else if (g_abKeyPressed[K_2]) {
-		// TODO: Option screen?
-	}
-	else if (g_abKeyPressed[K_3]) {
-		g_bQuitGame = true;
 	}
 }
 
@@ -301,7 +270,7 @@ void moveCharacter() {
 
 }
 void processUserInput() {
-	if (g_abKeyPressed[K_ESCAPE]){
+	if (g_abKeyPressed[K_ESCAPE]) {
 		closeMap();
 		LEVEL_restart = current_level;
 		current_level = LEVEL_PAUSE;
@@ -317,12 +286,34 @@ void clearScreen() {
 void renderGame() {
 	renderMap(&g_Console);        // renders the map to the buffer first
 
-	if (current_level != LEVEL_TITLE && current_level != LEVEL_MENU && current_level != LEVEL_OVER && current_level != LEVEL_PAUSE) {
+	switch (current_level) {
+	case LEVEL_PAUSE:
+		renderPauseMenu(&g_Console);
+		break;
+	case LEVEL_OVER:
+		break;
+	case LEVEL_TITLE:
+		break;
+	case LEVEL_MENU:
+		renderMainMenu(&g_Console);
+		break;
+	case LEVEL_ONE:
+	case LEVEL_TWO:
+	case LEVEL_THREE:
+	case LEVEL_FOUR:
+	case LEVEL_FIVE:
+	case LEVEL_SIX:
+	case LEVEL_SEVEN:
+	case LEVEL_EIGHT:
+	case LEVEL_NINE:
+	case LEVEL_TEN:
 		renderCharacter();  // renders the character into the buffer
 		renderFog(&g_Console); // fog on 2nd layer
 		renderAI(&g_Console); // we can still see AI even if they are in the fog
 		dialogue(&g_Console); // HUD interface
+		break;
 	}
+
 
 }
 

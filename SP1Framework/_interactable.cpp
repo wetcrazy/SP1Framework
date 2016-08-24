@@ -56,11 +56,19 @@ void updateObjects(Console * handle, MAP map) {
 				_POINTS_ASTERISK--; // Decrement stars left by 1
 			}
 
+			if (_POINTS_ASTERISK <= 0) {
+				for (size_t i = 0; i < _COLLECTION_OBJ_EXIT.size(); i++) {
+
+					COORD pos = _COLLECTION_OBJ_EXIT[i].pos;
+
+					g_Map[pos.Y][pos.X] = I_EXIT_ACTIVE;
+
+				}
+			}
+
 		}
 
 		if (g_sChar.below == I_PORTAL) {
-
-			g_sChar.m_bActive = true;
 
 			PORTAL port = findPortalAt(g_sChar.m_cLocation);
 
@@ -85,14 +93,18 @@ void updateObjects(Console * handle, MAP map) {
 
 		}
 
-		if (_POINTS_ASTERISK <= 0) {
-			for (size_t i = 0; i < _COLLECTION_OBJ_EXIT.size(); i++) {
+		if (g_sChar.below == I_TRAP) {
 
-				COORD pos = _COLLECTION_OBJ_EXIT[i].pos;
+			g_sChar.m_bActive = true;
 
-				g_Map[pos.Y][pos.X] = I_EXIT_ACTIVE;
+			TRAP trap = findTrapAt(g_sChar.m_cLocation);
+
+			if (trap.active) {
+
+				// TODO: Stun player logic
 
 			}
+
 		}
 
 		break;

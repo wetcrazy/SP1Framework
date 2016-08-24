@@ -38,6 +38,7 @@ const char INTERACTABLES[] = {
 	I_STAR,
 	I_PORTAL,
 	I_EXIT_ACTIVE,
+	I_EXIT_INACTIVE,
 	I_TRAP
 
 };

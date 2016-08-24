@@ -133,7 +133,7 @@ void renderMap(Console *handle) {
 	}
 
 	// Output everything in g_Map to Console
-	for (size_t row = 0; row < g_Map.size(); row++) {
+ 	for (size_t row = 0; row < g_Map.size(); row++) {
 		string s = "";
 		for (size_t col = 0; col < g_Map.at(row).size(); col++) {
 			// Change '8' to a mazey character
