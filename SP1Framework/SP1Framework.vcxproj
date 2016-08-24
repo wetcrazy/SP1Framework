@@ -89,6 +89,7 @@
     <ClCompile Include="score.cpp" />
     <ClCompile Include="skills.cpp" />
     <ClCompile Include="star.cpp" />
+    <ClCompile Include="trap.cpp" />
     <ClCompile Include="_AI.cpp" />
     <ClCompile Include="_interactable.cpp" />
   </ItemGroup>
@@ -105,6 +106,7 @@
     <ClInclude Include="score.h" />
     <ClInclude Include="skills.h" />
     <ClInclude Include="star.h" />
+    <ClInclude Include="trap.h" />
     <ClInclude Include="_AI.h" />
     <ClInclude Include="_interactable.h" />
   </ItemGroup>

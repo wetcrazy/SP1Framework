@@ -75,6 +75,9 @@
     <ClCompile Include="skills.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="trap.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="exit.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="trap.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>

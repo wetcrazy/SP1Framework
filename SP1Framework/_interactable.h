@@ -8,6 +8,7 @@
 #include "star.h"
 #include "portal.h"
 #include "exit.h"
+#include "trap.h"
 
 
 enum INTERACTABLES {
@@ -15,7 +16,8 @@ enum INTERACTABLES {
 	I_STAR = '*',
 	I_PORTAL = 'O',
 	I_EXIT_INACTIVE = '#',
-	I_EXIT_ACTIVE = 'o'
+	I_EXIT_ACTIVE = 'o',
+	I_TRAP = '!'
 
 };
 
@@ -23,24 +25,28 @@ enum INTERACTABLES {
 const char PASSABLES[] = {
 
 	' ',
-	'*',
-	'O',
-	'o'
+	I_STAR,
+	I_PORTAL,
+	I_EXIT_ACTIVE,
+	I_TRAP
 
 };
 
 // Interactables objects
 const char INTERACTABLES[] = {
 
-	'*',
-	'O',
-	'#'
+	I_STAR,
+	I_PORTAL,
+	I_EXIT_ACTIVE,
+	I_TRAP
 
 };
+
 
 extern vector<STAR> _COLLECTION_OBJ_STAR;
 extern vector<PORTAL> _COLLECTION_OBJ_PORTAL;
 extern vector<EXIT> _COLLECTION_OBJ_EXIT;
+extern vector<TRAP> _COLLECTION_OBJ_TRAP;
 
 // Is this an passable object?
 bool isPassable(char c);
@@ -59,6 +65,9 @@ STAR findStarAt(COORD pos);
 
 // Retrieve an instance of the 'portal' that the player is standing on
 PORTAL findPortalAt(COORD pos);
+
+// Retrieve an instance of the 'trap' that the player is standing on
+TRAP findTrapAt(COORD pos);
 
 // Make all exits passable
 void activateExit();

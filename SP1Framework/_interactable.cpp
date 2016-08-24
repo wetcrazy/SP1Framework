@@ -6,6 +6,7 @@
 vector<STAR> _COLLECTION_OBJ_STAR;
 vector<PORTAL> _COLLECTION_OBJ_PORTAL;
 vector<EXIT> _COLLECTION_OBJ_EXIT;
+vector<TRAP> _COLLECTION_OBJ_TRAP;
 
 
 // Test if the argument is an passable ASCII character

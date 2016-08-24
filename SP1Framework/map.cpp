@@ -98,6 +98,12 @@ void renderMap(Console *handle) {
 						});
 					}
 
+					if (buffer[col] == I_TRAP) {
+						_COLLECTION_OBJ_TRAP.push_back(TRAP{
+							pos, true
+						});
+					}
+
 					if (buffer[col] == AI::GHOST) {
 
 						buffer[col] = ' '; // Remove the ghost and let AI.cpp manually control it
