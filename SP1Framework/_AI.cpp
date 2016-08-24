@@ -105,6 +105,9 @@ void updateAI(double dTime) {
 
 	case LEVEL_THREE:
 		// Boss AI Here
+		// Boss bullet ai here
+		// When player is in range of boss, boss shoot bullet
+		// bullet flies towards the player but if there is a way infront it crashes into the wall
 		break;
 
 	}
