@@ -56,18 +56,18 @@ bool isPassable(char c);
 bool isInteractable(char c);
 
 // Runs object logic every frame
-void updateObjects(Console * handle, MAP map);
+void updateObjects(Console * handle, MAP map, double eTime);
 
 // Removes the entire objects on the map
 void destroyObjects();
 
-// Retrieve an instance of the 'star' that the player is standing on
+// Retrieve a copy of the 'star' that the player is standing on
 STAR findStarAt(COORD pos);
 
-// Retrieve an instance of the 'portal' that the player is standing on
+// Retrieve a copy of the 'portal' that the player is standing on
 PORTAL findPortalAt(COORD pos);
 
-// Retrieve an instance of the 'trap' that the player is standing on
+// Retrieve a copy of the 'trap' that the player is standing on
 TRAP findTrapAt(COORD pos);
 
 // Make all exits passable

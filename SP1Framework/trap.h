@@ -3,10 +3,11 @@
 
 #include "Framework\console.h"
 
-
+const double _OBJ_TRAP_STUNTIME = 4.0;
 
 struct TRAP {
 
+	int index;
 	COORD pos;
 	bool active;
 

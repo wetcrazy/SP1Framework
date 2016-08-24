@@ -50,6 +50,7 @@ void init(void) {
 	g_sChar.below = ' ';
 
 	g_sChar.m_bActive = true;
+	g_sChar.m_bStunned = false;
 
 	// sets the width, height and the font name to use in the console
 	g_Console.setConsoleFont(10, 18, L"Raster");
@@ -125,7 +126,7 @@ void update(double dt) {
 	g_dElapsedTime += dt;
 	g_dDeltaTime = dt;
 
- 	switch (g_eGameState) {
+	switch (g_eGameState) {
 	case S_PAUSE: updatePauseMenu(g_dElapsedTime, dt);
 		break;
 	case S_TITLESCREEN: titleScreenWait();
@@ -170,7 +171,7 @@ void gameplay() // gameplay logic
 		if (current_level != LEVEL_OVER) {
 			moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
 			processSkill(g_dDeltaTime);
-			updateObjects(&g_Console, current_level); // update logic for the objects in game
+			updateObjects(&g_Console, current_level, g_dElapsedTime); // update logic for the objects in game
 			processcheat(g_abKeyPressed);
 
 		}
@@ -209,42 +210,47 @@ void moveCharacter() {
 	if (g_dBounceTime > g_dElapsedTime)
 		return;
 
-	// Updating the location of the character based on the key press
-	// providing a beep sound whenver we shift the character
-	if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && isPassable(g_sChar.yP)) {
-		g_sChar.m_cLocation.Y--;
-		bSomethingHappened = true;
-	}
-	else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP)) {
-		Beep(1500, 100);
-	}
-	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
-		g_sChar.m_cLocation.X--;
-		bSomethingHappened = true;
-	}
-	else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN)) {
-		Beep(1500, 100);
-	}
-	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
+	if (!g_sChar.m_bStunned) {
 
-		g_sChar.m_cLocation.Y++;
-		bSomethingHappened = true;
-	}
-	else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN)) {
-		Beep(1500, 100);
-	}
-	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
-		g_sChar.m_cLocation.X++;
-		bSomethingHappened = true;
-	}
-	else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP)) {
-		Beep(1500, 100);
+		// Updating the location of the character based on the key press
+		// providing a beep sound whenver we shift the character
+		if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && isPassable(g_sChar.yP)) {
+			g_sChar.m_cLocation.Y--;
+			bSomethingHappened = true;
+		}
+		else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP)) {
+			Beep(1500, 100);
+		}
+		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
+			g_sChar.m_cLocation.X--;
+			bSomethingHappened = true;
+		}
+		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN)) {
+			Beep(1500, 100);
+		}
+		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
+
+			g_sChar.m_cLocation.Y++;
+			bSomethingHappened = true;
+		}
+		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN)) {
+			Beep(1500, 100);
+		}
+		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
+			g_sChar.m_cLocation.X++;
+			bSomethingHappened = true;
+		}
+		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP)) {
+			Beep(1500, 100);
+		}
+
 	}
 
 	if (bSomethingHappened) {
 		// set the bounce time to some time in the future to prevent accidental triggers
 		g_dBounceTime = g_dElapsedTime + 0.1; // 125ms should be enough
 	}
+
 
 }
 void processUserInput() {
@@ -309,7 +315,10 @@ void renderGame() {
 void renderCharacter() {
 	// Draw the location of the character
 	WORD charColor = g_PlayerColor;
-	if (g_sChar.m_bActive) {
+	if (g_sChar.m_bStunned) {
+		charColor = g_PlayerColorStunned;
+	}
+	else if (g_sChar.m_bActive) {
 		charColor = g_PlayerColorActive;
 	}
 	g_Console.writeToBuffer(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y + header_offset, (char)g_PlayerIcon, charColor);

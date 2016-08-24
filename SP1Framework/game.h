@@ -17,6 +17,7 @@ const char g_PlayerIcon = (char)1;
 const WORD g_PlayerColor = 0xF0;
 const WORD g_PlayerColorActive = 0x50;
 const WORD g_PlayerColorDamaged = 0x40;
+const WORD g_PlayerColorStunned = 0x5F;
 
 // Enumeration to store the control keys that your game will have
 enum EKEYS {
@@ -61,6 +62,7 @@ enum EGAMESTATES {
 struct SGameChar {
 	COORD m_cLocation;
 	bool  m_bActive;
+	bool  m_bStunned;
 	char  xP;
 	char  xN;
 	char  yP;

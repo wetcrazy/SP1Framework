@@ -31,10 +31,11 @@ void destroyObjects() {
 	_COLLECTION_OBJ_STAR.clear();
 	_COLLECTION_OBJ_PORTAL.clear();
 	_COLLECTION_OBJ_EXIT.clear();
+	_COLLECTION_OBJ_TRAP.clear();
 }
 
 // Object logic goes here
-void updateObjects(Console * handle, MAP map) {
+void updateObjects(Console * handle, MAP map, double eTime) {
 
 	switch (map) {
 	case LEVEL_TITLE:
@@ -95,14 +96,20 @@ void updateObjects(Console * handle, MAP map) {
 
 		if (g_sChar.below == I_TRAP) {
 
-			g_sChar.m_bActive = true;
+			static double stunReleaseTime = 0;
 
 			TRAP trap = findTrapAt(g_sChar.m_cLocation);
 
 			if (trap.active) {
+				g_sChar.m_bStunned = true; // stun the player
+				stunReleaseTime = eTime + _OBJ_TRAP_STUNTIME;
+				_COLLECTION_OBJ_TRAP[trap.index].active = false;
 
-				// TODO: Stun player logic
-
+			}
+			else if (eTime >= stunReleaseTime) {
+				g_sChar.m_bStunned = false;
+				g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
+				stunReleaseTime = 0;
 
 			}
 

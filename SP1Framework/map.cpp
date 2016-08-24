@@ -103,7 +103,7 @@ void renderMap(Console *handle) {
 
 					if (buffer[col] == I_TRAP) {
 						_COLLECTION_OBJ_TRAP.push_back(TRAP{
-							pos, true
+							_COLLECTION_OBJ_TRAP.size(), pos, true
 						});
 					}
 
