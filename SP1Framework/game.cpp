@@ -125,7 +125,7 @@ void update(double dt) {
 	g_dElapsedTime += dt;
 	g_dDeltaTime = dt;
 
-	switch (g_eGameState) {
+ 	switch (g_eGameState) {
 	case S_PAUSE: updatePauseMenu(g_dElapsedTime, dt);
 		break;
 	case S_TITLESCREEN: titleScreenWait();
@@ -134,7 +134,7 @@ void update(double dt) {
 		break;
 	case S_GAME: gameplay(); // gameplay logic when we are in the game
 		break;
-	case S_GAMEOVER: gameoverWait();// game logic for gameover
+	case S_GAMEOVER: updateGameOverMenu(g_dElapsedTime, dt);// game logic for gameover
 		break;
 	}
 }
@@ -159,28 +159,6 @@ void render() {
 	}
 	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
-}
-
-void titleScreenWait() {
-	if (g_abKeyPressed[K_SPACE]) {
-		closeMap();
-		current_level = LEVEL_MENU;
-	}
-}
-
-void gameoverWait() {
-	if (g_abKeyPressed[K_1]) {
-		closeMap();
-		current_level = LEVEL_restart;
-	}
-	else if (g_abKeyPressed[K_2]) {
-		closeMap();
-		current_level = LEVEL_MENU;
-	}
-	else if (g_abKeyPressed[K_3]) {
-		closeMap();
-		g_bQuitGame = true;
-	}
 }
 
 void gameplay() // gameplay logic
@@ -271,7 +249,7 @@ void moveCharacter() {
 }
 void processUserInput() {
 	if (g_abKeyPressed[K_ESCAPE]) {
-		closeMap();
+		closeHalfMap();
 		LEVEL_restart = current_level;
 		current_level = LEVEL_PAUSE;
 	}
@@ -283,6 +261,15 @@ void clearScreen() {
 	g_Console.clearBuffer(0x1F);
 }
 
+void titleScreenWait() {
+
+	if (isKeyPressed(VK_SPACE)) {
+		closeMap();
+		current_level = LEVEL_MENU;
+	}
+
+}
+
 void renderGame() {
 	renderMap(&g_Console);        // renders the map to the buffer first
 
@@ -291,6 +278,7 @@ void renderGame() {
 		renderPauseMenu(&g_Console);
 		break;
 	case LEVEL_OVER:
+		renderGameOverMenu(&g_Console);
 		break;
 	case LEVEL_TITLE:
 		break;

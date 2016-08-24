@@ -103,6 +103,7 @@ void updateObjects(Console * handle, MAP map) {
 
 				// TODO: Stun player logic
 
+
 			}
 
 		}

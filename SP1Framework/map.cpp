@@ -9,6 +9,7 @@ MAP LEVEL_restart;
 MAP current_level;
 
 vector< vector<char> > g_Map;
+vector< vector<char> > g_Map_Cache;
 
 const short fogWidth = 8;
 const short fogHeight = 4;
@@ -19,8 +20,6 @@ const WORD fogColor = 0x0F;
 const unsigned char mapWalls = 0xDB;
 
 void renderMap(Console *handle) {
-
-
 
 	string buffer; // Buffer that contains the line of string that we read from the text file
 
@@ -133,7 +132,7 @@ void renderMap(Console *handle) {
 	}
 
 	// Output everything in g_Map to Console
- 	for (size_t row = 0; row < g_Map.size(); row++) {
+	for (size_t row = 0; row < g_Map.size(); row++) {
 		string s = "";
 		for (size_t col = 0; col < g_Map.at(row).size(); col++) {
 			// Change '8' to a mazey character
@@ -154,8 +153,7 @@ void renderFog(Console * handle) {
 
 	string str = " ";
 
-	if (!isGhostStunned())
-	{
+	if (!isGhostStunned()) {
 
 		for (short row = 0; row < g_Map.size(); row++) {
 
@@ -168,7 +166,7 @@ void renderFog(Console * handle) {
 					continue;
 				}
 
-				// Dont apply fog to the exit
+				// Dont apply fog to the exits
 				if (g_Map[row][col] == I_EXIT_INACTIVE || g_Map[row][col] == I_EXIT_ACTIVE) {
 					continue;
 				}
@@ -188,6 +186,13 @@ void closeMap() {
 	destroyObjects();
 	resetSkillStunCharges();
 	resetScoreSystem();
+	g_Map.clear();
+	file.close();
+}
+
+// For pause menu
+void closeHalfMap() {
+	g_Map_Cache = g_Map;
 	g_Map.clear();
 	file.close();
 }

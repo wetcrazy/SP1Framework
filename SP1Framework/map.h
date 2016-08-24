@@ -41,10 +41,19 @@ enum MAP {
 extern MAP LEVEL_restart;
 extern MAP current_level;
 extern vector< vector<char> > g_Map;
+extern vector< vector<char> > g_Map_Cache;
 
+// Draw the entire map vector onto the console
 void renderMap(Console * handle);
+
+// Renders fog over the map
 void renderFog(Console * handle);
-void closeMap(); // Closes the file stream & resets all variables upon changing map
+
+// Closes the file stream & resets all variables upon changing map
+void closeMap();
+
+// Clear only the map
+void closeHalfMap();
 
 
 #endif

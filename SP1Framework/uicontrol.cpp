@@ -3,35 +3,46 @@
 
 unsigned short selected_menu = 0;
 unsigned short selected_pause = 0;
+unsigned short selected_gameover = 0;
 
 // Controls logic for Main menu
 void updateMainMenu(double eTime, double dTime) {
-	
-	if (isKeyPressed(VK_UP)) {
-		selected_menu = 0;
-	}
-	else if (isKeyPressed(VK_DOWN)) {
-		selected_menu = 1;
-	}
 
-	// Process selected menu
-	if (isKeyPressed(VK_RETURN)) {
+	static bool keyUp = false;
 
-		switch (selected_menu) {
+	if (keyUp) {
 
-		case 0:
-			// Start Game
-			closeMap();
-			current_level = LEVEL_ONE;
-			break;
-
-		case 1:
-			// Quit
-			g_bQuitGame = true;
-			break;
-
+		if (isKeyPressed(VK_UP)) {
+			selected_menu = 0;
+		}
+		else if (isKeyPressed(VK_DOWN)) {
+			selected_menu = 1;
 		}
 
+		// Process selected menu
+		if (isKeyPressed(VK_RETURN)) {
+
+			switch (selected_menu) {
+
+			case 0:
+				// Start Game
+				closeMap();
+				current_level = LEVEL_ONE;
+				keyUp = false;
+				break;
+
+			case 1:
+				// Quit
+				g_bQuitGame = true;
+				break;
+
+			}
+
+		}
+	}
+
+	if (!isKeyPressed(VK_RETURN)) {
+		keyUp = true;
 	}
 
 }
@@ -63,7 +74,9 @@ void updatePauseMenu(double eTime, double dTime) {
 
 			case 0:
 				// Resume
-
+				g_eGameState = S_GAME; // for once, manually set the game state
+				g_Map = g_Map_Cache; // Reload the cached map onto the map
+				current_level = LEVEL_restart;
 				break;
 
 			case 1:
@@ -98,6 +111,63 @@ void updatePauseMenu(double eTime, double dTime) {
 
 }
 
+void updateGameOverMenu(double eTime, double dTime) {
+
+	static bool canPress1 = true;
+
+	if (canPress1) {
+
+		canPress1 = false;
+
+		if (isKeyPressed(VK_UP)) {
+			if (selected_gameover > 0) {
+				selected_gameover--;
+			}
+		}
+		else if (isKeyPressed(VK_DOWN)) {
+			if (selected_gameover < 2) {
+				selected_gameover++;
+			}
+		}
+
+		// Process selected menu
+		if (isKeyPressed(VK_RETURN)) {
+
+			switch (selected_gameover) {
+
+			case 0:
+				// Retry
+				closeMap();
+				current_level = LEVEL_restart;
+				break;
+
+			case 1:
+				// Main Menu
+				closeMap();
+				current_level = LEVEL_MENU;
+				break;
+
+			case 2:
+				// Quit
+				g_bQuitGame = true;
+				break;
+
+			}
+
+			selected_gameover = 0;
+
+		}
+
+	}
+
+	// Can press again on KeyUp 
+	if (!isKeyPressed(VK_UP) && !isKeyPressed(VK_DOWN)) {
+		canPress1 = true;
+	}
+
+
+}
+
 // Draw Main menu to screen
 void renderMainMenu(Console * handle) {
 
@@ -109,7 +179,7 @@ void renderMainMenu(Console * handle) {
 	COORD pos;
 	pos.Y = (consoleSize.Y / 2);
 	COORD pos2;
-	pos2.Y = (consoleSize.Y / 2) + 1;
+	pos2.Y = (consoleSize.Y / 2) + 2;
 
 	switch (selected_menu) {
 
@@ -194,5 +264,53 @@ void renderPauseMenu(Console * handle) {
 	handle->writeToBuffer(pos2, context2);
 	handle->writeToBuffer(pos3, context3);
 	handle->writeToBuffer(pos4, context4);
+
+}
+
+void renderGameOverMenu(Console * handle) {
+
+	string context1;
+	string context2;
+	string context3;
+
+	COORD consoleSize = handle->getConsoleSize();
+
+	COORD pos;
+	pos.Y = (consoleSize.Y / 2);
+	COORD pos2;
+	pos2.Y = (consoleSize.Y / 2) + 2;
+	COORD pos3;
+	pos3.Y = (consoleSize.Y / 2) + 4;
+
+	switch (selected_gameover) {
+
+	case 0:
+		context1 = ">Retry<";
+		context2 = "Main Menu";
+		context3 = "Quit";
+		break;
+
+	case 1:
+		context1 = "Retry";
+		context2 = ">Main Menu<";
+		context3 = "Quit";
+		break;
+
+	case 2:
+		context1 = "Retry";
+		context2 = "Main Menu";
+		context3 = ">Quit<";
+		break;
+
+	}
+
+
+	pos.X = (consoleSize.X / 2) - (context1.length() / 2);
+	pos2.X = (consoleSize.X / 2) - (context2.length() / 2);
+	pos3.X = (consoleSize.X / 2) - (context3.length() / 2);
+
+	handle->writeToBuffer(pos, context1);
+	handle->writeToBuffer(pos2, context2);
+	handle->writeToBuffer(pos3, context3);
 
 }
