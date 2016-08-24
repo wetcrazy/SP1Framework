@@ -201,10 +201,13 @@ void gameplay() // gameplay logic
 
 	if (current_level != LEVEL_MENU) {
 		updateAI(g_dDeltaTime); // processs AI logic
-		moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
-		processSkill(g_dDeltaTime);
-		updateObjects(&g_Console, current_level); // update logic for the objects in game
-		processcheat(g_abKeyPressed);
+		if (current_level != LEVEL_OVER) {
+			moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
+			processSkill(g_dDeltaTime);
+			updateObjects(&g_Console, current_level); // update logic for the objects in game
+			processcheat(g_abKeyPressed);
+
+		}
 	}
 
 }
