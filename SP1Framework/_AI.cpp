@@ -5,6 +5,8 @@
 
 vector<AI_GHOST> _COLLECTION_AI_GHOST;
 
+bool isGStunned = false;
+
 
 void stunGhosts() {
 	for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++) {
@@ -27,6 +29,10 @@ bool isNPC(char c) {
 	return false;
 }
 
+bool isGhostStunned(){
+	return isGStunned;
+}
+
 void updateAI(double dTime) {
 
 	static double ghostDeltaMoved = 0;
@@ -41,6 +47,7 @@ void updateAI(double dTime) {
 
 		// Ghost Stun recovering logic
 		if (ghostDeltaStunned > 0) {
+			isGStunned = true;
 			ghostDeltaStunned += dTime;
 			if (ghostDeltaStunned >= stun_GHOST_DURATION) {
 				ghostDeltaStunned = 0;
@@ -52,6 +59,8 @@ void updateAI(double dTime) {
 
 		// Ghosts AI movement
 		if (ghostDeltaMoved >= movementSpeed_GHOST) {
+
+			isGStunned = false;
 
 			for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++) {
 

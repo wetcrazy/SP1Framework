@@ -23,6 +23,9 @@ const char AI[] = {
 // Is this a non playable character?
 bool isNPC(char c);
 
+// Are the ghost stunned?
+bool isGhostStunned();
+
 // Stuns all ghost
 void stunGhosts();
 

@@ -7,7 +7,8 @@
 #include <fstream>
 #include "Framework\console.h"
 #include <vector>
-
+#include "skills.h"
+#include "_AI.h"
 
 using namespace std;
 

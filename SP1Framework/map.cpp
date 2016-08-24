@@ -1,9 +1,7 @@
 ﻿#include "map.h"
-#include "_interactable.h"
-#include "Framework\console.h"
-#include "_AI.h"
-#include "skills.h"
+#include "_interactable.h" 
 #include "score.h"
+
 
 static ifstream file;
 
@@ -146,28 +144,32 @@ void renderFog(Console * handle) {
 
 	string str = " ";
 
-	for (short row = 0; row < g_Map.size(); row++) {
+	if (!isGhostStunned())
+	{
 
-		for (short col = 0; col < g_Map[row].size(); col++) {
+		for (short row = 0; row < g_Map.size(); row++) {
 
-			COORD playerPos = g_sChar.m_cLocation;
+			for (short col = 0; col < g_Map[row].size(); col++) {
 
-			// Skip printing of fog if it falls within the player's vision radius
-			if (playerPos.X >= (col - fogWidth) && playerPos.X <= (col + fogWidth) && playerPos.Y <= (row + fogHeight) && playerPos.Y >= (row - fogHeight)) {
-				continue;
+				COORD playerPos = g_sChar.m_cLocation;
+
+				// Skip printing of fog if it falls within the player's vision radius
+				if (playerPos.X >= (col - fogWidth) && playerPos.X <= (col + fogWidth) && playerPos.Y <= (row + fogHeight) && playerPos.Y >= (row - fogHeight)) {
+					continue;
+				}
+
+				// Dont apply fog to the exit
+				if (g_Map[row][col] == I_EXIT_INACTIVE || g_Map[row][col] == I_EXIT_ACTIVE) {
+					continue;
+				}
+
+				handle->writeToBuffer(col, row + header_offset, str, fogColor);
+
 			}
-
-			// Dont apply fog to the exit
-			if (g_Map[row][col] == I_EXIT_INACTIVE || g_Map[row][col] == I_EXIT_ACTIVE) {
-				continue;
-			}
-
-			handle->writeToBuffer(col, row + header_offset, str, fogColor);
 
 		}
 
 	}
-
 }
 
 // Closes the file stream & resets all variables upon changing map
