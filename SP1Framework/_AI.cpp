@@ -14,6 +14,11 @@ void stunGhosts() {
 	}
 }
 
+void HurtBoss()
+{
+	//if boss is hurt, reduce it's hp bar
+}
+
 void unstunGhosts() {
 	for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++) {
 		_COLLECTION_AI_GHOST[i].active = true;

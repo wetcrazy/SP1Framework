@@ -26,6 +26,9 @@ bool isNPC(char c);
 // Are the ghost stunned?
 bool isGhostStunned();
 
+// Checks the boss hp bar
+void HurtBoss();
+
 // Stuns all ghost
 void stunGhosts();
 

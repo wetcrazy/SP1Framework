@@ -41,6 +41,24 @@ void processSkill(double dTime) {
 
 }
 
+//void ProcessSkillBoss(double dtime)
+//{
+//	static bool CanPressBoss = true;
+//	
+//	while (LEVEL_TEN)
+//	{
+//		if (!isKeyPressed(VK_SPACE))
+//		{
+//			CanPressBoss = true;
+//		}
+//
+//		if (isKeyPressed(VK_SPACE) && CanPressBoss)
+//		{
+//			
+//		}
+//	}
+//}
+
 short getSkillStunCharges() {
 	return SKILL_STUN_CHARGES;
 }
