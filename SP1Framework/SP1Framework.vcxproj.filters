@@ -81,16 +81,19 @@
     <ClCompile Include="uicontrol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
+
     <ClCompile Include="boss.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
+
     <ClCompile Include="shield.cpp">
-=======
-    <ClCompile Include="randomExit.cpp">
->>>>>>> efc18674c0ad77358a8c35d19c0cf8191184f2a3
-      <Filter>Source Files\Objects</Filter>
+	<Filter>Header Files\Objects</Filter>
     </ClCompile>
+
+    <ClCompile Include="randomExit.cpp">
+    <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
