@@ -37,24 +37,87 @@ void processSkill(double dTime) {
 	case LEVEL_FOUR:
 		if (isKeyPressed(VK_SPACE))
 		{
-			COORD PlayerCord = g_sChar.m_cLocation;
+			COORD PlayerCord = g_sChar.m_cLocation;// PLAYER COORDINATES
+			size_t rng = rand() % 10;
+			static size_t Num_Stars = 0;
+			static size_t Max_Stars = 10;
 
-			// Is the block solid or blank
-			if ((g_Map[PlayerCord.Y - 1][PlayerCord.X] == '8'))// UP
+			// If the block solid or blank, destroy~~
+			if ((isKeyPressed(VK_UP)) && (g_Map[PlayerCord.Y - 1][PlayerCord.X] == '8'))// UP
 			{
-				g_Map[PlayerCord.Y - 1][PlayerCord.X] = ' ';
+				if (Num_Stars < Max_Stars)
+				{
+					if (rng == 6)
+					{
+						g_Map[PlayerCord.Y - 1][PlayerCord.X] = '*';
+						Num_Stars++;
+					}
+					else
+					{
+						g_Map[PlayerCord.Y - 1][PlayerCord.X] = ' ';
+					}					
+				}
+				else
+				{
+					g_Map[PlayerCord.Y - 1][PlayerCord.X] = ' ';
+				}
 			}
-			else if ((g_Map[PlayerCord.Y + 1][PlayerCord.X] == '8'))// DOWN
+			else if ((isKeyPressed(VK_DOWN)) && (g_Map[PlayerCord.Y + 1][PlayerCord.X] == '8'))// DOWN
 			{
-				g_Map[PlayerCord.Y + 1][PlayerCord.X] = ' ';
+				if (Num_Stars < Max_Stars)
+				{
+					if (rng == 6)
+					{
+						g_Map[PlayerCord.Y + 1][PlayerCord.X] = '*';
+						Num_Stars++;
+					}
+					else
+					{
+						g_Map[PlayerCord.Y + 1][PlayerCord.X] = ' ';
+					}
+				}
+				else
+				{
+					g_Map[PlayerCord.Y + 1][PlayerCord.X] = ' ';
+				}
 			}
-			else if ((g_Map[PlayerCord.Y][PlayerCord.X - 1] == '8'))// RIGHT
+			else if ((isKeyPressed(VK_LEFT)) && (g_Map[PlayerCord.Y][PlayerCord.X - 1] == '8'))// LEFT
 			{
-				g_Map[PlayerCord.Y][PlayerCord.X - 1] = ' ';
+				if (Num_Stars < Max_Stars)
+				{
+					if (rng == 6)
+					{
+						g_Map[PlayerCord.Y][PlayerCord.X - 1] = '*';
+						Num_Stars++;
+					}
+					else
+					{
+						g_Map[PlayerCord.Y][PlayerCord.X - 1] = ' ';
+					}
+				}
+				else
+				{
+					g_Map[PlayerCord.Y][PlayerCord.X - 1] = ' ';
+				}
 			}
-			else if ((g_Map[PlayerCord.Y][PlayerCord.X + 1] == '8'))// LEFT
+			else if ((isKeyPressed(VK_RIGHT)) && (g_Map[PlayerCord.Y][PlayerCord.X + 1] == '8'))// RIGHT
 			{
-				g_Map[PlayerCord.Y][PlayerCord.X + 1] = ' ';
+				if (Num_Stars < Max_Stars)
+				{
+					if (rng == 6)
+					{
+						g_Map[PlayerCord.Y][PlayerCord.X + 1] = '*';
+						Num_Stars++;
+					}
+					else
+					{
+						g_Map[PlayerCord.Y][PlayerCord.X + 1] = ' ';
+					}
+				}
+				else
+				{
+					g_Map[PlayerCord.Y][PlayerCord.X + 1] = ' ';
+				}				
 			}
 
 		}
