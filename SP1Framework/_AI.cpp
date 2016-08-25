@@ -4,7 +4,7 @@
 
 
 vector<AI_GHOST> _COLLECTION_AI_GHOST;
-BOSS _AI_BOSS;
+AI_BOSS _AI_BOSS;
 
 bool isGStunned = false;
 
@@ -94,7 +94,7 @@ void updateAI(double dTime) {
 					tempPos = _COLLECTION_AI_GHOST[i].pos;
 					tempPos.X--;
 
-					// Dont move if the ghost is going to move into another ghost
+					// Dont move if we are going to collide into another ghost
 					if (!isGhostAtPos(i, tempPos)){
 						_COLLECTION_AI_GHOST[i].pos.X--;
 					}
@@ -105,7 +105,7 @@ void updateAI(double dTime) {
 					tempPos = _COLLECTION_AI_GHOST[i].pos;
 					tempPos.X++;
 
-					// Dont move if the ghost is going to move into another ghost
+					// Dont move if we are going to collide into another ghost
 					if (!isGhostAtPos(i, tempPos)){
 						_COLLECTION_AI_GHOST[i].pos.X++;
 					}
@@ -116,7 +116,7 @@ void updateAI(double dTime) {
 					tempPos = _COLLECTION_AI_GHOST[i].pos;
 					tempPos.Y--;
 
-					// Dont move if the ghost is going to move into another ghost
+					// Dont move if we are going to collide into another ghost
 					if (!isGhostAtPos(i, tempPos)){
 						_COLLECTION_AI_GHOST[i].pos.Y--;
 					}
@@ -127,7 +127,7 @@ void updateAI(double dTime) {
 					tempPos = _COLLECTION_AI_GHOST[i].pos;
 					tempPos.Y++;
 
-					// Dont move if the ghost is going to move into another ghost
+					// Dont move if we are going to collide into another ghost
 					if (!isGhostAtPos(i, tempPos)){
 						_COLLECTION_AI_GHOST[i].pos.Y++;
 					}
@@ -151,10 +151,13 @@ void updateAI(double dTime) {
 		break;
 
 	case LEVEL_THREE:
-		// Boss AI Here
-		// Boss bullet ai here
-		// When player is in range of boss, boss shoot bullet
-		// bullet flies towards the player but if there is a way infront it crashes into the wall
+	case LEVEL_FOUR:
+
+		break;
+	case LEVEL_FIVE:
+
+
+
 		break;
 
 	}
@@ -185,4 +188,12 @@ void destroyGhosts() {
 
 void destroyAI() {
 	_COLLECTION_AI_GHOST.clear();
+}
+
+void spawn_boss(COORD pos){
+
+	_AI_BOSS.pos = pos;
+	_AI_BOSS.health = 15;
+	_AI_BOSS.phase = 1;
+
 }

@@ -3,12 +3,11 @@
 
 #include <Windows.h>
 
-struct BOSS {
+struct AI_BOSS {
 
 	COORD pos;
 	short health;
 	short phase;
-	bool god;
 
 };
 

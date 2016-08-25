@@ -56,7 +56,7 @@ void renderMap(Console *handle) {
 		case LEVEL_FIVE:
 			g_sChar.m_cLocation = handle->getConsoleSize();
 			g_sChar.m_cLocation.X /= 2;
-			(g_sChar.m_cLocation.Y /= 2)  += 9; // hard coded y offset
+			(g_sChar.m_cLocation.Y /= 2) += 9; // hard coded y offset
 
 			g_eGameState = S_GAME;
 			file.open("level_" + to_string(current_level) + ".txt");
@@ -127,8 +127,19 @@ void renderMap(Console *handle) {
 
 					break;
 
-				}
+				case LEVEL_THREE:
+				case LEVEL_FOUR:
+				case LEVEL_FIVE:
+					if (buffer[col] == AI::BOSS){
 
+						buffer[col] = ' ';
+
+						spawn_boss(pos);
+
+					}
+					break;
+
+				}
 			}
 
 			vecRowBuffer.push_back(buffer[col]);

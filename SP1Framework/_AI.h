@@ -8,17 +8,19 @@
 
 
 extern vector<AI_GHOST> _COLLECTION_AI_GHOST;
-extern BOSS _AI_BOSS;
+extern AI_BOSS _AI_BOSS;
 
 enum AI {
 
-	GHOST = '@'
+	GHOST = '@',
+	BOSS = '&'
 
 };
 
 
 const char AI[] = {
-	GHOST
+	GHOST,
+	BOSS
 };
 
 
@@ -48,6 +50,9 @@ void destroyAI();
 
 // Spawn the amount of ghosts at random location
 void spawn_ghosts(unsigned int count);
+
+// Not really spawning but initializing the boss's struct
+void spawn_boss(COORD pos);
 
 // Repositions and process AI logic
 void updateAI(double dTime);
