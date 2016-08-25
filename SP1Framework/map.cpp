@@ -11,8 +11,8 @@ MAP current_level;
 vector< vector<char> > g_Map;
 vector< vector<char> > g_Map_Cache;
 
-const short fogWidth = 8;
-const short fogHeight = 4;
+short fogWidth = 8;
+short fogHeight = 4;
 
 const WORD mapColor = 0xF8;
 const WORD fogColor = 0x0F;
@@ -175,7 +175,7 @@ void renderFog(Console * handle) {
 
 	string str = " ";
 
-	if (!isGhostStunned()) {
+	if ((!isGhostStunned() || _AI_BOSS.phase == 1) && _AI_BOSS.phase < 2) {
 
 		for (short row = 0; row < g_Map.size(); row++) {
 
@@ -212,6 +212,10 @@ void replaceMapCharacter(char c, char sub){
 			}
 		}
 	}
+
+}
+
+void setFogSize(short ) {
 
 }
 

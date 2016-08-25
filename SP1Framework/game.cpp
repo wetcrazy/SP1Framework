@@ -10,6 +10,7 @@
 #include "cheat.h"
 #include "skills.h"
 #include "uicontrol.h"
+#include "movement.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -18,11 +19,10 @@ bool    g_abKeyPressed[K_COUNT];
 // Game specific variables here
 SGameChar g_sChar;
 EGAMESTATES g_eGameState;
-double  g_dBounceTime; // this is to prevent key bouncing, so we won't trigger keypresses more than once
 
 
 // Console object
-Console g_Console(mapWidth, mapHeight + footer_offset, "Group 6");
+Console g_Console(mapWidth, mapHeight + footer_offset, "Group 6: Lingering Dark Tunnel");
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -35,7 +35,6 @@ void init(void) {
 
 	// Set precision for floating point output
 	g_dElapsedTime = 0.0;
-	g_dBounceTime = 0.0;
 
 	// sets the initial state for the game
 	g_eGameState = S_TITLESCREEN;
@@ -167,108 +166,17 @@ void gameplay() // gameplay logic
 {
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
 
-	if (current_level != LEVEL_MENU && current_level != LEVEL_PAUSE) {
+	if (current_level != LEVEL_MENU && current_level != LEVEL_PAUSE && current_level != LEVEL_OVER) {
+		moveCharacter(&g_Console, g_dElapsedTime, g_dDeltaTime);    // moves the character, collision detection, physics, etc, sound can be played here too.
+		processSkill(g_dDeltaTime);
 		updateAI(g_dElapsedTime, g_dDeltaTime); // processs AI logic
-		if (current_level != LEVEL_OVER) {
-			moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
-			processSkill(g_dDeltaTime);
-			updateObjects(&g_Console, current_level, g_dElapsedTime); // update logic for the objects in game
-			processcheat(g_abKeyPressed);
-
-		}
+		updateObjects(&g_Console, current_level, g_dElapsedTime); // update logic for the objects in game
+		processcheat(g_abKeyPressed);
 	}
 
 }
 
-void moveCharacter() {
 
-	try {
-
-		// Collision Detection
-		g_sChar.xP = g_Map.at(g_sChar.m_cLocation.Y).at(g_sChar.m_cLocation.X + 1);
-		g_sChar.xN = g_Map.at(g_sChar.m_cLocation.Y).at(g_sChar.m_cLocation.X - 1);
-		g_sChar.yP = g_Map.at(g_sChar.m_cLocation.Y - 1).at(g_sChar.m_cLocation.X);
-		g_sChar.yN = g_Map.at(g_sChar.m_cLocation.Y + 1).at(g_sChar.m_cLocation.X);
-		g_sChar.below = g_Map.at(g_sChar.m_cLocation.Y).at(g_sChar.m_cLocation.X);
-
-	}
-	catch (out_of_range ex) {
-
-		// Go next level
-		closeMap();
-
-		switch (current_level)
-		{
-
-		case LEVEL_ONE:
-			current_level = LEVEL_TWO;
-			break;
-		case LEVEL_TWO:
-			current_level = LEVEL_THREE;
-			break;
-		case LEVEL_THREE:
-			current_level = LEVEL_FOUR;
-			break;
-		case LEVEL_FOUR:
-			current_level = LEVEL_FIVE;
-			break;
-		default:
-			current_level = LEVEL_TITLE;
-			break;
-		}
-
-	}
-
-	bool bSomethingHappened = false;
-	if (g_dBounceTime > g_dElapsedTime)
-		return;
-
-	if (!g_sChar.m_bStunned) {
-
-		// Updating the location of the character based on the key press
-		// providing a beep sound whenver we shift the character
-		if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && isPassable(g_sChar.yP)) {
-			g_sChar.m_cLocation.Y--;
-			bSomethingHappened = true;
-			g_sChar.direction = D_UP;
-		}
-		else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP)) {
-			//Beep(1500, 100);
-		}
-		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
-			g_sChar.m_cLocation.X--;
-			bSomethingHappened = true;
-			g_sChar.direction = D_LEFT;
-		}
-		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN)) {
-			//Beep(1500, 100);
-		}
-		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
-			g_sChar.m_cLocation.Y++;
-			bSomethingHappened = true;
-			g_sChar.direction = D_DOWN;
-		}
-		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN)) {
-			//Beep(1500, 100);
-		}
-		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
-			g_sChar.m_cLocation.X++;
-			bSomethingHappened = true;
-			g_sChar.direction = D_RIGHT;
-		}
-		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP)) {
-			//Beep(1500, 100);
-		}
-
-	}
-
-	if (bSomethingHappened) {
-		// set the bounce time to some time in the future to prevent accidental triggers
-		g_dBounceTime = g_dElapsedTime + 0.1; // 125ms should be enough
-	}
-
-
-}
 void processUserInput() {
 	if (g_abKeyPressed[K_ESCAPE]) {
 		closeHalfMap();
@@ -311,18 +219,14 @@ void renderGame() {
 	case LEVEL_TWO:
 	case LEVEL_THREE:
 	case LEVEL_FOUR:
+	case LEVEL_FIVE:
 	case LEVEL_SIX:
 	case LEVEL_SEVEN:
 	case LEVEL_EIGHT:
 	case LEVEL_NINE:
 	case LEVEL_TEN:
 		renderCharacter();  // renders the character into the buffer
-		renderFog(&g_Console); // fog on 2nd layer
-		renderAI(&g_Console); // we can still see AI even if they are in the fog
-		dialogue(&g_Console); // HUD interface
-		break;
-	case LEVEL_FIVE:
-		renderCharacter();  // renders the character into the buffer
+		renderFog(&g_Console); // overlay fog above the map
 		renderAI(&g_Console); // we can still see AI even if they are in the fog
 		dialogue(&g_Console); // HUD interface
 		break;

@@ -34,13 +34,10 @@ bool isGhostStunned();
 // Are there any ghost in this position? Skips iteration of index 'i'
 bool isGhostAtPos(int i, COORD pos);
 
-// Checks the boss hp bar
-void HurtBoss();
-
-// Stuns all ghost
+// Set all ghosts in the vector to 'inactive'
 void stunGhosts();
 
-// Un-stuns all ghost
+// Set all ghosts in the vector to 'active'
 void unstunGhosts();
 
 // Despawn all ghosts
@@ -50,10 +47,16 @@ void destroyGhosts();
 void destroyAI();
 
 // Spawn ghost at specific coordinates
-void spawn_ghosts(COORD pos);
+void spawn_ghost(COORD pos, bool active);
 
 // Not really spawning but initializing the boss's struct
 void spawn_boss(COORD pos);
+
+// Processes ghost ai logic
+void updateGhostMovement(double eTime, double dTime);
+
+// Process Ghost touch logic, returns true if player is touched
+bool updateGhostTouch();
 
 // Repositions and process AI logic
 void updateAI(double eTime,double dTime);

@@ -64,6 +64,7 @@ void dialogue(Console * handle) {
 
 		case 2:
 			strLeft = "-Phase 2-";
+			strCenter = "Destroy the Boss!";
 			strTopCenter = "Boss HP: ";
 
 			for (short i = 0; i < _AI_BOSS.health; i++){

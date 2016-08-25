@@ -81,19 +81,18 @@
     <ClCompile Include="uicontrol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-
     <ClCompile Include="boss.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
-
     <ClCompile Include="shield.cpp">
-	<Filter>Header Files\Objects</Filter>
+      <Filter>Header Files\Objects</Filter>
     </ClCompile>
-
     <ClCompile Include="randomExit.cpp">
-    <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
-
+    <ClCompile Include="movement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -149,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="shield.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="movement.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -86,6 +86,7 @@
     <ClCompile Include="ghost.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="movement.cpp" />
     <ClCompile Include="portal.cpp" />
     <ClCompile Include="randomExit.cpp" />
     <ClCompile Include="score.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="ghost.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="movement.h" />
     <ClInclude Include="portal.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="shield.h" />
