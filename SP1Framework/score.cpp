@@ -1,11 +1,11 @@
 #include "score.h"
 
 
-int _POINTS_ASTERISK = 2;
+int _POINTS_ASTERISK = 10;
 
 
 void resetScoreSystem() {
 
-	_POINTS_ASTERISK = 2;
+	_POINTS_ASTERISK = 10;
 
 }

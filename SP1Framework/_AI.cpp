@@ -178,14 +178,16 @@ void updateAI(double eTime, double dTime) {
 				}
 			}
 
-			// TODO: Boss attacking Logic
-
+			// Boss attacking Logic
+			// 1: Spawn 4 ghosts on collecting 1st star
+			// 2: Render fog, but remove upon transitioning
 			break;
 
 		case 2: // P2
 
-
-
+			// Boss attacking logic
+			// 1: Moves left & right and shoots projectile @ up,down,left,right, diagonally
+			// 2: To damage boss: 
 			break;
 
 		case 3: // P3

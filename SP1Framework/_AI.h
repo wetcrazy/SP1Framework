@@ -49,8 +49,8 @@ void destroyGhosts();
 // Destroy all AI objects
 void destroyAI();
 
-// Spawn the amount of ghosts at random location
-void spawn_ghosts(unsigned int count);
+// Spawn ghost at specific coordinates
+void spawn_ghosts(COORD pos);
 
 // Not really spawning but initializing the boss's struct
 void spawn_boss(COORD pos);

@@ -159,7 +159,7 @@ void render() {
 		renderGame();
 		break;
 	}
-	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
+	//renderFramerate();  // renders debug information, frame rate, elapsed time, etc
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
 
@@ -196,15 +196,27 @@ void moveCharacter() {
 
 		// Go next level
 		closeMap();
-		if (current_level == LEVEL_ONE) {
+
+		switch (current_level)
+		{
+
+		case LEVEL_ONE:
 			current_level = LEVEL_TWO;
-		}
-		else if (current_level == LEVEL_TWO) {
-			current_level = LEVEL_TEN;
-		}
-		else {
+			break;
+		case LEVEL_TWO:
+			current_level = LEVEL_THREE;
+			break;
+		case LEVEL_THREE:
+			current_level = LEVEL_FOUR;
+			break;
+		case LEVEL_FOUR:
+			current_level = LEVEL_FIVE;
+			break;
+		default:
 			current_level = LEVEL_TITLE;
+			break;
 		}
+
 	}
 
 	bool bSomethingHappened = false;
@@ -221,7 +233,7 @@ void moveCharacter() {
 			g_sChar.direction = D_UP;
 		}
 		else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP)) {
-			Beep(1500, 100);
+			//Beep(1500, 100);
 		}
 		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
 			g_sChar.m_cLocation.X--;
@@ -229,7 +241,7 @@ void moveCharacter() {
 			g_sChar.direction = D_LEFT;
 		}
 		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN)) {
-			Beep(1500, 100);
+			//Beep(1500, 100);
 		}
 		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
 			g_sChar.m_cLocation.Y++;
@@ -237,7 +249,7 @@ void moveCharacter() {
 			g_sChar.direction = D_DOWN;
 		}
 		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN)) {
-			Beep(1500, 100);
+			//Beep(1500, 100);
 		}
 		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
 			g_sChar.m_cLocation.X++;
@@ -245,7 +257,7 @@ void moveCharacter() {
 			g_sChar.direction = D_RIGHT;
 		}
 		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP)) {
-			Beep(1500, 100);
+			//Beep(1500, 100);
 		}
 
 	}
