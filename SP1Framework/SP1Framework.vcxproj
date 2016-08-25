@@ -95,6 +95,7 @@
     <ClCompile Include="_interactable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="boss.h" />
     <ClInclude Include="cheat.h" />
     <ClInclude Include="dialogue.h" />
     <ClInclude Include="exit.h" />

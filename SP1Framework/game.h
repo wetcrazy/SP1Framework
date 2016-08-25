@@ -58,6 +58,13 @@ enum EGAMESTATES {
 	S_COUNT
 };
 
+enum E_PLAYERDIRECTION {
+	D_LEFT,
+	D_RIGHT,
+	D_UP,
+	D_DOWN
+};
+
 // struct for the game character
 struct SGameChar {
 	COORD m_cLocation;
@@ -68,6 +75,7 @@ struct SGameChar {
 	char  yP;
 	char  yN;
 	char  below;
+	E_PLAYERDIRECTION direction;
 };
 
 extern SGameChar g_sChar;

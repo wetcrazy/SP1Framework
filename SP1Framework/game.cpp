@@ -48,6 +48,7 @@ void init(void) {
 	g_sChar.yP = ' ';
 	g_sChar.yN = ' ';
 	g_sChar.below = ' ';
+	g_sChar.direction = D_UP;
 
 	g_sChar.m_bActive = true;
 	g_sChar.m_bStunned = false;
@@ -217,6 +218,7 @@ void moveCharacter() {
 		if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && isPassable(g_sChar.yP)) {
 			g_sChar.m_cLocation.Y--;
 			bSomethingHappened = true;
+			g_sChar.direction = D_UP;
 		}
 		else if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && !isPassable(g_sChar.yP)) {
 			Beep(1500, 100);
@@ -224,6 +226,7 @@ void moveCharacter() {
 		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
 			g_sChar.m_cLocation.X--;
 			bSomethingHappened = true;
+			g_sChar.direction = D_LEFT;
 		}
 		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && !isPassable(g_sChar.xN)) {
 			Beep(1500, 100);
@@ -232,6 +235,7 @@ void moveCharacter() {
 
 			g_sChar.m_cLocation.Y++;
 			bSomethingHappened = true;
+			g_sChar.direction = D_DOWN;
 		}
 		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && !isPassable(g_sChar.yN)) {
 			Beep(1500, 100);
@@ -239,6 +243,7 @@ void moveCharacter() {
 		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
 			g_sChar.m_cLocation.X++;
 			bSomethingHappened = true;
+			g_sChar.direction = D_RIGHT;
 		}
 		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1 && !isPassable(g_sChar.xP)) {
 			Beep(1500, 100);
