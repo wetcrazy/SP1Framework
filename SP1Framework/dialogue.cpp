@@ -32,7 +32,18 @@ void dialogue(Console * handle) {
 		break;
 
 	case LEVEL_TWO:
-		strCenter = "Solve the puzzle";
+		strLeft = "Stage 2";
+		strCenter = "Avoid Ghosts & Collect Stars";
+		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
+		strTopCenter = "Flash:";
+		if (getSkillStunCharges() == 0) {
+			strTopCenter += " Empty";
+		}
+		else {
+			for (short i = 0; i < getSkillStunCharges(); i++) {
+				strTopCenter += "#";
+			}
+		}
 		break;
 	case LEVEL_THREE:
 		strCenter = "";
