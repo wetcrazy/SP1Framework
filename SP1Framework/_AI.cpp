@@ -1,5 +1,5 @@
 #include "_AI.h"
-
+#include "_interactable.h"
 
 
 
@@ -49,7 +49,7 @@ bool isGhostAtPos(int i, COORD pos){
 	return false;
 }
 
-void updateAI(double dTime) {
+void updateAI(double eTime, double dTime) {
 
 	static double ghostDeltaMoved = 0;
 	static double ghostDeltaStunned = 0;
@@ -154,8 +154,51 @@ void updateAI(double dTime) {
 	case LEVEL_FOUR:
 
 		break;
-	case LEVEL_FIVE:
 
+	case LEVEL_FIVE: // Boss AI Logic
+
+		// Different phases logic for Boss
+		switch (_AI_BOSS.phase){
+
+		case 1: // P1
+
+			// Transition to phase 2 when enough stars are collected
+			if (_POINTS_ASTERISK <= 0){
+
+				static double removalTime = eTime + 0.1;
+				static double timeNow = eTime;
+				static int shieldCount = _COLLECTION_OBJ_SHIELD.size();
+
+				if (shieldCount > 0 && timeNow >= removalTime){
+					removeCharacterFromMap(I_SHIELD, ' ');
+					removalTime = eTime + 0.1;
+					shieldCount--;
+				}
+				else if (shieldCount == 0){
+					_AI_BOSS.phase = 2;
+				}
+				else {
+					timeNow += dTime;
+				}
+
+
+			}
+
+
+
+			break;
+
+		case 2: // P2
+
+
+
+			break;
+
+		case 3: // P3
+
+			break;
+
+		}
 
 
 		break;
@@ -179,6 +222,7 @@ void renderAI(Console * handle) {
 
 		handle->writeToBuffer(_COLLECTION_AI_GHOST[i].pos.X, _COLLECTION_AI_GHOST[i].pos.Y + header_offset, AI::GHOST, ghostColor);
 	}
+
 
 }
 

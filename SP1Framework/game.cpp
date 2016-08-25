@@ -168,7 +168,7 @@ void gameplay() // gameplay logic
 	processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
 
 	if (current_level != LEVEL_MENU && current_level != LEVEL_PAUSE) {
-		updateAI(g_dDeltaTime); // processs AI logic
+		updateAI(g_dElapsedTime, g_dDeltaTime); // processs AI logic
 		if (current_level != LEVEL_OVER) {
 			moveCharacter();    // moves the character, collision detection, physics, etc, sound can be played here too.
 			processSkill(g_dDeltaTime);

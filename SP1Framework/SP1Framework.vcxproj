@@ -77,6 +77,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boss.cpp" />
     <ClCompile Include="cheat.cpp" />
     <ClCompile Include="dialogue.cpp" />
     <ClCompile Include="Framework\console.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="portal.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="shield.cpp" />
     <ClCompile Include="skills.cpp" />
     <ClCompile Include="star.cpp" />
     <ClCompile Include="trap.cpp" />
@@ -106,6 +108,7 @@
     <ClInclude Include="map.h" />
     <ClInclude Include="portal.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="shield.h" />
     <ClInclude Include="skills.h" />
     <ClInclude Include="star.h" />
     <ClInclude Include="trap.h" />

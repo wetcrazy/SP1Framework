@@ -52,13 +52,32 @@ void dialogue(Console * handle) {
 		strCenter = "";
 		break;
 	case LEVEL_FIVE:
-		strLeft = "Final Stage";
-		strCenter = "Collect Stars to break barrier";
-		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
-		strTopCenter = "Boss HP: ";
-		for (short i = 0; i < _AI_BOSS.health; i++){
-			strTopCenter += "#";
+
+		switch (_AI_BOSS.phase){
+
+		case 1:
+			strLeft = "-Phase 1-";
+			strCenter = "Collect Stars to break the barrier!";
+			strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
+			strTopCenter = "Boss HP: Invulnerable";
+			break;
+
+		case 2:
+			strLeft = "-Phase 2-";
+			strTopCenter = "Boss HP: ";
+
+			for (short i = 0; i < _AI_BOSS.health; i++){
+				strTopCenter += "#";
+			}
+			break;
+
+		case 3:
+			strLeft = "-Final Phase-";
+
+
+			break;
 		}
+
 		break;
 	case LEVEL_SIX:
 		strCenter = "";

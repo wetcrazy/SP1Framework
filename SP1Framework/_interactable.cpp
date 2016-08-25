@@ -7,6 +7,7 @@ vector<STAR> _COLLECTION_OBJ_STAR;
 vector<PORTAL> _COLLECTION_OBJ_PORTAL;
 vector<EXIT> _COLLECTION_OBJ_EXIT;
 vector<TRAP> _COLLECTION_OBJ_TRAP;
+vector<SHIELD> _COLLECTION_OBJ_SHIELD;
 
 
 // Test if the argument is an passable ASCII character
@@ -148,4 +149,10 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 	}
 
 
+}
+
+
+
+void removeShield(int index){
+	_COLLECTION_OBJ_SHIELD.erase(_COLLECTION_OBJ_SHIELD.begin() + index);
 }

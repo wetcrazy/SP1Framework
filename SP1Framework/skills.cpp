@@ -1,5 +1,5 @@
 #include "skills.h"
-
+#include "_interactable.h"
 
 
 short SKILL_STUN_CHARGES = 3;
@@ -8,7 +8,7 @@ short SKILL_MINING = 2;
 
 // Use the skills available and appropriate to the current_level
 void processSkill(double dTime) {
-
+	
 	static bool canPress = true;
 	static bool PressCan = true;
 

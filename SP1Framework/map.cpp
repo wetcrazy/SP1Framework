@@ -129,11 +129,18 @@ void renderMap(Console *handle) {
 
 				case LEVEL_THREE:
 				case LEVEL_FOUR:
+					break;
 				case LEVEL_FIVE:
+
+					if (buffer[col] == I_SHIELD){
+						_COLLECTION_OBJ_SHIELD.push_back({
+							_COLLECTION_OBJ_SHIELD.size(), pos
+						});
+					}
+
 					if (buffer[col] == AI::BOSS){
 
 						buffer[col] = ' ';
-
 						spawn_boss(pos);
 
 					}
@@ -186,8 +193,8 @@ void renderFog(Console * handle) {
 					continue;
 				}
 
-				// Dont apply fog to the exits
-				if (g_Map[row][col] == I_EXIT_INACTIVE || g_Map[row][col] == I_EXIT_ACTIVE) {
+				// Dont apply fog to the exits/shield/boss
+				if (g_Map[row][col] == I_EXIT_INACTIVE || g_Map[row][col] == I_EXIT_ACTIVE || g_Map[row][col] == I_SHIELD || g_Map[row][col] == BOSS) {
 					continue;
 				}
 
@@ -198,6 +205,19 @@ void renderFog(Console * handle) {
 		}
 
 	}
+}
+
+void removeCharacterFromMap(char c, char sub){
+
+	for (size_t i = 0; i < g_Map.size(); i++){
+		for (size_t k = 0; k < g_Map[i].size(); k++){
+			if (g_Map[i][k] == c){
+				g_Map[i][k] = sub;
+				return;
+			}
+		}
+	}
+
 }
 
 // Closes the file stream & resets all variables upon changing map

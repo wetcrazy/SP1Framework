@@ -11,10 +11,10 @@ struct AI_BOSS {
 
 };
 
-
-
 const WORD color_BOSS_SHIELD_ACTIVE_1 = 0x0C;
 const WORD color_BOSS_SHIELD_INACTIVE = 0x08;
+
+
 
 
 #endif

@@ -5,6 +5,7 @@
 #include "ghost.h"
 #include "game.h"
 #include "boss.h"
+#include "score.h"
 
 
 extern vector<AI_GHOST> _COLLECTION_AI_GHOST;
@@ -55,7 +56,7 @@ void spawn_ghosts(unsigned int count);
 void spawn_boss(COORD pos);
 
 // Repositions and process AI logic
-void updateAI(double dTime);
+void updateAI(double eTime,double dTime);
 
 // Renders AI onto the map
 void renderAI(Console * handle);
