@@ -232,7 +232,6 @@ void moveCharacter() {
 			Beep(1500, 100);
 		}
 		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
-
 			g_sChar.m_cLocation.Y++;
 			bSomethingHappened = true;
 			g_sChar.direction = D_DOWN;
@@ -300,7 +299,6 @@ void renderGame() {
 	case LEVEL_TWO:
 	case LEVEL_THREE:
 	case LEVEL_FOUR:
-	case LEVEL_FIVE:
 	case LEVEL_SIX:
 	case LEVEL_SEVEN:
 	case LEVEL_EIGHT:
@@ -308,6 +306,11 @@ void renderGame() {
 	case LEVEL_TEN:
 		renderCharacter();  // renders the character into the buffer
 		renderFog(&g_Console); // fog on 2nd layer
+		renderAI(&g_Console); // we can still see AI even if they are in the fog
+		dialogue(&g_Console); // HUD interface
+		break;
+	case LEVEL_FIVE:
+		renderCharacter();  // renders the character into the buffer
 		renderAI(&g_Console); // we can still see AI even if they are in the fog
 		dialogue(&g_Console); // HUD interface
 		break;

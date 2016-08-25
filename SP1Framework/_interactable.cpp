@@ -7,7 +7,7 @@ vector<STAR> _COLLECTION_OBJ_STAR;
 vector<PORTAL> _COLLECTION_OBJ_PORTAL;
 vector<EXIT> _COLLECTION_OBJ_EXIT;
 vector<TRAP> _COLLECTION_OBJ_TRAP;
-vector<SHIELD> _COLLECTION_OBJ_SHIELD;
+short _COLLECTION_OBJ_SHIELD_COUNT = 0;
 
 
 // Test if the argument is an passable ASCII character
@@ -33,6 +33,7 @@ void destroyObjects() {
 	_COLLECTION_OBJ_PORTAL.clear();
 	_COLLECTION_OBJ_EXIT.clear();
 	_COLLECTION_OBJ_TRAP.clear();
+	_COLLECTION_OBJ_SHIELD_COUNT = 0;
 }
 
 // Object logic goes here
@@ -129,11 +130,7 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 			if (_POINTS_ASTERISK > 0) {
 				_POINTS_ASTERISK--; // Decrement stars left by 1
 			}
-
-			if (_POINTS_ASTERISK <= 0) {
-				// Break boss shield here
-			}
-
+			
 		}
 		break;
 	case LEVEL_SIX:
@@ -149,10 +146,4 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 	}
 
 
-}
-
-
-
-void removeShield(int index){
-	_COLLECTION_OBJ_SHIELD.erase(_COLLECTION_OBJ_SHIELD.begin() + index);
 }

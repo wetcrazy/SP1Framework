@@ -133,16 +133,11 @@ void renderMap(Console *handle) {
 				case LEVEL_FIVE:
 
 					if (buffer[col] == I_SHIELD){
-						_COLLECTION_OBJ_SHIELD.push_back({
-							_COLLECTION_OBJ_SHIELD.size(), pos
-						});
+						_COLLECTION_OBJ_SHIELD_COUNT++;
 					}
 
 					if (buffer[col] == AI::BOSS){
-
-						buffer[col] = ' ';
-						spawn_boss(pos);
-
+						spawn_boss(pos); // Initialize the boss
 					}
 					break;
 
@@ -207,7 +202,7 @@ void renderFog(Console * handle) {
 	}
 }
 
-void removeCharacterFromMap(char c, char sub){
+void replaceMapCharacter(char c, char sub){
 
 	for (size_t i = 0; i < g_Map.size(); i++){
 		for (size_t k = 0; k < g_Map[i].size(); k++){

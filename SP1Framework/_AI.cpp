@@ -133,19 +133,23 @@ void updateAI(double eTime, double dTime) {
 					}
 				}
 
-
-				COORD ghostPos = _COLLECTION_AI_GHOST[i].pos;
-				COORD playerPos = g_sChar.m_cLocation;
-
-				if (ghostPos.X == playerPos.X && ghostPos.Y == playerPos.Y) {
-					closeMap();
-					LEVEL_restart = current_level;
-					current_level = LEVEL_OVER;
-					break;
-				}
-
 			}
 			ghostDeltaMoved = 0;
+
+		}
+
+		// Did player touched a ghost?
+		for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++){
+
+			COORD ghostPos = _COLLECTION_AI_GHOST[i].pos;
+			COORD playerPos = g_sChar.m_cLocation;
+
+			if (ghostPos.X == playerPos.X && ghostPos.Y == playerPos.Y) {
+				closeMap();
+				LEVEL_restart = current_level;
+				current_level = LEVEL_OVER;
+				break;
+			}
 		}
 
 		break;
@@ -164,27 +168,17 @@ void updateAI(double eTime, double dTime) {
 
 			// Transition to phase 2 when enough stars are collected
 			if (_POINTS_ASTERISK <= 0){
+				if (_COLLECTION_OBJ_SHIELD_COUNT > 0){
+					replaceMapCharacter(I_SHIELD, ' ');
+					_COLLECTION_OBJ_SHIELD_COUNT--;
 
-				static double removalTime = eTime + 0.1;
-				static double timeNow = eTime;
-				static int shieldCount = _COLLECTION_OBJ_SHIELD.size();
-
-				if (shieldCount > 0 && timeNow >= removalTime){
-					removeCharacterFromMap(I_SHIELD, ' ');
-					removalTime = eTime + 0.1;
-					shieldCount--;
+					if (_COLLECTION_OBJ_SHIELD_COUNT <= 0){
+						_AI_BOSS.phase = 2;
+					}
 				}
-				else if (shieldCount == 0){
-					_AI_BOSS.phase = 2;
-				}
-				else {
-					timeNow += dTime;
-				}
-
-
 			}
 
-
+			// TODO: Boss attacking Logic
 
 			break;
 

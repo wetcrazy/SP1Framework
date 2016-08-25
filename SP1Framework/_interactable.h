@@ -51,7 +51,7 @@ extern vector<STAR> _COLLECTION_OBJ_STAR;
 extern vector<PORTAL> _COLLECTION_OBJ_PORTAL;
 extern vector<EXIT> _COLLECTION_OBJ_EXIT;
 extern vector<TRAP> _COLLECTION_OBJ_TRAP;
-extern vector<SHIELD> _COLLECTION_OBJ_SHIELD;
+extern short _COLLECTION_OBJ_SHIELD_COUNT;
 
 // Is this an passable object?
 bool isPassable(char c);
@@ -79,9 +79,6 @@ void activateExit();
 
 // Make all exits un-passable
 void deactivateExit();
-
-// Removes the shield at index
-void removeShield(int index);
 
 //generate random exit 
 void randomExit();

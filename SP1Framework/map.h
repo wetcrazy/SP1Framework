@@ -55,7 +55,7 @@ void closeMap();
 // Clear only the map
 void closeHalfMap();
 
-// Remove specific character once from the map and substitude it with 'sub'
-void removeCharacterFromMap(char c, char sub);
+// Replace the character 'c' with 'sub' once
+void replaceMapCharacter(char c, char sub);
 
 #endif
