@@ -38,7 +38,7 @@ void processSkill(double dTime) {
 		if (isKeyPressed(VK_SPACE))
 		{
 			COORD PlayerCord = g_sChar.m_cLocation;// PLAYER COORDINATES
-			size_t rng = rand() % 10;
+			size_t rng = rand() % 20;
 			static size_t Num_Stars = 0;
 			static size_t Max_Stars = 10;
 
