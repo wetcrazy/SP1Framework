@@ -80,7 +80,12 @@ void activateExit();
 // Make all exits un-passable
 void deactivateExit();
 
+<<<<<<< HEAD
 // Removes the shield at index
 void removeShield(int index);
 
+=======
+//generate random exit 
+void randomExit();
+>>>>>>> efc18674c0ad77358a8c35d19c0cf8191184f2a3
 #endif // !_INTERACTABLE_H
