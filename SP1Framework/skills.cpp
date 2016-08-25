@@ -3,13 +3,14 @@
 
 
 short SKILL_STUN_CHARGES = 3;
-
+short SKILL_MINING = 2;
 
 
 // Use the skills available and appropriate to the current_level
 void processSkill(double dTime) {
 
 	static bool canPress = true;
+	static bool PressCan = true;
 
 	switch (current_level) {
 
@@ -32,14 +33,35 @@ void processSkill(double dTime) {
 
 		}
 
+	case LEVEL_THREE:
+	case LEVEL_FOUR:
+		if (isKeyPressed(VK_SPACE))
+		{
+			COORD PlayerCord = g_sChar.m_cLocation;
 
+			// Is the block solid or blank
+			if ((g_Map[PlayerCord.Y - 1][PlayerCord.X] == '8'))// UP
+			{
+				g_Map[PlayerCord.Y - 1][PlayerCord.X] = ' ';
+			}
+			else if ((g_Map[PlayerCord.Y + 1][PlayerCord.X] == '8'))// DOWN
+			{
+				g_Map[PlayerCord.Y + 1][PlayerCord.X] = ' ';
+			}
+			else if ((g_Map[PlayerCord.Y][PlayerCord.X - 1] == '8'))// RIGHT
+			{
+				g_Map[PlayerCord.Y][PlayerCord.X - 1] = ' ';
+			}
+			else if ((g_Map[PlayerCord.Y][PlayerCord.X + 1] == '8'))// LEFT
+			{
+				g_Map[PlayerCord.Y][PlayerCord.X + 1] = ' ';
+			}
+
+		}
 		break;
-
-
 	}
-
-
 }
+
 
 //void ProcessSkillBoss(double dtime)
 //{
