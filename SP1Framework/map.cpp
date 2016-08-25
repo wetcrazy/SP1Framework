@@ -47,16 +47,25 @@ void renderMap(Console *handle) {
 			g_sChar.m_cLocation = handle->getConsoleSize(); // Spawn player at middle
 			g_sChar.m_cLocation.X /= 2;
 			g_sChar.m_cLocation.Y /= 2;
+
+			g_eGameState = S_GAME;
+			file.open("level_" + to_string(current_level) + ".txt");
+			break;
 		case LEVEL_THREE:
 		case LEVEL_FOUR:
 		case LEVEL_FIVE:
+			g_sChar.m_cLocation = handle->getConsoleSize();
+			g_sChar.m_cLocation.X /= 2;
+			(g_sChar.m_cLocation.Y /= 2)  += 9; // hard coded y offset
+
+			g_eGameState = S_GAME;
+			file.open("level_" + to_string(current_level) + ".txt");
+			break;
 		case LEVEL_SIX:
 		case LEVEL_SEVEN:
 		case LEVEL_EIGHT:
 		case LEVEL_NINE:
 		case LEVEL_TEN:
-			g_eGameState = S_GAME;
-			file.open("level_" + to_string(current_level) + ".txt");
 			break;
 		}
 	}
@@ -186,6 +195,7 @@ void closeMap() {
 	destroyObjects();
 	resetSkillStunCharges();
 	resetScoreSystem();
+	g_sChar.m_bStunned = false;
 	g_Map.clear();
 	file.close();
 }

@@ -4,6 +4,7 @@
 
 
 vector<AI_GHOST> _COLLECTION_AI_GHOST;
+BOSS _AI_BOSS;
 
 bool isGStunned = false;
 
@@ -36,6 +37,16 @@ bool isNPC(char c) {
 
 bool isGhostStunned(){
 	return isGStunned;
+}
+
+bool isGhostAtPos(int i, COORD pos){
+
+	for each (AI_GHOST g in _COLLECTION_AI_GHOST){
+		if (g.pos.X == pos.X && g.pos.Y == pos.Y && g.index != i){
+			return true;
+		}
+	}
+	return false;
 }
 
 void updateAI(double dTime) {
@@ -75,20 +86,51 @@ void updateAI(double dTime) {
 					return;
 				}
 
+				COORD tempPos;
+
 				// Continue movement
 				if (_COLLECTION_AI_GHOST[i].pos.X > g_sChar.m_cLocation.X) {
-					_COLLECTION_AI_GHOST[i].pos.X--;
+
+					tempPos = _COLLECTION_AI_GHOST[i].pos;
+					tempPos.X--;
+
+					// Dont move if the ghost is going to move into another ghost
+					if (!isGhostAtPos(i, tempPos)){
+						_COLLECTION_AI_GHOST[i].pos.X--;
+					}
+
 				}
 				else if (_COLLECTION_AI_GHOST[i].pos.X < g_sChar.m_cLocation.X) {
-					_COLLECTION_AI_GHOST[i].pos.X++;
+
+					tempPos = _COLLECTION_AI_GHOST[i].pos;
+					tempPos.X++;
+
+					// Dont move if the ghost is going to move into another ghost
+					if (!isGhostAtPos(i, tempPos)){
+						_COLLECTION_AI_GHOST[i].pos.X++;
+					}
 				}
 
 				if (_COLLECTION_AI_GHOST[i].pos.Y > g_sChar.m_cLocation.Y) {
-					_COLLECTION_AI_GHOST[i].pos.Y--;
+
+					tempPos = _COLLECTION_AI_GHOST[i].pos;
+					tempPos.Y--;
+
+					// Dont move if the ghost is going to move into another ghost
+					if (!isGhostAtPos(i, tempPos)){
+						_COLLECTION_AI_GHOST[i].pos.Y--;
+					}
 				}
 
 				else if (_COLLECTION_AI_GHOST[i].pos.Y < g_sChar.m_cLocation.Y) {
-					_COLLECTION_AI_GHOST[i].pos.Y++;
+
+					tempPos = _COLLECTION_AI_GHOST[i].pos;
+					tempPos.Y++;
+
+					// Dont move if the ghost is going to move into another ghost
+					if (!isGhostAtPos(i, tempPos)){
+						_COLLECTION_AI_GHOST[i].pos.Y++;
+					}
 				}
 
 

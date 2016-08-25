@@ -4,9 +4,11 @@
 #include "map.h"
 #include "ghost.h"
 #include "game.h"
+#include "boss.h"
 
 
 extern vector<AI_GHOST> _COLLECTION_AI_GHOST;
+extern BOSS _AI_BOSS;
 
 enum AI {
 
@@ -16,7 +18,7 @@ enum AI {
 
 
 const char AI[] = {
-	'@'
+	GHOST
 };
 
 
@@ -25,6 +27,9 @@ bool isNPC(char c);
 
 // Are the ghost stunned?
 bool isGhostStunned();
+
+// Are there any ghost in this position? Skips iteration of index 'i'
+bool isGhostAtPos(int i, COORD pos);
 
 // Checks the boss hp bar
 void HurtBoss();

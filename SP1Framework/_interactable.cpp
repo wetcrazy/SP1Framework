@@ -122,6 +122,18 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 	case LEVEL_FOUR:
 		break;
 	case LEVEL_FIVE:
+		if (g_sChar.below == I_STAR) {
+			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
+
+			if (_POINTS_ASTERISK > 0) {
+				_POINTS_ASTERISK--; // Decrement stars left by 1
+			}
+
+			if (_POINTS_ASTERISK <= 0) {
+				// Break boss shield here
+			}
+
+		}
 		break;
 	case LEVEL_SIX:
 		break;

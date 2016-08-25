@@ -8,7 +8,7 @@ struct BOSS {
 	COORD pos;
 	short health;
 	short phase;
-	
+	bool god;
 
 };
 
