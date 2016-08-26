@@ -154,6 +154,7 @@ void renderMap(Console *handle) {
 	}
 
 	WORD colorToPrint = mapColor;
+	char charToPrint;
 
 	// Output everything in g_Map to Console
 	for (size_t row = 0; row < g_Map.size(); row++) {
@@ -163,12 +164,15 @@ void renderMap(Console *handle) {
 				colorToPrint = menuColor;
 			}
 			if (g_Map.at(row).at(col) == '8') {
-				g_Map[row][col] = mapWalls;
+				charToPrint = mapWalls;
 			}
 			else {
-				g_Map[row][col] = g_Map.at(row).at(col);
+				charToPrint = g_Map.at(row).at(col);
 			}
-			handle->writeToBuffer(col, row + header_offset, g_Map[row][col], colorToPrint);
+			g_Map[row][col] = g_Map.at(row).at(col);
+			
+
+			handle->writeToBuffer(col, row + header_offset, charToPrint, colorToPrint);
 		}
 	}
 

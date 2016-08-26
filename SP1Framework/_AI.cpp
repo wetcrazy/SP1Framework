@@ -16,6 +16,7 @@ void stunGhosts() {
 }
 
 void unstunGhosts() {
+	isGStunned = false;
 	for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++) {
 		_COLLECTION_AI_GHOST[i].active = true;
 	}
