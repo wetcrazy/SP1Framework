@@ -120,6 +120,7 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 		break;
 
 	case LEVEL_THREE:
+<<<<<<< HEAD
 	case LEVEL_FOUR:
 
 		if (g_sChar.below == ' ') {
@@ -141,6 +142,47 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 					g_Map[pos.Y][pos.X] = I_EXIT_ACTIVE;
 
 				}
+=======
+		if (g_sChar.below == I_TRAP) {
+
+			static double stunReleaseTime = 0;
+
+			TRAP trap = findTrapAt(g_sChar.m_cLocation);
+
+			if (trap.active) {
+				g_sChar.m_bStunned = true; // stun the player
+				stunReleaseTime = eTime + _OBJ_TRAP_STUNTIME;
+				_COLLECTION_OBJ_TRAP[trap.index].active = false;
+
+			}
+			else if (eTime >= stunReleaseTime) {
+				g_sChar.m_bStunned = false;
+				g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
+				stunReleaseTime = 0;
+
+			}
+
+		}
+		break;
+	case LEVEL_FOUR:
+		if (g_sChar.below == I_TRAP) {
+
+			static double stunReleaseTime = 0;
+
+			TRAP trap = findTrapAt(g_sChar.m_cLocation);
+
+			if (trap.active) {
+				g_sChar.m_bStunned = true; // stun the player
+				stunReleaseTime = eTime + _OBJ_TRAP_STUNTIME;
+				_COLLECTION_OBJ_TRAP[trap.index].active = false;
+
+			}
+			else if (eTime >= stunReleaseTime) {
+				g_sChar.m_bStunned = false;
+				g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
+				stunReleaseTime = 0;
+
+>>>>>>> 26d9b7c194ad6db686cc9f77f0687c91525fd7a9
 			}
 
 		}
