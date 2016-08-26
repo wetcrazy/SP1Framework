@@ -155,7 +155,7 @@ void renderMap(Console *handle) {
 			if (current_level == LEVEL_MENU || current_level == LEVEL_TITLE || current_level == LEVEL_PAUSE || current_level == LEVEL_OVER) {
 				colorToPrint = menuColor;
 			}
-			if (g_Map.at(row).at(col) == '8') {
+			if (g_Map.at(row).at(col) == '8' || g_Map.at(row).at(col) == '7') {
 				charToPrint = mapWalls;
 			}
 			else {

@@ -43,7 +43,7 @@ void processSkill(double dTime) {
 
 			// If the block solid or blank, destroy~~
 
-			if ((isKeyPressed(VK_UP)) && (g_Map[PlayerCord.Y - 1][PlayerCord.X] == '8'))// UP
+			if ((isKeyPressed(VK_UP)) && (g_Map[PlayerCord.Y - 1][PlayerCord.X] == '7'))// UP
 			{
 				if (Num_Stars < Max_Stars)
 				{
@@ -65,7 +65,7 @@ void processSkill(double dTime) {
 					g_Map[PlayerCord.Y - 1][PlayerCord.X] = ' ';
 				}
 			}
-			else if ((isKeyPressed(VK_DOWN)) && (g_Map[PlayerCord.Y + 1][PlayerCord.X] == '8'))// DOWN
+			else if ((isKeyPressed(VK_DOWN)) && (g_Map[PlayerCord.Y + 1][PlayerCord.X] == '7'))// DOWN
 			{
 				if (Num_Stars < Max_Stars)
 				{
@@ -86,7 +86,7 @@ void processSkill(double dTime) {
 					g_Map[PlayerCord.Y + 1][PlayerCord.X] = ' ';
 				}
 			}
-			else if ((isKeyPressed(VK_LEFT)) && (g_Map[PlayerCord.Y][PlayerCord.X - 1] == '8'))// LEFT
+			else if ((isKeyPressed(VK_LEFT)) && (g_Map[PlayerCord.Y][PlayerCord.X - 1] == '7'))// LEFT
 			{
 				if (Num_Stars < Max_Stars)
 				{
@@ -107,7 +107,7 @@ void processSkill(double dTime) {
 					g_Map[PlayerCord.Y][PlayerCord.X - 1] = ' ';
 				}
 			}
-			else if ((isKeyPressed(VK_RIGHT)) && (g_Map[PlayerCord.Y][PlayerCord.X + 1] == '8'))// RIGHT
+			else if ((isKeyPressed(VK_RIGHT)) && (g_Map[PlayerCord.Y][PlayerCord.X + 1] == '7'))// RIGHT
 			{
 				if (Num_Stars < Max_Stars)
 				{
