@@ -8,6 +8,12 @@ AI_BOSS _AI_BOSS;
 double movementSpeed_GHOST = 0.6;
 bool isGStunned = false;
 
+// Clumsy ghost spawning animation
+static bool transitioned1 = false;
+static int ghostIndex = 0;
+const double spawnInterval = 1;
+const short ghostSpawnRadiusX = 5;
+const short ghostSpawnRadiusY = 4;
 
 void stunGhosts() {
 	for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++) {
@@ -60,19 +66,15 @@ void updateAI(double eTime, double dTime) {
 
 	case LEVEL_FIVE: // Boss AI Logic
 
-		// Clumsy ghost spawning animation
-		static bool transitioned1 = false;
-		static int ghostIndex = 0;
-		static double nextSpawnTime = eTime;
-		const double spawnInterval = 1;
-		const short ghostSpawnRadiusX = 5;
-		const short ghostSpawnRadiusY = 4;
+
+		static double nextSpawnTime = eTime;		
 		movementSpeed_GHOST = 0.2; // increase movespeed of ghosts
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
 
 		case 1: // P1
+
 
 			// Spawn 4 ghosts upon entering this stage
 			if (!transitioned1 && !isKeyPressed(VK_F5) && eTime >= nextSpawnTime) {
@@ -128,6 +130,7 @@ void updateAI(double eTime, double dTime) {
 			// Animation done, start moving the ghost
 			if (transitioned1) {
 				updateGhostMovement(eTime, dTime);
+				// Reset everything if player touched the ghost
 				if (updateGhostTouch()) {
 					transitioned1 = false;
 					ghostIndex = 0;
@@ -294,6 +297,8 @@ void destroyGhosts() {
 
 void destroyAI() {
 	_COLLECTION_AI_GHOST.clear();
+	transitioned1 = false;
+	ghostIndex = 0;
 }
 
 void spawn_ghost(COORD pos, bool active) {
