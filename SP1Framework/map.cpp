@@ -122,6 +122,14 @@ void renderMap(Console *handle) {
 					break;
 
 				case LEVEL_THREE:
+					if (buffer[col] == AI::GHOST) {
+
+						buffer[col] = ' '; // Remove the ghost and let AI.cpp manually control it
+
+						_COLLECTION_AI_GHOST.push_back(AI_GHOST{
+							_COLLECTION_AI_GHOST.size(), pos, true
+						});
+					}
 					break;
 				case LEVEL_FIVE:
 
