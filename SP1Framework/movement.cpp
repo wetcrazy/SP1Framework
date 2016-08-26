@@ -31,9 +31,6 @@ void moveCharacter(Console * handle, double eTime, double dTime) {
 			current_level = LEVEL_THREE;
 			break;
 		case LEVEL_THREE:
-			current_level = LEVEL_FOUR;
-			break;
-		case LEVEL_FOUR:
 			current_level = LEVEL_FIVE;
 			break;
 		default:

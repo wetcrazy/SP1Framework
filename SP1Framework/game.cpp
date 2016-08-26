@@ -218,13 +218,7 @@ void renderGame() {
 	case LEVEL_ONE:
 	case LEVEL_TWO:
 	case LEVEL_THREE:
-	case LEVEL_FOUR:
 	case LEVEL_FIVE:
-	case LEVEL_SIX:
-	case LEVEL_SEVEN:
-	case LEVEL_EIGHT:
-	case LEVEL_NINE:
-	case LEVEL_TEN:
 		renderCharacter();  // renders the character into the buffer
 		renderFog(&g_Console); // overlay fog above the map
 		renderAI(&g_Console); // we can still see AI even if they are in the fog

@@ -120,7 +120,6 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 		break;
 
 	case LEVEL_THREE:
-	case LEVEL_FOUR:
 
 		if (g_sChar.below == ' ') {
 			g_sChar.m_bActive = false;
@@ -155,16 +154,6 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 			}
 
 		}
-		break;
-	case LEVEL_SIX:
-		break;
-	case LEVEL_SEVEN:
-		break;
-	case LEVEL_EIGHT:
-		break;
-	case LEVEL_NINE:
-		break;
-	case LEVEL_TEN:
 		break;
 	}
 

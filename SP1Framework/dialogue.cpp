@@ -50,9 +50,6 @@ void dialogue(Console * handle) {
 		strCenter = "Mine the Blocks & Find the Stars";
 		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 		break;
-	case LEVEL_FOUR:
-		strCenter = "";
-		break;
 	case LEVEL_FIVE:
 
 		switch (_AI_BOSS.phase){
@@ -81,21 +78,6 @@ void dialogue(Console * handle) {
 			break;
 		}
 
-		break;
-	case LEVEL_SIX:
-		strCenter = "";
-		break;
-	case LEVEL_SEVEN:
-		strCenter = "";
-		break;
-	case LEVEL_EIGHT:
-		strCenter = "";
-		break;
-	case LEVEL_NINE:
-		strCenter = "";
-		break;
-	case LEVEL_TEN:
-		strCenter = "";
 		break;
 
 	}

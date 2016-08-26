@@ -53,7 +53,6 @@ void renderMap(Console *handle) {
 			file.open("level_" + to_string(current_level) + ".txt");
 			break;
 		case LEVEL_THREE:
-		case LEVEL_FOUR:
 		case LEVEL_FIVE:
 			g_sChar.m_cLocation = handle->getConsoleSize();
 			g_sChar.m_cLocation.X /= 2;
@@ -61,12 +60,6 @@ void renderMap(Console *handle) {
 
 			g_eGameState = S_GAME;
 			file.open("level_" + to_string(current_level) + ".txt");
-			break;
-		case LEVEL_SIX:
-		case LEVEL_SEVEN:
-		case LEVEL_EIGHT:
-		case LEVEL_NINE:
-		case LEVEL_TEN:
 			break;
 		}
 	}
@@ -129,7 +122,6 @@ void renderMap(Console *handle) {
 					break;
 
 				case LEVEL_THREE:
-				case LEVEL_FOUR:
 					break;
 				case LEVEL_FIVE:
 
@@ -170,7 +162,7 @@ void renderMap(Console *handle) {
 				charToPrint = g_Map.at(row).at(col);
 			}
 			g_Map[row][col] = g_Map.at(row).at(col);
-			
+
 
 			handle->writeToBuffer(col, row + header_offset, charToPrint, colorToPrint);
 		}
