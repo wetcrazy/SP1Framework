@@ -65,15 +65,13 @@ void updateAI(double eTime, double dTime) {
 
 	case LEVEL_FIVE: // Boss AI Logic
 
-
-		static double nextSpawnTime = eTime;		
+		static double nextSpawnTime = eTime;
 		movementSpeed_GHOST = 0.2; // increase movespeed of ghosts
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
 
 		case 1: // P1
-
 
 			// Spawn 4 ghosts upon entering this stage
 			if (!transitioned1 && !isKeyPressed(VK_F5) && eTime >= nextSpawnTime) {

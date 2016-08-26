@@ -11,6 +11,7 @@
 #include "skills.h"
 #include "uicontrol.h"
 #include "movement.h"
+#include "bullet.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -168,7 +169,7 @@ void gameplay() // gameplay logic
 
 	if (current_level != LEVEL_MENU && current_level != LEVEL_PAUSE && current_level != LEVEL_OVER) {
 		moveCharacter(&g_Console, g_dElapsedTime, g_dDeltaTime);    // moves the character, collision detection, physics, etc, sound can be played here too.
-		processSkill(g_dDeltaTime);
+		processSkill(&g_Console, g_dDeltaTime);
 		updateAI(g_dElapsedTime, g_dDeltaTime); // processs AI logic
 		updateObjects(&g_Console, current_level, g_dElapsedTime); // update logic for the objects in game
 		processcheat(g_abKeyPressed);
@@ -182,6 +183,19 @@ void processUserInput() {
 		closeHalfMap();
 		LEVEL_restart = current_level;
 		current_level = LEVEL_PAUSE;
+	}
+
+	if (isKeyPressed(VK_UP)) {
+		g_sChar.direction = D_UP;
+	}
+	if (isKeyPressed(VK_DOWN)) {
+		g_sChar.direction = D_DOWN;
+	}
+	if (isKeyPressed(VK_LEFT)) {
+		g_sChar.direction = D_LEFT;
+	}
+	if (isKeyPressed(VK_RIGHT)) {
+		g_sChar.direction = D_RIGHT;
 	}
 
 }
@@ -220,6 +234,7 @@ void renderGame() {
 	case LEVEL_THREE:
 	case LEVEL_FIVE:
 		renderCharacter();  // renders the character into the buffer
+		renderBullets(&g_Console, g_dElapsedTime, g_dDeltaTime);
 		renderFog(&g_Console); // overlay fog above the map
 		renderAI(&g_Console); // we can still see AI even if they are in the fog
 		dialogue(&g_Console); // HUD interface

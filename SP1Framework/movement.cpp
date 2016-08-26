@@ -51,22 +51,18 @@ void moveCharacter(Console * handle, double eTime, double dTime) {
 		if (g_abKeyPressed[K_UP] && g_sChar.m_cLocation.Y > 0 && isPassable(g_sChar.yP)) {
 			g_sChar.m_cLocation.Y--;
 			bSomethingHappened = true;
-			g_sChar.direction = D_UP;
 		}
 		else if (g_abKeyPressed[K_LEFT] && g_sChar.m_cLocation.X > 0 && isPassable(g_sChar.xN)) {
 			g_sChar.m_cLocation.X--;
 			bSomethingHappened = true;
-			g_sChar.direction = D_LEFT;
 		}
 		else if (g_abKeyPressed[K_DOWN] && g_sChar.m_cLocation.Y < handle->getConsoleSize().Y - 1 && isPassable(g_sChar.yN)) {
 			g_sChar.m_cLocation.Y++;
 			bSomethingHappened = true;
-			g_sChar.direction = D_DOWN;
 		}
 		else if (g_abKeyPressed[K_RIGHT] && g_sChar.m_cLocation.X < handle->getConsoleSize().X - 1 && isPassable(g_sChar.xP)) {
 			g_sChar.m_cLocation.X++;
 			bSomethingHappened = true;
-			g_sChar.direction = D_RIGHT;
 		}
 
 	}

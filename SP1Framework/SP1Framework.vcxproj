@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="boss.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="cheat.cpp" />
     <ClCompile Include="dialogue.cpp" />
     <ClCompile Include="Framework\console.cpp" />
@@ -99,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boss.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="cheat.h" />
     <ClInclude Include="dialogue.h" />
     <ClInclude Include="exit.h" />
