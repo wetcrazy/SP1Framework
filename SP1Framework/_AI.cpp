@@ -58,6 +58,7 @@ void updateAI(double eTime, double dTime) {
 	case LEVEL_ONE:
 	case LEVEL_TWO:
 	case LEVEL_THREE:
+
 		movementSpeed_GHOST = 0.6;
 		updateGhostMovement(eTime, dTime);
 		updateGhostTouch();
