@@ -188,7 +188,7 @@ void processUserInput() {
 
 void clearScreen() {
 	// Clears the buffer with this colour attribute
-	g_Console.clearBuffer(0x1F);
+	g_Console.clearBuffer(0x07);
 }
 
 void titleScreenWait() {

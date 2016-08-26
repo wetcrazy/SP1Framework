@@ -16,6 +16,7 @@ short fogHeight = 4;
 
 const WORD mapColor = 0xF8;
 const WORD fogColor = 0x0F;
+const WORD menuColor = 0x0F;
 
 const unsigned char mapWalls = 0xDB;
 
@@ -132,11 +133,11 @@ void renderMap(Console *handle) {
 					break;
 				case LEVEL_FIVE:
 
-					if (buffer[col] == I_SHIELD){
+					if (buffer[col] == I_SHIELD) {
 						_COLLECTION_OBJ_SHIELD_COUNT++;
 					}
 
-					if (buffer[col] == AI::BOSS){
+					if (buffer[col] == AI::BOSS) {
 						spawn_boss(pos); // Initialize the boss
 					}
 					break;
@@ -145,7 +146,6 @@ void renderMap(Console *handle) {
 			}
 
 			vecRowBuffer.push_back(buffer[col]);
-
 		}
 
 		g_Map.push_back(vecRowBuffer);
@@ -153,20 +153,23 @@ void renderMap(Console *handle) {
 
 	}
 
+	WORD colorToPrint = mapColor;
+
 	// Output everything in g_Map to Console
 	for (size_t row = 0; row < g_Map.size(); row++) {
-		string s = "";
 		for (size_t col = 0; col < g_Map.at(row).size(); col++) {
 			// Change '8' to a mazey character
+			if (current_level == LEVEL_MENU || current_level == LEVEL_TITLE || current_level == LEVEL_PAUSE || current_level == LEVEL_OVER) {
+				colorToPrint = menuColor;
+			}
 			if (g_Map.at(row).at(col) == '8') {
-				s += mapWalls;
+				g_Map[row][col] = mapWalls;
 			}
 			else {
-				s += g_Map.at(row).at(col);
+				g_Map[row][col] = g_Map.at(row).at(col);
 			}
-
+			handle->writeToBuffer(col, row + header_offset, g_Map[row][col], colorToPrint);
 		}
-		handle->writeToBuffer(0, row + header_offset, s, mapColor);
 	}
 
 }
@@ -202,11 +205,11 @@ void renderFog(Console * handle) {
 	}
 }
 
-void replaceMapCharacter(char c, char sub){
+void replaceMapCharacter(char c, char sub) {
 
-	for (size_t i = 0; i < g_Map.size(); i++){
-		for (size_t k = 0; k < g_Map[i].size(); k++){
-			if (g_Map[i][k] == c){
+	for (size_t i = 0; i < g_Map.size(); i++) {
+		for (size_t k = 0; k < g_Map[i].size(); k++) {
+			if (g_Map[i][k] == c) {
 				g_Map[i][k] = sub;
 				return;
 			}
@@ -215,7 +218,7 @@ void replaceMapCharacter(char c, char sub){
 
 }
 
-void setFogSize(short ) {
+void setFogSize(short) {
 
 }
 

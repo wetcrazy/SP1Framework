@@ -90,7 +90,6 @@
     <ClCompile Include="portal.cpp" />
     <ClCompile Include="randomExit.cpp" />
     <ClCompile Include="score.cpp" />
-    <ClCompile Include="shield.cpp" />
     <ClCompile Include="skills.cpp" />
     <ClCompile Include="star.cpp" />
     <ClCompile Include="trap.cpp" />

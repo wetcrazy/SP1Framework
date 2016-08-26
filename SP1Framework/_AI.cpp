@@ -52,6 +52,7 @@ void updateAI(double eTime, double dTime) {
 	case LEVEL_TWO:
 	case LEVEL_THREE:
 	case LEVEL_FOUR:
+		movementSpeed_GHOST = 0.6;
 		updateGhostMovement(eTime, dTime);
 		updateGhostTouch();
 		break;
@@ -65,7 +66,7 @@ void updateAI(double eTime, double dTime) {
 		const double spawnInterval = 1;
 		const short ghostSpawnRadiusX = 5;
 		const short ghostSpawnRadiusY = 4;
-		movementSpeed_GHOST = 0.4; // increase movespeed of ghosts
+		movementSpeed_GHOST = 0.2; // increase movespeed of ghosts
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
