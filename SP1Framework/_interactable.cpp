@@ -120,8 +120,30 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 		break;
 
 	case LEVEL_THREE:
-		break;
 	case LEVEL_FOUR:
+
+		if (g_sChar.below == ' ') {
+			g_sChar.m_bActive = false;
+		}
+
+		if (g_sChar.below == I_STAR) {
+			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
+
+			if (_POINTS_ASTERISK > 0) {
+				_POINTS_ASTERISK--; // Decrement stars left by 1
+			}
+
+			if (_POINTS_ASTERISK <= 0) {
+				for (size_t i = 0; i < _COLLECTION_OBJ_EXIT.size(); i++) {
+
+					COORD pos = _COLLECTION_OBJ_EXIT[i].pos;
+
+					g_Map[pos.Y][pos.X] = I_EXIT_ACTIVE;
+
+				}
+			}
+
+		}
 		break;
 	case LEVEL_FIVE:
 		if (g_sChar.below == I_STAR) {

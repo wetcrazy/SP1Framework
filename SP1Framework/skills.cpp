@@ -10,8 +10,7 @@ short SKILL_MINING = 2;
 void processSkill(double dTime) {
 	
 	static bool canPress = true;
-	static bool PressCan = true;
-
+	
 	switch (current_level) {
 
 	case LEVEL_ONE:
@@ -41,16 +40,21 @@ void processSkill(double dTime) {
 			size_t rng = rand() % 20;
 			static size_t Num_Stars = 0;
 			static size_t Max_Stars = 10;
+			static COORD Position;
 
 			// If the block solid or blank, destroy~~
+
 			if ((isKeyPressed(VK_UP)) && (g_Map[PlayerCord.Y - 1][PlayerCord.X] == '8'))// UP
 			{
 				if (Num_Stars < Max_Stars)
 				{
 					if (rng == 6)
 					{
+						
 						g_Map[PlayerCord.Y - 1][PlayerCord.X] = '*';
+						Position = { PlayerCord.Y - 1, PlayerCord.X };
 						Num_Stars++;
+						_COLLECTION_OBJ_STAR.push_back(STAR{Position});
 					}
 					else
 					{
@@ -69,7 +73,9 @@ void processSkill(double dTime) {
 					if (rng == 6)
 					{
 						g_Map[PlayerCord.Y + 1][PlayerCord.X] = '*';
+						Position = { PlayerCord.Y + 1, PlayerCord.X };
 						Num_Stars++;
+						_COLLECTION_OBJ_STAR.push_back(STAR{ Position });
 					}
 					else
 					{
@@ -88,7 +94,9 @@ void processSkill(double dTime) {
 					if (rng == 6)
 					{
 						g_Map[PlayerCord.Y][PlayerCord.X - 1] = '*';
+						Position = { PlayerCord.Y, PlayerCord.X - 1 };
 						Num_Stars++;
+						_COLLECTION_OBJ_STAR.push_back(STAR{ Position });
 					}
 					else
 					{
@@ -107,7 +115,9 @@ void processSkill(double dTime) {
 					if (rng == 6)
 					{
 						g_Map[PlayerCord.Y][PlayerCord.X + 1] = '*';
+						Position = { PlayerCord.Y, PlayerCord.X + 1 };
 						Num_Stars++;
+						_COLLECTION_OBJ_STAR.push_back(STAR{ Position });
 					}
 					else
 					{
@@ -122,27 +132,33 @@ void processSkill(double dTime) {
 
 		}
 		break;
+	
+	// Player shooting in Boss Level
+	case LEVEL_FIVE:
+		if (isKeyPressed(VK_SPACE))
+		{
+			COORD Player_Cord = g_sChar.m_cLocation;
+
+			if ((isKeyPressed(VK_UP)) && (g_Map[Player_Cord.Y - 1][Player_Cord.X] == ' '))// UP
+			{
+				// Render bullet
+			}
+			else if ((isKeyPressed(VK_DOWN)) && (g_Map[Player_Cord.Y + 1][Player_Cord.X] == ' '))// DOWN
+			{
+				// Render bullet 
+			}
+			else if ((isKeyPressed(VK_LEFT)) && (g_Map[Player_Cord.Y][Player_Cord.X - 1] == ' '))// LEFT
+			{
+				// Render bullet 
+			}
+			else if ((isKeyPressed(VK_RIGHT)) && (g_Map[Player_Cord.Y][Player_Cord.X + 1] == ' '))// RIGHT
+			{
+				// Render bullet 
+			}
+		}
+		break;
 	}
 }
-
-
-//void ProcessSkillBoss(double dtime)
-//{
-//	static bool CanPressBoss = true;
-//	
-//	while (LEVEL_TEN)
-//	{
-//		if (!isKeyPressed(VK_SPACE))
-//		{
-//			CanPressBoss = true;
-//		}
-//
-//		if (isKeyPressed(VK_SPACE) && CanPressBoss)
-//		{
-//			
-//		}
-//	}
-//}
 
 short getSkillStunCharges() {
 	return SKILL_STUN_CHARGES;

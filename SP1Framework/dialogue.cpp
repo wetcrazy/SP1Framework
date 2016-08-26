@@ -46,7 +46,9 @@ void dialogue(Console * handle) {
 		}
 		break;
 	case LEVEL_THREE:
-		strCenter = "";
+		strLeft = "Stage 3";
+		strCenter = "Mine the Blocks & Find the Stars";
+		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 		break;
 	case LEVEL_FOUR:
 		strCenter = "";
