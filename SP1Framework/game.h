@@ -63,7 +63,11 @@ enum E_PLAYERDIRECTION {
 	D_LEFT,
 	D_RIGHT,
 	D_UP,
-	D_DOWN
+	D_DOWN,
+	D_TOPLEFT,
+	D_TOPRIGHT,
+	D_BOTTOMLEFT,
+	D_BOTTOMRIGHT
 };
 
 // struct for the game character
@@ -72,11 +76,15 @@ struct SGameChar {
 	short health;
 	bool  m_bActive;
 	bool  m_bStunned;
-	char  xP;
-	char  xN;
-	char  yP;
-	char  yN;
-	char  below;
+	char  c_Left;
+	char  c_Right;
+	char  c_Up;
+	char  c_Down;
+	char  c_TopLeft;
+	char  c_TopRight;
+	char  c_BottomLeft;
+	char  c_BottomRight;
+	char  c_Below;
 	E_PLAYERDIRECTION direction;
 };
 

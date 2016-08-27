@@ -7,7 +7,7 @@
 #include "boss.h"
 #include "score.h"
 #include "gameUtils.h"
-
+#include <random>
 
 extern vector<AI_GHOST> _COLLECTION_AI_GHOST;
 extern AI_BOSS _AI_BOSS;

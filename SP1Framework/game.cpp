@@ -43,12 +43,6 @@ void init(void) {
 
 	g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
 	g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
-	g_sChar.xP = ' ';
-	g_sChar.xN = ' ';
-	g_sChar.yP = ' ';
-	g_sChar.yN = ' ';
-	g_sChar.below = ' ';
-	g_sChar.direction = D_UP;
 
 	g_sChar.m_bActive = true;
 	g_sChar.m_bStunned = false;
@@ -159,7 +153,7 @@ void render() {
 		renderGame();
 		break;
 	}
-	//renderFramerate();  // renders debug information, frame rate, elapsed time, etc
+	renderFramerate();  // renders debug information, frame rate, elapsed time, etc
 	renderToScreen();   // dump the contents of the buffer to the screen, one frame worth of game
 }
 
@@ -196,6 +190,18 @@ void processUserInput() {
 	}
 	if (isKeyPressed(VK_RIGHT)) {
 		g_sChar.direction = D_RIGHT;
+	}
+	if (isKeyPressed(VK_UP) && isKeyPressed(VK_LEFT)) {
+		g_sChar.direction = D_TOPLEFT;
+	}
+	if (isKeyPressed(VK_UP) && isKeyPressed(VK_RIGHT)) {
+		g_sChar.direction = D_TOPRIGHT;
+	}
+	if (isKeyPressed(VK_DOWN) && isKeyPressed(VK_LEFT)) {
+		g_sChar.direction = D_BOTTOMLEFT;
+	}
+	if (isKeyPressed(VK_DOWN) && isKeyPressed(VK_RIGHT)) {
+		g_sChar.direction = D_BOTTOMRIGHT;
 	}
 
 }

@@ -20,7 +20,7 @@ enum INTERACTABLES {
 	I_EXIT_ACTIVE = 'o',
 	I_TRAP = '!',
 	I_SHIELD = '~',
-	I_ENEMY_STAR = ','
+	I_ENEMY_STAR = '*'
 	
 };
 

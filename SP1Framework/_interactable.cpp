@@ -48,11 +48,11 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 	case LEVEL_ONE:
 	case LEVEL_TWO:
 
-		if (g_sChar.below == ' ') {
+		if (g_sChar.c_Below == ' ') {
 			g_sChar.m_bActive = false;
 		}
 
-		if (g_sChar.below == I_STAR) {
+		if (g_sChar.c_Below == I_STAR) {
 			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
 
 			if (_POINTS_ASTERISK > 0) {
@@ -71,7 +71,7 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 
 		}
 
-		if (g_sChar.below == I_PORTAL) {
+		if (g_sChar.c_Below == I_PORTAL) {
 
 			PORTAL port = findPortalAt(g_sChar.m_cLocation);
 
@@ -96,7 +96,7 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 
 		}
 
-		if (g_sChar.below == I_TRAP) {
+		if (g_sChar.c_Below == I_TRAP) {
 
 			static double stunReleaseTime = 0;
 
@@ -121,11 +121,11 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 
 	case LEVEL_THREE:
 
-		if (g_sChar.below == ' ') {
+		if (g_sChar.c_Below == ' ') {
 			g_sChar.m_bActive = false;
 		}
 
-		if (g_sChar.below == I_STAR) {
+		if (g_sChar.c_Below == I_STAR) {
 			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
 
 			if (_POINTS_ASTERISK > 0) {
@@ -146,7 +146,7 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 		break;
 
 	case LEVEL_FIVE:
-		if (g_sChar.below == I_STAR) {
+		if (g_sChar.c_Below == I_STAR) {
 			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
 
 			if (_POINTS_ASTERISK > 0) {

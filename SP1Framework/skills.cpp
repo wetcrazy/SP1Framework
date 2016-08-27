@@ -144,6 +144,18 @@ void processSkill(Console * handle, double dTime) {
 			case D_RIGHT:
 				spawnBullet(g_sChar.m_cLocation, E_DIRECTION_BULLET::RIGHT, true);
 				break;
+			case D_TOPLEFT:
+				spawnBullet(g_sChar.m_cLocation, E_DIRECTION_BULLET::TOPLEFT, true);
+				break;
+			case D_TOPRIGHT:
+				spawnBullet(g_sChar.m_cLocation, E_DIRECTION_BULLET::TOPRIGHT, true);
+				break;
+			case D_BOTTOMLEFT:
+				spawnBullet(g_sChar.m_cLocation, E_DIRECTION_BULLET::BOTTOMLEFT, true);
+				break;
+			case D_BOTTOMRIGHT:
+				spawnBullet(g_sChar.m_cLocation, E_DIRECTION_BULLET::BOTTOMRIGHT, true);
+				break;
 
 			}
 		}

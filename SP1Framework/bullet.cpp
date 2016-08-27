@@ -7,6 +7,7 @@ vector<BULLET> _OBJ_COLLECTION_BULLET;
 // Bullet moves 1 character every X seconds, lower to speed it up
 const double bulletSpeed = 0.01;
 
+
 void spawnBullet(COORD pos, E_DIRECTION_BULLET direction, bool isPlayer) {
 
 	_OBJ_COLLECTION_BULLET.push_back({
@@ -80,7 +81,7 @@ void updateBullets(double eTime, double dTime) {
 			else { // bullet from boss
 
 				if (i->pos.X == g_sChar.m_cLocation.X && i->pos.Y == g_sChar.m_cLocation.Y) {
-
+					g_sChar.health--;
 				}
 
 			}

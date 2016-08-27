@@ -1,5 +1,7 @@
 #include "_AI.h"
 #include "_interactable.h"
+#include "bullet.h"
+
 
 
 
@@ -72,8 +74,10 @@ void updateAI(double eTime, double dTime) {
 
 		// Phase 2
 		static COORD locationToMove = getRandomMapLocation();
-		const double bossMoveInterval = 5; // Moves to a new location every x second
+		const double bossMoveInterval = 5; // Moves to a new location every x seconds
+		const double bossShootInterval = 1; // Shoots a bullet every x seconds
 		static double nextMoveTime = eTime + bossMoveInterval;
+		static double nextShootTime = eTime + bossShootInterval;
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
@@ -149,7 +153,9 @@ void updateAI(double eTime, double dTime) {
 					_COLLECTION_OBJ_SHIELD_COUNT--;
 
 					if (_COLLECTION_OBJ_SHIELD_COUNT <= 0) {
-						
+						destroyGhosts();
+						replaceMapCharacterAll('7', ' ');
+						replaceMapCharacterAll(I_STAR, ' ');
 						_AI_BOSS.phase = 2; // Shields removed, proceed to phase 2
 					}
 				}
@@ -161,6 +167,20 @@ void updateAI(double eTime, double dTime) {
 
 			// Boss attacking logic
 			moveBossTo(locationToMove, eTime, dTime);
+
+			// Move boss to a new position now and then
+			if (eTime >= nextMoveTime) {
+				locationToMove = getRandomMapLocation();
+				nextMoveTime = eTime + bossMoveInterval;
+			}
+
+			// Shoot bullets per interval
+			if (eTime >= nextShootTime) {
+				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
+				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
+				nextShootTime = eTime + bossShootInterval;
+			}			
+
 			break;
 
 		case 3: // P3
@@ -179,7 +199,7 @@ void updateAI(double eTime, double dTime) {
 void moveBossTo(COORD dest, double eTime, double dTime) {
 
 	static double nextMoveTime = eTime;
-	const double bossMoveSpeed = 0.1; // move 1 char every X seconds, lower to speed boss up
+	const double bossMoveSpeed = 0.05; // move 1 char every X seconds, lower to speed boss up
 
 	// Ghosts AI movement
 	if (eTime >= nextMoveTime) {
@@ -363,7 +383,8 @@ void spawn_ghost(COORD pos, bool active) {
 void spawn_boss(COORD pos) {
 
 	_AI_BOSS.pos = pos;
-	_AI_BOSS.health = 15;
+	_AI_BOSS.health = 40;
 	_AI_BOSS.phase = 1;
+	g_sChar.health = g_PlayerDefaultHealth;
 
 }

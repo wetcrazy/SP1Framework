@@ -64,10 +64,14 @@ void dialogue(Console * handle) {
 		case 2:
 			strLeft = "-Phase 2-";
 			strCenter = "Destroy the Boss!";
+			strRight = "My HP: ";
 			strTopCenter = "Boss HP: ";
 
 			for (short i = 0; i < _AI_BOSS.health; i++){
 				strTopCenter += "#";
+			}
+			for (short i = 0; i < g_sChar.health; i++) {
+				strRight += "#";
 			}
 			break;
 

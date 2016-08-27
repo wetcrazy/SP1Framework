@@ -13,14 +13,14 @@ const WORD bulletBossColor = 0xF4;
 
 enum E_DIRECTION_BULLET {
 
-	UP,
-	DOWN,
-	RIGHT,
-	LEFT,
-	TOPLEFT,
-	TOPRIGHT,
-	BOTTOMLEFT,
-	BOTTOMRIGHT
+	UP = 1,
+	DOWN = 2,
+	RIGHT = 3,
+	LEFT = 4,
+	TOPLEFT = 5,
+	TOPRIGHT = 6,
+	BOTTOMLEFT = 7,
+	BOTTOMRIGHT = 8
 
 };
 
