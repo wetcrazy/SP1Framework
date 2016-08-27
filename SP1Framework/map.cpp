@@ -138,6 +138,7 @@ void renderMap(Console *handle) {
 					}
 
 					if (buffer[col] == AI::BOSS) {
+						buffer[col] = ' '; // Remove the boss, let AI.CPP manually control it
 						spawn_boss(pos); // Initialize the boss
 					}
 					break;
@@ -153,23 +154,28 @@ void renderMap(Console *handle) {
 
 	}
 
-	WORD colorToPrint = mapColor;
 	char charToPrint;
 
 	// Output everything in g_Map to Console
 	for (size_t row = 0; row < g_Map.size(); row++) {
 		for (size_t col = 0; col < g_Map.at(row).size(); col++) {
+
+			WORD colorToPrint = mapColor;
+
+			char currentChar = g_Map.at(row).at(col);
+
 			// Change '8' to a mazey character
 			if (current_level == LEVEL_MENU || current_level == LEVEL_TITLE || current_level == LEVEL_PAUSE || current_level == LEVEL_OVER) {
 				colorToPrint = menuColor;
 			}
-			if (g_Map.at(row).at(col) == '8' || g_Map.at(row).at(col) == '7') {
+
+			if (currentChar == '8' || currentChar == '7') {
 				charToPrint = mapWalls;
 			}
 			else {
-				charToPrint = g_Map.at(row).at(col);
+				charToPrint = currentChar;
 			}
-			g_Map[row][col] = g_Map.at(row).at(col);
+			g_Map[row][col] = currentChar;
 
 
 			handle->writeToBuffer(col, row + header_offset, charToPrint, colorToPrint);
@@ -209,7 +215,7 @@ void renderFog(Console * handle) {
 	}
 }
 
-void replaceMapCharacter(char c, char sub) {
+void replaceMapCharacterOnce(char c, char sub) {
 
 	for (size_t i = 0; i < g_Map.size(); i++) {
 		for (size_t k = 0; k < g_Map[i].size(); k++) {
@@ -220,6 +226,16 @@ void replaceMapCharacter(char c, char sub) {
 		}
 	}
 
+}
+
+void replaceMapCharacterAll(char c, char sub) {
+	for (size_t i = 0; i < g_Map.size(); i++) {
+		for (size_t k = 0; k < g_Map[i].size(); k++) {
+			if (g_Map[i][k] == c) {
+				g_Map[i][k] = sub;
+			}
+		}
+	}
 }
 
 void setFogSize(short) {

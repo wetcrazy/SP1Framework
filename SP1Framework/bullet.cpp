@@ -10,7 +10,7 @@ const double bulletSpeed = 0.01;
 void spawnBullet(COORD pos, E_DIRECTION_BULLET direction, bool isPlayer) {
 
 	_OBJ_COLLECTION_BULLET.push_back({
-		_OBJ_COLLECTION_BULLET.size(), pos, direction, isPlayer
+		pos, direction, isPlayer
 	});
 
 }
@@ -22,51 +22,73 @@ void updateBullets(double eTime, double dTime) {
 
 	if (eTime >= nextMoveTime) {
 
-		for (size_t i = 0; i < _OBJ_COLLECTION_BULLET.size(); i++) {
-
-			BULLET *b = &_OBJ_COLLECTION_BULLET[i];
-			switch (b->direction) {
+		for (auto i = _OBJ_COLLECTION_BULLET.begin(); i != _OBJ_COLLECTION_BULLET.end(); ++i) {
+						
+			switch (i->direction) {
 
 			case E_DIRECTION_BULLET::UP:
-				b->pos.Y -= 1;
+				i->pos.Y -= 1;
 				break;
 
 			case E_DIRECTION_BULLET::DOWN:
-				b->pos.Y += 1;
+				i->pos.Y += 1;
 				break;
 
 			case E_DIRECTION_BULLET::LEFT:
-				b->pos.X -= 1;
+				i->pos.X -= 1;
 				break;
 
 			case E_DIRECTION_BULLET::RIGHT:
-				b->pos.X += 1;
+				i->pos.X += 1;
 				break;
 
 			case E_DIRECTION_BULLET::TOPLEFT:
-
+				i->pos.X -= 1;
+				i->pos.Y -= 1;
 				break;
 
 			case E_DIRECTION_BULLET::TOPRIGHT:
-
+				i->pos.X += 1;
+				i->pos.Y -= 1;
 				break;
 
 			case E_DIRECTION_BULLET::BOTTOMLEFT:
-
+				i->pos.X -= 1;
+				i->pos.Y += 1;
 				break;
 
 			case E_DIRECTION_BULLET::BOTTOMRIGHT:
-
+				i->pos.X += 1;
+				i->pos.Y += 1;
 				break;
 
 			}
 
-			// TODO: process collision logic
-			if (b->isPlayer) {
+			if (i->isPlayer) { // bullet from player
+
+				if (i->pos.X == _AI_BOSS.pos.X && i->pos.Y == _AI_BOSS.pos.Y) { // Check if bullet hit the boss
+					_AI_BOSS.health--;
+
+					// Boss died, go phase 3!
+					if (_AI_BOSS.health <= 0) {
+						_AI_BOSS.phase = 3;
+					}
+
+				}
 
 			}
-			else {
+			else { // bullet from boss
 
+				if (i->pos.X == g_sChar.m_cLocation.X && i->pos.Y == g_sChar.m_cLocation.Y) {
+
+				}
+
+			}
+
+			// Removes bullet on collision
+			if (g_Map[i->pos.Y][i->pos.X] != ' ' || ( i->pos.X == _AI_BOSS.pos.X && i->pos.Y == _AI_BOSS.pos.Y)) {
+				destroyBullet(i);
+				break;
 			}
 
 		}
@@ -118,12 +140,9 @@ void renderBullets(Console * handle, double eTime, double dTime) {
 
 }
 
-void destroyBullet(int index) {
+void destroyBullet(vector<BULLET>::const_iterator index) {
 
-	for (size_t i = 0; i < _OBJ_COLLECTION_BULLET.size(); i++) {
-		if (_OBJ_COLLECTION_BULLET[i].index == index) {
-			_OBJ_COLLECTION_BULLET.erase(_OBJ_COLLECTION_BULLET.begin() + index); // remove this element
-		}
-	}
+	_OBJ_COLLECTION_BULLET.erase(index);
+
 
 }

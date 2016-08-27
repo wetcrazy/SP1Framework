@@ -66,8 +66,14 @@ void updateAI(double eTime, double dTime) {
 
 	case LEVEL_FIVE: // Boss AI Logic
 
+		// Phase 1
 		static double nextSpawnTime = eTime;
 		movementSpeed_GHOST = 0.2; // increase movespeed of ghosts
+
+		// Phase 2
+		static COORD locationToMove = getRandomMapLocation();
+		const double bossMoveInterval = 5; // Moves to a new location every x second
+		static double nextMoveTime = eTime + bossMoveInterval;
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
@@ -139,10 +145,11 @@ void updateAI(double eTime, double dTime) {
 			// Transition to phase 2 when enough stars are collected
 			if (_POINTS_ASTERISK <= 0) {
 				if (_COLLECTION_OBJ_SHIELD_COUNT > 0) {
-					replaceMapCharacter(I_SHIELD, ' ');
+					replaceMapCharacterOnce(I_SHIELD, ' ');
 					_COLLECTION_OBJ_SHIELD_COUNT--;
 
 					if (_COLLECTION_OBJ_SHIELD_COUNT <= 0) {
+						
 						_AI_BOSS.phase = 2; // Shields removed, proceed to phase 2
 					}
 				}
@@ -153,8 +160,7 @@ void updateAI(double eTime, double dTime) {
 		case 2: // P2
 
 			// Boss attacking logic
-			// 1: Moves left & right and shoots projectile @ up, down, left, right, diagonally
-			// 2: To damage boss: 
+			moveBossTo(locationToMove, eTime, dTime);
 			break;
 
 		case 3: // P3
@@ -164,6 +170,38 @@ void updateAI(double eTime, double dTime) {
 		}
 
 		break;
+
+	}
+
+}
+
+
+void moveBossTo(COORD dest, double eTime, double dTime) {
+
+	static double nextMoveTime = eTime;
+	const double bossMoveSpeed = 0.1; // move 1 char every X seconds, lower to speed boss up
+
+	// Ghosts AI movement
+	if (eTime >= nextMoveTime) {
+
+		// Continue movement
+		if (_AI_BOSS.pos.X > dest.X) {
+			_AI_BOSS.pos.X--;
+		}
+		else if (_AI_BOSS.pos.X < dest.X) {
+			_AI_BOSS.pos.X++;
+		}
+
+		if (_AI_BOSS.pos.Y > dest.Y) {
+			_AI_BOSS.pos.Y--;
+		}
+
+		else if (_AI_BOSS.pos.Y < dest.Y) {
+
+			_AI_BOSS.pos.Y++;
+		}
+
+		nextMoveTime = eTime + bossMoveSpeed;
 
 	}
 
@@ -284,6 +322,23 @@ void renderAI(Console * handle) {
 		}
 
 		handle->writeToBuffer(_COLLECTION_AI_GHOST[i].pos.X, _COLLECTION_AI_GHOST[i].pos.Y + header_offset, AI::GHOST, ghostColor);
+	}
+
+	if (_AI_BOSS.phase > 0 && current_level == LEVEL_FIVE) {
+		COORD bossPos = _AI_BOSS.pos;
+		WORD colorToPrint;
+		switch (_AI_BOSS.phase) {
+		case 1:
+			colorToPrint = color_BOSS_P1_COLOR;
+			break;
+		case 2:
+			colorToPrint = color_BOSS_P2_COLOR;
+			break;
+		case 3:
+			colorToPrint = color_BOSS_P3_COLOR;
+			break;
+		}
+		handle->writeToBuffer(bossPos.X, bossPos.Y + header_offset, AI::BOSS, colorToPrint);
 	}
 
 

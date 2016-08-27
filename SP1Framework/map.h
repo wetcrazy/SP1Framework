@@ -50,6 +50,9 @@ void closeMap();
 void closeHalfMap();
 
 // Replace the character 'c' with 'sub' once
-void replaceMapCharacter(char c, char sub);
+void replaceMapCharacterOnce(char c, char sub);
+
+// Replace all of character 'c' with 'sub' 
+void replaceMapCharacterAll(char c, char sub);
 
 #endif

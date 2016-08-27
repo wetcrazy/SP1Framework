@@ -6,6 +6,7 @@
 #include "map.h"
 #include "score.h"
 #include "_interactable.h"
+#include "_AI.h"
 
 const WORD bulletPlayerColor = 0xF3;
 const WORD bulletBossColor = 0xF4;
@@ -25,7 +26,6 @@ enum E_DIRECTION_BULLET {
 
 struct BULLET {
 
-	int index;
 	COORD pos;
 	E_DIRECTION_BULLET direction;
 	bool isPlayer;
@@ -42,7 +42,7 @@ void updateBullets(double eTime, double dTime);
 void renderBullets(Console * handle, double eTime, double dTime);
 
 // Removes the bullet with the specific index
-void destroyBullet(int index);
+void destroyBullet(vector<BULLET>::const_iterator i);
 
 
 #endif

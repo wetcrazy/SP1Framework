@@ -6,6 +6,7 @@
 #include "game.h"
 #include "boss.h"
 #include "score.h"
+#include "gameUtils.h"
 
 
 extern vector<AI_GHOST> _COLLECTION_AI_GHOST;
@@ -51,6 +52,9 @@ void spawn_ghost(COORD pos, bool active);
 
 // Not really spawning but initializing the boss's struct
 void spawn_boss(COORD pos);
+
+// Moves the boss to the specific coordinates
+void moveBossTo(COORD dest, double eTime, double dTime);
 
 // Processes ghost ai logic
 void updateGhostMovement(double eTime, double dTime);
