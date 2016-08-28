@@ -96,6 +96,7 @@ void updateAI(double eTime, double dTime) {
 
 				COORD ghost_pos;
 
+				// Ghost summoning animation
 				switch (ghostIndex) {
 
 				case 0:
@@ -131,8 +132,8 @@ void updateAI(double eTime, double dTime) {
 					break;
 
 				case 4:
-					unstunGhosts(); // activate all the ghosts
-					g_sChar.m_bStunned = false; // resume movement after animation
+					unstunGhosts(); // Activate all the ghosts once summoned
+					g_sChar.m_bStunned = false; // Resume player movement after animation
 					transitioned1 = true;
 					break;
 
@@ -188,17 +189,21 @@ void updateAI(double eTime, double dTime) {
 				if (movesBeforeStunned <= 0) {
 					stunBoss();
 					movesBeforeStunned = bossStunInterval;
-					nextMoveTime =  eTime + bossStunDuration;
+					nextMoveTime = eTime + bossStunDuration;
 				}
 			}
 
 			// Shoot bullets per interval
 			if (eTime >= nextShootTime && !_AI_BOSS.stunned) {
+
+				// Spawn bullets at random direction
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
+
 				nextShootTime = eTime + bossShootInterval;
+
 			}
 
 			break;
