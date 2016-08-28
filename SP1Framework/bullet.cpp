@@ -166,5 +166,4 @@ void destroyBullet(vector<BULLET>::const_iterator index) {
 
 	_OBJ_COLLECTION_BULLET.erase(index);
 
-
 }

@@ -63,7 +63,9 @@ void updateAI(double eTime, double dTime) {
 
 		movementSpeed_GHOST = 0.6;
 		updateGhostMovement(eTime, dTime);
-		updateGhostTouch();
+		if (!isGhostStunned()) {
+			updateGhostTouch();
+		}
 		break;
 
 	case LEVEL_FIVE: // Boss AI Logic
@@ -171,6 +173,7 @@ void updateAI(double eTime, double dTime) {
 			// Boss attacking logic
 			moveBossTo(locationToMove, eTime, dTime);
 
+			// Unstun the boss when duration is over
 			if (eTime >= nextMoveTime && _AI_BOSS.stunned) {
 				unstunBoss();
 			}
@@ -233,6 +236,13 @@ void moveBossTo(COORD dest, double eTime, double dTime) {
 		}
 		else if (_AI_BOSS.pos.Y < dest.Y) {
 			_AI_BOSS.pos.Y++;
+		}
+
+		if (_AI_BOSS.pos.X == g_sChar.m_cLocation.X && _AI_BOSS.pos.Y == g_sChar.m_cLocation.Y) {
+			closeMap();
+			LEVEL_restart = current_level;
+			current_level = LEVEL_OVER;
+			return;
 		}
 
 		nextMoveTime = eTime + bossMoveSpeed;
