@@ -18,7 +18,7 @@ const WORD g_PlayerColor = 0xF0;
 const WORD g_PlayerColorActive = 0x50;
 const WORD g_PlayerColorDamaged = 0x40;
 const WORD g_PlayerColorStunned = 0x5F;
-const short g_PlayerDefaultHealth = 5;
+const short g_PlayerDefaultHealth = 10;
 
 // Enumeration to store the control keys that your game will have
 enum EKEYS {

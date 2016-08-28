@@ -73,11 +73,14 @@ void updateAI(double eTime, double dTime) {
 		movementSpeed_GHOST = 0.2; // increase movespeed of ghosts
 
 		// Phase 2
+		const double bossMoveInterval = 2; // Moves to a new location every x seconds
+		const double bossShootInterval = 0.10; // Shoots a bullet every x seconds
+		const short  bossStunInterval = 5;  // Stuns the boss after moving X amount of times
+		const double bossStunDuration = 5; // How long will the boss be stunned for
 		static COORD locationToMove = getRandomMapLocation();
-		const double bossMoveInterval = 5; // Moves to a new location every x seconds
-		const double bossShootInterval = 1; // Shoots a bullet every x seconds
 		static double nextMoveTime = eTime + bossMoveInterval;
 		static double nextShootTime = eTime + bossShootInterval;
+		static short movesBeforeStunned = bossStunInterval;
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
@@ -168,18 +171,32 @@ void updateAI(double eTime, double dTime) {
 			// Boss attacking logic
 			moveBossTo(locationToMove, eTime, dTime);
 
+			if (eTime >= nextMoveTime && _AI_BOSS.stunned) {
+				unstunBoss();
+			}
+
 			// Move boss to a new position now and then
-			if (eTime >= nextMoveTime) {
+			if (eTime >= nextMoveTime && !_AI_BOSS.stunned) {
+
 				locationToMove = getRandomMapLocation();
 				nextMoveTime = eTime + bossMoveInterval;
+				movesBeforeStunned--; // Decrement each time he moves
+
+				if (movesBeforeStunned <= 0) {
+					stunBoss();
+					movesBeforeStunned = bossStunInterval;
+					nextMoveTime =  eTime + bossStunDuration;
+				}
 			}
 
 			// Shoot bullets per interval
-			if (eTime >= nextShootTime) {
+			if (eTime >= nextShootTime && !_AI_BOSS.stunned) {
+				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
+				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 				nextShootTime = eTime + bossShootInterval;
-			}			
+			}
 
 			break;
 
@@ -201,7 +218,6 @@ void moveBossTo(COORD dest, double eTime, double dTime) {
 	static double nextMoveTime = eTime;
 	const double bossMoveSpeed = 0.05; // move 1 char every X seconds, lower to speed boss up
 
-	// Ghosts AI movement
 	if (eTime >= nextMoveTime) {
 
 		// Continue movement
@@ -215,9 +231,7 @@ void moveBossTo(COORD dest, double eTime, double dTime) {
 		if (_AI_BOSS.pos.Y > dest.Y) {
 			_AI_BOSS.pos.Y--;
 		}
-
 		else if (_AI_BOSS.pos.Y < dest.Y) {
-
 			_AI_BOSS.pos.Y++;
 		}
 
@@ -358,6 +372,12 @@ void renderAI(Console * handle) {
 			colorToPrint = color_BOSS_P3_COLOR;
 			break;
 		}
+
+		// Boss Stun Color
+		if (_AI_BOSS.stunned) {
+			colorToPrint = color_BOSS_STUNNED;
+		}
+
 		handle->writeToBuffer(bossPos.X, bossPos.Y + header_offset, AI::BOSS, colorToPrint);
 	}
 
@@ -385,6 +405,15 @@ void spawn_boss(COORD pos) {
 	_AI_BOSS.pos = pos;
 	_AI_BOSS.health = 40;
 	_AI_BOSS.phase = 1;
+	_AI_BOSS.stunned = false;
 	g_sChar.health = g_PlayerDefaultHealth;
 
+}
+
+void stunBoss() {
+	_AI_BOSS.stunned = true;
+}
+
+void unstunBoss() {
+	_AI_BOSS.stunned = false;
 }

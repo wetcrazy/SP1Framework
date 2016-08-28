@@ -53,6 +53,12 @@ void spawn_ghost(COORD pos, bool active);
 // Not really spawning but initializing the boss's struct
 void spawn_boss(COORD pos);
 
+// Sets the 'stunned' property in boss struct to true, duration denoted in boss.h
+void stunBoss();
+
+// Sets the 'stunned' property in boss struct to false
+void unstunBoss();
+
 // Moves the boss to the specific coordinates
 void moveBossTo(COORD dest, double eTime, double dTime);
 

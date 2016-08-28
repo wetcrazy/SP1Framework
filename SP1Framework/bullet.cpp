@@ -24,7 +24,7 @@ void updateBullets(double eTime, double dTime) {
 	if (eTime >= nextMoveTime) {
 
 		for (auto i = _OBJ_COLLECTION_BULLET.begin(); i != _OBJ_COLLECTION_BULLET.end(); ++i) {
-						
+
 			switch (i->direction) {
 
 			case E_DIRECTION_BULLET::UP:
@@ -82,12 +82,33 @@ void updateBullets(double eTime, double dTime) {
 
 				if (i->pos.X == g_sChar.m_cLocation.X && i->pos.Y == g_sChar.m_cLocation.Y) {
 					g_sChar.health--;
+
+					// Player died, do necessary clean up here
+					if (g_sChar.health <= 0) {
+						closeMap();
+						_OBJ_COLLECTION_BULLET.clear();
+						LEVEL_restart = current_level;
+						current_level = LEVEL_OVER;
+						return;
+					}
 				}
 
 			}
 
-			// Removes bullet on collision
-			if (g_Map[i->pos.Y][i->pos.X] != ' ' || ( i->pos.X == _AI_BOSS.pos.X && i->pos.Y == _AI_BOSS.pos.Y)) {
+			// Player's bullet hit the boss
+			if (i->isPlayer && i->pos.X == _AI_BOSS.pos.X && i->pos.Y == _AI_BOSS.pos.Y) {
+				destroyBullet(i);
+				break;
+			}
+
+			// Boss's bullet hit the player
+			if (!i->isPlayer && i->pos.X == g_sChar.m_cLocation.X && i->pos.Y == g_sChar.m_cLocation.Y) {
+				destroyBullet(i);
+				break;
+			}
+
+			// Removes bullet on collision with something else
+			if (g_Map[i->pos.Y][i->pos.X] != ' ') {
 				destroyBullet(i);
 				break;
 			}
