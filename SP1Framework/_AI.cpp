@@ -72,17 +72,29 @@ void updateAI(double eTime, double dTime) {
 
 		// Phase 1
 		static double nextSpawnTime = eTime;
-		movementSpeed_GHOST = 0.2; // increase movespeed of ghosts
+		movementSpeed_GHOST = 0.175; // increase movespeed of ghosts
 
 		// Phase 2
-		const double bossMoveInterval = 2; // Moves to a new location every x seconds
-		const double bossShootInterval = 0.10; // Shoots a bullet every x seconds
-		const short  bossStunInterval = 5;  // Stuns the boss after moving X amount of times
-		const double bossStunDuration = 5; // How long will the boss be stunned for
-		static COORD locationToMove = getRandomMapLocation();
-		static double nextMoveTime = eTime + bossMoveInterval;
-		static double nextShootTime = eTime + bossShootInterval;
-		static short movesBeforeStunned = bossStunInterval;
+		const double bossP2MoveInterval = 2; // Moves to a new location every X seconds
+		const double bossP2ShootInterval = 0.10; // Shoots a bullet every X seconds
+		const short  bossP2StunInterval = 5;  // Stuns the boss after moving X amount of times
+		const double bossP2StunDuration = 5; // How long will the boss be stunned for
+		static COORD bossP2locationToMove = getRandomMapLocation();
+		static double bossP2nextMoveTime = eTime + bossP2MoveInterval;
+		static double bossP2nextShootTime = eTime + bossP2ShootInterval;
+		static short bossP2movesBeforeStunned = bossP2StunInterval;
+
+		// Phase 3
+		const double bossP3MoveInterval = 0.25; // Interval before boss moves to the next location
+		const double bossP3ShootInterval = 0.05; // Shoots a bullet every X seconds
+		const double bossP3StunDuration = 5; // How long will the boss be stunned for
+		const COORD bossP3location1 = COORD{ 1, 1 };
+		const COORD bossP3location2 = COORD{ 1, g_Map.size() - header_offset - footer_offset };
+		static double bossP3nextMoveTime = eTime + bossP3MoveInterval;
+		static double bossP3nextShootTime = eTime + bossP3ShootInterval;
+		static short bossP3Stage = 1;
+
+
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
@@ -171,30 +183,30 @@ void updateAI(double eTime, double dTime) {
 
 		case 2: // P2
 
-			// Boss attacking logic
-			moveBossTo(locationToMove, eTime, dTime);
+			// Attempts to move boss to this location every frame
+			moveBossTo(bossP2locationToMove, eTime, dTime);
 
 			// Unstun the boss when duration is over
-			if (eTime >= nextMoveTime && _AI_BOSS.stunned) {
+			if (eTime >= bossP2nextMoveTime && _AI_BOSS.stunned) {
 				unstunBoss();
 			}
 
 			// Move boss to a new position now and then
-			if (eTime >= nextMoveTime && !_AI_BOSS.stunned) {
+			if (eTime >= bossP2nextMoveTime && !_AI_BOSS.stunned) {
 
-				locationToMove = getRandomMapLocation();
-				nextMoveTime = eTime + bossMoveInterval;
-				movesBeforeStunned--; // Decrement each time he moves
+				bossP2locationToMove = getRandomMapLocation();
+				bossP2nextMoveTime = eTime + bossP2MoveInterval;
+				bossP2movesBeforeStunned--; // Decrement each time he moves
 
-				if (movesBeforeStunned <= 0) {
+				if (bossP2movesBeforeStunned <= 0) {
 					stunBoss();
-					movesBeforeStunned = bossStunInterval;
-					nextMoveTime = eTime + bossStunDuration;
+					bossP2movesBeforeStunned = bossP2StunInterval;
+					bossP2nextMoveTime = eTime + bossP2StunDuration;
 				}
 			}
 
 			// Shoot bullets per interval
-			if (eTime >= nextShootTime && !_AI_BOSS.stunned) {
+			if (eTime >= bossP2nextShootTime && !_AI_BOSS.stunned) {
 
 				// Spawn bullets at random direction
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
@@ -202,13 +214,30 @@ void updateAI(double eTime, double dTime) {
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 				spawnBullet(_AI_BOSS.pos, (E_DIRECTION_BULLET)(rand() % 7 + 1), false);
 
-				nextShootTime = eTime + bossShootInterval;
+				bossP2nextShootTime = eTime + bossP2ShootInterval;
 
 			}
 
 			break;
 
 		case 3: // P3
+
+			// Move boss to the intial location
+			moveBossTo(bossP3location2, eTime, dTime);
+
+			switch (bossP3Stage) {
+
+			case 1:
+				
+				break;
+			case 2:
+
+				break;
+			case 3:
+
+				break;
+
+			}
 
 			break;
 
@@ -418,7 +447,7 @@ void spawn_ghost(COORD pos, bool active) {
 void spawn_boss(COORD pos) {
 
 	_AI_BOSS.pos = pos;
-	_AI_BOSS.health = 40;
+	_AI_BOSS.health = boss_HEALTH_DEFAULT;
 	_AI_BOSS.phase = 1;
 	_AI_BOSS.stunned = false;
 	g_sChar.health = g_PlayerDefaultHealth;

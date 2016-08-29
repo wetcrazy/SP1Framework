@@ -44,7 +44,7 @@ void updateBullets(double eTime, double dTime) {
 				break;
 
 			case E_DIRECTION_BULLET::TOPLEFT:
-				i->pos.X -= 1;
+				i->pos.X -=  1;
 				i->pos.Y -= 1;
 				break;
 
@@ -72,6 +72,7 @@ void updateBullets(double eTime, double dTime) {
 
 					// Boss died, go phase 3!
 					if (_AI_BOSS.health <= 0) {
+						_AI_BOSS.stunned = false;
 						_AI_BOSS.phase = 3;
 					}
 

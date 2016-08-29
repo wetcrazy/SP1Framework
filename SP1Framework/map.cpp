@@ -17,6 +17,7 @@ short fogHeight = 4;
 const WORD mapColor = 0xF8;
 const WORD fogColor = 0x0F;
 const WORD menuColor = 0x0F;
+const WORD level3WallColor = 0xF0;
 
 const unsigned char mapWalls = 0xDB;
 
@@ -128,7 +129,7 @@ void renderMap(Console *handle) {
 				case LEVEL_THREE:
 					if (buffer[col] == AI::GHOST) {
 
-						buffer[col] = ' '; // Remove the ghost and let AI.cpp manually control it
+						buffer[col] = '7'; // Remove the ghost and let AI.cpp manually control it
 
 						_COLLECTION_AI_GHOST.push_back(AI_GHOST{
 							_COLLECTION_AI_GHOST.size(), pos, true
@@ -175,10 +176,15 @@ void renderMap(Console *handle) {
 
 			if (currentChar == '8' || currentChar == '7') {
 				charToPrint = mapWalls;
+				if (current_level == LEVEL_THREE) {
+					colorToPrint = level3WallColor;
+				}
 			}
 			else {
 				charToPrint = currentChar;
 			}
+
+
 			g_Map[row][col] = currentChar;
 
 

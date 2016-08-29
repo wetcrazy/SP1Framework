@@ -14,8 +14,8 @@ void moveCharacter(Console * handle, double eTime, double dTime) {
 		g_sChar.c_Up = g_Map.at(g_sChar.m_cLocation.Y - 1).at(g_sChar.m_cLocation.X);
 		g_sChar.c_Down = g_Map.at(g_sChar.m_cLocation.Y + 1).at(g_sChar.m_cLocation.X);
 
-		g_sChar.c_TopRight = g_Map.at(g_sChar.m_cLocation.Y - 1).at(g_sChar.m_cLocation.X + 1);
 		g_sChar.c_TopLeft = g_Map.at(g_sChar.m_cLocation.Y - 1).at(g_sChar.m_cLocation.X - 1);
+		g_sChar.c_TopRight = g_Map.at(g_sChar.m_cLocation.Y - 1).at(g_sChar.m_cLocation.X + 1);
 		g_sChar.c_BottomLeft = g_Map.at(g_sChar.m_cLocation.Y + 1).at(g_sChar.m_cLocation.X - 1);
 		g_sChar.c_BottomRight = g_Map.at(g_sChar.m_cLocation.Y + 1).at(g_sChar.m_cLocation.X + 1);
 

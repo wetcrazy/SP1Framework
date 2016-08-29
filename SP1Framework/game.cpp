@@ -241,17 +241,11 @@ void renderGame() {
 		break;
 	case LEVEL_ONE:
 	case LEVEL_TWO:
-	
+	case LEVEL_THREE:
 	case LEVEL_FIVE:
 		renderCharacter();  // renders the character into the buffer
 		renderBullets(&g_Console, g_dElapsedTime, g_dDeltaTime);
 		renderFog(&g_Console); // overlay fog above the map
-		renderAI(&g_Console); // we can still see AI even if they are in the fog
-		dialogue(&g_Console); // HUD interface
-		break;
-	case LEVEL_THREE:
-		renderCharacter();  // renders the character into the buffer
-		renderBullets(&g_Console, g_dElapsedTime, g_dDeltaTime);
 		renderAI(&g_Console); // we can still see AI even if they are in the fog
 		dialogue(&g_Console); // HUD interface
 		break;
