@@ -49,6 +49,10 @@ void dialogue(Console * handle) {
 		strLeft = "Stage 3";
 		strCenter = "Mine the Blocks & Find the Stars";
 		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
+		if (_POINTS_ASTERISK<0)
+		{
+			strRight = "Stars left : 0";
+		}
 		break;
 	case LEVEL_FIVE:
 

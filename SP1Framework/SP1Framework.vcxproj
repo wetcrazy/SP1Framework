@@ -90,7 +90,6 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="movement.cpp" />
     <ClCompile Include="portal.cpp" />
-    <ClCompile Include="randomExit.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="skills.cpp" />
     <ClCompile Include="star.cpp" />

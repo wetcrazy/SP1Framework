@@ -131,17 +131,30 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 			if (_POINTS_ASTERISK > 0) {
 				_POINTS_ASTERISK--; // Decrement stars left by 1
 			}
-
-			if (_POINTS_ASTERISK <= 0) {
+			
+			if (_POINTS_ASTERISK ==0) {
+			
+				COORD pos = getRandomMapLocation();
+				_COLLECTION_OBJ_EXIT.push_back(EXIT{
+					pos, true
+				});
 				for (size_t i = 0; i < _COLLECTION_OBJ_EXIT.size(); i++) {
-
+					
 					COORD pos = _COLLECTION_OBJ_EXIT[i].pos;
-
+					
+					_POINTS_ASTERISK--;
 					g_Map[pos.Y][pos.X] = I_EXIT_ACTIVE;
+		
+					
 
 				}
 			}
-
+		
+		}
+		if (g_sChar.c_Below == I_EXIT_ACTIVE)
+		{
+			closeMap();
+			current_level = LEVEL_FIVE;
 		}
 		break;
 

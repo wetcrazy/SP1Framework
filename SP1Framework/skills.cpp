@@ -36,16 +36,16 @@ void processSkill(Console * handle, double dTime) {
 	case LEVEL_THREE:
 		if (isKeyPressed(VK_SPACE)) {
 			COORD PlayerCord = g_sChar.m_cLocation;// PLAYER COORDINATES
-			size_t rng = rand() % 50;
+			size_t rng = rand() % 40;
 			static size_t Num_Stars = 0;
-			static size_t Max_Stars = 10;
+			static size_t Max_Stars = 30;
 			static COORD Position;
 
 			// If the block solid or blank, destroy~~
 
 			if ((isKeyPressed(VK_UP)) && (g_Map[PlayerCord.Y - 1][PlayerCord.X] == '7'))// UP
 			{
-				if (Num_Stars < Max_Stars) {
+				
 					if (rng == 6) {
 
 						g_Map[PlayerCord.Y - 1][PlayerCord.X] = '*';
@@ -56,14 +56,11 @@ void processSkill(Console * handle, double dTime) {
 					else {
 						g_Map[PlayerCord.Y - 1][PlayerCord.X] = ' ';
 					}
-				}
-				else {
-					g_Map[PlayerCord.Y - 1][PlayerCord.X] = ' ';
-				}
+				
 			}
 			else if ((isKeyPressed(VK_DOWN)) && (g_Map[PlayerCord.Y + 1][PlayerCord.X] == '7'))// DOWN
 			{
-				if (Num_Stars < Max_Stars) {
+				
 					if (rng == 6) {
 						g_Map[PlayerCord.Y + 1][PlayerCord.X] = '*';
 						Position = { PlayerCord.Y + 1, PlayerCord.X };
@@ -73,14 +70,11 @@ void processSkill(Console * handle, double dTime) {
 					else {
 						g_Map[PlayerCord.Y + 1][PlayerCord.X] = ' ';
 					}
-				}
-				else {
-					g_Map[PlayerCord.Y + 1][PlayerCord.X] = ' ';
-				}
+				
 			}
 			else if ((isKeyPressed(VK_LEFT)) && (g_Map[PlayerCord.Y][PlayerCord.X - 1] == '7'))// LEFT
 			{
-				if (Num_Stars < Max_Stars) {
+				
 					if (rng == 6) {
 						g_Map[PlayerCord.Y][PlayerCord.X - 1] = '*';
 						Position = { PlayerCord.Y, PlayerCord.X - 1 };
@@ -90,14 +84,11 @@ void processSkill(Console * handle, double dTime) {
 					else {
 						g_Map[PlayerCord.Y][PlayerCord.X - 1] = ' ';
 					}
-				}
-				else {
-					g_Map[PlayerCord.Y][PlayerCord.X - 1] = ' ';
-				}
+				
 			}
 			else if ((isKeyPressed(VK_RIGHT)) && (g_Map[PlayerCord.Y][PlayerCord.X + 1] == '7'))// RIGHT
 			{
-				if (Num_Stars < Max_Stars) {
+				
 					if (rng == 6) {
 						g_Map[PlayerCord.Y][PlayerCord.X + 1] = '*';
 						Position = { PlayerCord.Y, PlayerCord.X + 1 };
@@ -107,10 +98,7 @@ void processSkill(Console * handle, double dTime) {
 					else {
 						g_Map[PlayerCord.Y][PlayerCord.X + 1] = ' ';
 					}
-				}
-				else {
-					g_Map[PlayerCord.Y][PlayerCord.X + 1] = ' ';
-				}
+				
 			}
 
 		}

@@ -81,8 +81,7 @@ void activateExit();
 // Make all exits un-passable
 void deactivateExit();
 
-//generate random exit 
-void randomExit();
+
 
 
 #endif // !_INTERACTABLE_H
