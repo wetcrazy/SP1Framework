@@ -148,6 +148,7 @@ void render() {
 	case S_PAUSE:
 	case S_TITLESCREEN:
 	case S_MENU:
+	case S_INSTRUCTION:
 	case S_GAME:
 	case S_GAMEOVER:
 		renderGame();
@@ -234,6 +235,9 @@ void renderGame() {
 		break;
 	case LEVEL_MENU:
 		renderMainMenu(&g_Console);
+		break;
+	case LEVEL_INSTRUCTION:
+		updateInstructionMenu(g_dElapsedTime,g_dDeltaTime);
 		break;
 	case LEVEL_ONE:
 	case LEVEL_TWO:

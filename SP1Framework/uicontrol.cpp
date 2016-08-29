@@ -15,8 +15,12 @@ void updateMainMenu(double eTime, double dTime) {
 		if (isKeyPressed(VK_UP)) {
 			selected_menu = 0;
 		}
-		else if (isKeyPressed(VK_DOWN)) {
+		else if ((isKeyPressed(VK_UP)) || (isKeyPressed(VK_DOWN)))
+		{
 			selected_menu = 1;
+		}
+		else if (isKeyPressed(VK_DOWN)) {
+			selected_menu = 2;
 		}
 
 		// Process selected menu
@@ -32,6 +36,13 @@ void updateMainMenu(double eTime, double dTime) {
 				break;
 
 			case 1:
+			{
+				// Start Instuction Menu
+				closeMap();
+				current_level = LEVEL_INSTRUCTION;
+				break;
+			}
+			case 2:
 				// Quit
 				g_bQuitGame = true;
 				break;
@@ -45,6 +56,23 @@ void updateMainMenu(double eTime, double dTime) {
 		keyUp = true;
 	}
 
+}
+
+// Controls logic for Instruction Menu
+void updateInstructionMenu(double eTime, double dTime)
+{
+	static bool canPress = true;
+
+	if (canPress)
+	{
+		if (isKeyPressed(VK_SPACE))
+		{
+			closeMap();
+			current_level = LEVEL_MENU;
+			canPress = false;
+		}
+		canPress = true;
+	}
 }
 
 // Controls logic for Pause menu
@@ -173,6 +201,7 @@ void renderMainMenu(Console * handle) {
 
 	string context1;
 	string context2;
+	string context3;
 
 	COORD consoleSize = handle->getConsoleSize();
 
@@ -180,27 +209,37 @@ void renderMainMenu(Console * handle) {
 	pos.Y = (consoleSize.Y / 2);
 	COORD pos2;
 	pos2.Y = (consoleSize.Y / 2) + 2;
+	COORD pos3;
+	pos3.Y = (consoleSize.Y / 2) + 4;
 
 	switch (selected_menu) {
 
 	case 0:
 		context1 = ">Start Game<";
-		context2 = "Quit";
+		context2 = "Instruction";
+		context3 = "Quit";
 		break;
 
 	case 1:
 		context1 = "Start Game";
-		context2 = ">Quit<";
+		context2 = ">Instruction<";
+		context3 = "Quit";
+		break;
+	case 2:
+		context1 = "Start Game";
+		context2 = "Instruction";
+		context3 = ">Quit<";
 		break;
 
 	}
 
 	pos.X = (consoleSize.X / 2) - (context1.length() / 2);
 	pos2.X = (consoleSize.X / 2) - (context2.length() / 2);
+	pos3.X = (consoleSize.X / 2) - (context3.length() / 2);
 
 	handle->writeToBuffer(pos, context1);
 	handle->writeToBuffer(pos2, context2);
-
+	handle->writeToBuffer(pos3, context3);
 }
 
 // Draw Pause menu to screen

@@ -43,6 +43,10 @@ void renderMap(Console *handle) {
 			file.open("level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_MENU;
 			break;
+		case LEVEL_INSTRUCTION:
+			file.open("level_" + to_string(current_level) + ".txt");
+			g_eGameState = S_INSTRUCTION;
+			break;
 		case LEVEL_ONE:
 		case LEVEL_TWO:
 			g_sChar.m_cLocation = handle->getConsoleSize(); // Spawn player at middle
