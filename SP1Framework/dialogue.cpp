@@ -49,14 +49,13 @@ void dialogue(Console * handle) {
 		strLeft = "Stage 3";
 		strCenter = "Mine the Blocks & Find the Stars";
 		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
-		if (_POINTS_ASTERISK<0)
-		{
+		if (_POINTS_ASTERISK < 0) {
 			strRight = "Stars left : 0";
 		}
 		break;
 	case LEVEL_FIVE:
 
-		switch (_AI_BOSS.phase){
+		switch (_AI_BOSS.phase) {
 
 		case 1:
 			strLeft = "-Phase 1-";
@@ -67,11 +66,11 @@ void dialogue(Console * handle) {
 
 		case 2:
 			strLeft = "-Phase 2-";
-			strCenter = "Destroy the Boss!";
+			strCenter = "Weaken the Boss!";
 			strRight = "My HP: ";
 			strTopCenter = "Boss HP: ";
 
-			for (short i = 0; i < _AI_BOSS.health; i++){
+			for (short i = 0; i < _AI_BOSS.health; i++) {
 				strTopCenter += "#";
 			}
 			for (short i = 0; i < g_sChar.health; i++) {
@@ -81,9 +80,18 @@ void dialogue(Console * handle) {
 
 		case 3:
 			strLeft = "-Final Phase-";
+			strCenter = "Finish the Boss!";
+			strRight = "My HP: ";
+			strTopCenter = "Boss HP: ";
 
-
+			for (short i = 0; i < _AI_BOSS.health; i++) {
+				strTopCenter += "#";
+			}
+			for (short i = 0; i < g_sChar.health; i++) {
+				strRight += "#";
+			}
 			break;
+
 		}
 
 		break;

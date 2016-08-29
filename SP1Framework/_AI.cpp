@@ -85,14 +85,14 @@ void updateAI(double eTime, double dTime) {
 		static short bossP2movesBeforeStunned = bossP2StunInterval;
 
 		// Phase 3
-		const double bossP3MoveInterval = 0.25; // Interval before boss moves to the next location
-		const double bossP3ShootInterval = 0.05; // Shoots a bullet every X seconds
-		const double bossP3StunDuration = 5; // How long will the boss be stunned for
+		const double bossP3MoveInterval = 0.08; // Interval before boss moves to the next location
+		const double bossP3ShootInterval = 0.10; // Shoots a bullet every X seconds
+		const double bossP3StunDuration = 3; // How long will the boss be stunned for
 		const COORD bossP3location1 = COORD{ 1, 1 };
 		const COORD bossP3location2 = COORD{ 1, g_Map.size() - header_offset - footer_offset };
 		static double bossP3nextMoveTime = eTime + bossP3MoveInterval;
 		static double bossP3nextShootTime = eTime + bossP3ShootInterval;
-		static short bossP3Stage = 1;
+		static short bossP3Stage = 0;
 
 
 
@@ -222,18 +222,85 @@ void updateAI(double eTime, double dTime) {
 
 		case 3: // P3
 
+			// Character on the Right side and Top of Boss
+			char b_char_Right = g_Map[_AI_BOSS.pos.Y][_AI_BOSS.pos.X + 1];
+			char b_char_Top = g_Map[_AI_BOSS.pos.Y - 1][_AI_BOSS.pos.X];
+
 			// Move boss to the intial location
-			moveBossTo(bossP3location2, eTime, dTime);
+			if ((_AI_BOSS.pos.X != bossP3location1.X || _AI_BOSS.pos.Y != bossP3location1.Y) && bossP3Stage == 0) {
+				g_sChar.m_bStunned = true; // Stun the player before transitioning
+				moveBossTo(bossP3location1, eTime, dTime); // Move slowly to the initial start point
+				if (_AI_BOSS.pos.X == bossP3location1.X && _AI_BOSS.pos.Y == bossP3location1.Y) { // Check if we have arrived at the start point
+					bossP3Stage++; // Go to next sub-stage
+					g_sChar.m_bStunned = false; // Unstun the player
+				}
+			}
 
 			switch (bossP3Stage) {
 
 			case 1:
-				
+
+				// Shoot bullets every set intervals
+				if (eTime >= bossP3nextShootTime && !_AI_BOSS.stunned && b_char_Right != '8') {
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::DOWN, false);
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::BOTTOMRIGHT, false);
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::RIGHT, false);
+					bossP3nextShootTime = eTime + bossP3ShootInterval;
+				}
+				else if (b_char_Right == '8' && !_AI_BOSS.stunned) {
+					stunBoss(); // Allow the player to shoot the boss for a period
+					bossP3nextMoveTime = eTime + bossP3StunDuration; // Stun the boss after barraging
+				}
+
+				// Move the boss to the right
+				if (eTime >= bossP3nextMoveTime && b_char_Right != '8') {
+					_AI_BOSS.pos.X++;
+					bossP3nextMoveTime = eTime + bossP3MoveInterval;
+				}
+
+				if (eTime >= bossP3nextMoveTime && _AI_BOSS.stunned) { // Unstun after stun duration is over
+					unstunBoss();
+					bossP3Stage++; // Time to transition to next sub-stage
+				}
+
 				break;
 			case 2:
 
+				// Move boss to the intial location
+				if (_AI_BOSS.pos.X != bossP3location2.X || _AI_BOSS.pos.Y != bossP3location2.Y) {
+
+					moveBossTo(bossP3location2, eTime, dTime); // Move slowly to the initial start point
+
+					if (_AI_BOSS.pos.X == bossP3location2.X && _AI_BOSS.pos.Y == bossP3location2.Y) { // Check if we have arrived at the start point
+						bossP3Stage++; // Go to next sub-stage
+					}
+				}
+
 				break;
 			case 3:
+
+				// Shoot bullets every set intervals
+				if (eTime >= bossP3nextShootTime && !_AI_BOSS.stunned && b_char_Top != '8') {
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::TOPRIGHT, false);
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::RIGHT, false);
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::BOTTOMRIGHT, false);
+					bossP3nextShootTime = eTime + bossP3ShootInterval;
+				}
+				else if (b_char_Top == '8' && !_AI_BOSS.stunned) {
+					stunBoss(); // Allow the player to shoot the boss for a period
+					bossP3nextMoveTime = eTime + bossP3StunDuration; // Stun the boss after barraging
+				}
+
+				// Move the boss to the top
+				if (eTime >= bossP3nextMoveTime && b_char_Top != '8') {
+					_AI_BOSS.pos.Y--;
+					bossP3nextMoveTime = eTime + bossP3MoveInterval;
+				}
+
+				if (eTime >= bossP3nextMoveTime && _AI_BOSS.stunned) { // Unstun after stun duration is over
+					unstunBoss();
+					bossP3Stage++; // Time to transition to next sub-stage
+				}
 
 				break;
 
