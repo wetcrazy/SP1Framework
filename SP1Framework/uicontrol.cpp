@@ -6,6 +6,8 @@ unsigned short selected_pause = 0;
 unsigned short selected_gameover = 0;
 unsigned short selected_Instuction = 0;
 
+extern bool gCanPress;
+
 // Controls logic for Main menu
 void updateMainMenu(double eTime, double dTime) {
 
@@ -77,17 +79,15 @@ void updateInstructionMenu(double eTime, double dTime)
 			}
 			else if (selected_Instuction == 1)
 			{
+				gCanPress = false;
 				g_Map = g_Map_Cache; // Reload the cached map onto the map
 				current_level = LEVEL_restart;
 				g_eGameState = S_GAME;
 				canPress = false;
 			}
 		}
-	}
-	if (!isKeyPressed(VK_SPACE))
-	{
-		canPress = true;
-	}
+	}		
+	canPress = true;
 }
 
 // Controls logic for Pause menu
@@ -105,7 +105,7 @@ void updatePauseMenu(double eTime, double dTime) {
 			}
 		}
 		else if (isKeyPressed(VK_DOWN)) {
-			if (selected_pause < 3) {
+			if (selected_pause < 4) {
 				selected_pause++;
 			}
 		}

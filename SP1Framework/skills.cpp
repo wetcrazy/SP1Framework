@@ -5,7 +5,7 @@
 
 short SKILL_STUN_CHARGES = 3;
 short SKILL_MINING = 2;
-
+bool gCanPress = true;
 
 // Use the skills available and appropriate to the current_level
 void processSkill(Console * handle, double dTime) {
@@ -20,15 +20,17 @@ void processSkill(Console * handle, double dTime) {
 		// KeyUp = true
 		if (!isKeyPressed(VK_SPACE)) {
 			canPress = true;
+			gCanPress = true;
 		}
 
-		if (isKeyPressed(VK_SPACE) && canPress) {
+		if (isKeyPressed(VK_SPACE) && canPress && gCanPress) {
 
 			// Stun ghosts if we still have charges
 			if (SKILL_STUN_CHARGES > 0) {
 				stunGhosts();
 				SKILL_STUN_CHARGES--;
 				canPress = false;
+				gCanPress = true;
 			}
 
 		}
