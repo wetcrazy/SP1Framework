@@ -47,8 +47,11 @@ void renderFog(Console * handle);
 // Closes the file stream & resets all variables upon changing map
 void closeMap();
 
-// Clear only the map
+// Clear map and writes the previous g_Map into g_Map_Cache
 void closeHalfMap();
+
+// Clears map only
+void closeMapOnly();
 
 // Replace the character 'c' with 'sub' once
 void replaceMapCharacterOnce(char c, char sub);

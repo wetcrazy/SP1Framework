@@ -4,6 +4,7 @@
 unsigned short selected_menu = 0;
 unsigned short selected_pause = 0;
 unsigned short selected_gameover = 0;
+unsigned short selected_Instuction = 0;
 
 // Controls logic for Main menu
 void updateMainMenu(double eTime, double dTime) {
@@ -36,12 +37,13 @@ void updateMainMenu(double eTime, double dTime) {
 				break;
 
 			case 1:
-			{
 				// Start Instuction Menu
 				closeMap();
+				selected_Instuction = 0;
 				current_level = LEVEL_INSTRUCTION;
+				keyUp = false;
 				break;
-			}
+
 			case 2:
 				// Quit
 				g_bQuitGame = true;
@@ -67,10 +69,23 @@ void updateInstructionMenu(double eTime, double dTime)
 	{
 		if (isKeyPressed(VK_SPACE))
 		{
-			closeMap();
-			current_level = LEVEL_MENU;
-			canPress = false;
+			if (selected_Instuction == 0)
+			{
+				closeMap();
+				current_level = LEVEL_MENU;
+				canPress = false;
+			}
+			else if (selected_Instuction == 1)
+			{
+				g_Map = g_Map_Cache; // Reload the cached map onto the map
+				current_level = LEVEL_restart;
+				g_eGameState = S_GAME;
+				canPress = false;
+			}
 		}
+	}
+	if (!isKeyPressed(VK_SPACE))
+	{
 		canPress = true;
 	}
 }
@@ -114,16 +129,20 @@ void updatePauseMenu(double eTime, double dTime) {
 				break;
 
 			case 2:
+				// Instuction
+				closeMapOnly();
+				selected_Instuction = 1;
+				current_level = LEVEL_INSTRUCTION;
+				break;
+			case 3:
 				// Main Menu
 				closeMap();
 				current_level = LEVEL_MENU;
 				break;
-
-			case 3:
+			case 4:
 				// Quit
 				g_bQuitGame = true;
 				break;
-
 			}
 
 			selected_pause = 0;
@@ -249,6 +268,7 @@ void renderPauseMenu(Console * handle) {
 	string context2;
 	string context3;
 	string context4;
+	string context5;
 
 	COORD consoleSize = handle->getConsoleSize();
 
@@ -260,37 +280,49 @@ void renderPauseMenu(Console * handle) {
 	pos3.Y = (consoleSize.Y / 2) + 4;
 	COORD pos4;
 	pos4.Y = (consoleSize.Y / 2) + 6;
+	COORD pos5;
+	pos5.Y = (consoleSize.Y / 2) + 8;
 
 	switch (selected_pause) {
 
 	case 0:
 		context1 = ">Resume<";
 		context2 = "Retry";
-		context3 = "Main Menu";
-		context4 = "Quit";
+		context3 = "Instruction";
+		context4 = "Main Menu";
+		context5 = "Quit";
 		break;
 
 	case 1:
 		context1 = "Resume";
 		context2 = ">Retry<";
-		context3 = "Main Menu";
-		context4 = "Quit";
+		context3 = "Instruction";
+		context4 = "Main Menu";
+		context5 = "Quit";
 		break;
 
 	case 2:
 		context1 = "Resume";
 		context2 = "Retry";
-		context3 = ">Main Menu<";
-		context4 = "Quit";
+		context3 = ">Instruction<";
+		context4 = "Main Menu";
+		context5 = "Quit";
 		break;
 
 	case 3:
 		context1 = "Resume";
 		context2 = "Retry";
-		context3 = "Main Menu";
-		context4 = ">Quit<";
+		context3 = "Instruction";
+		context4 = ">Main Menu<";
+		context5 = "Quit";
 		break;
-
+	case 4:
+		context1 = "Resume";
+		context2 = "Retry";
+		context3 = "Instruction";
+		context4 = "Main Menu";
+		context5 = ">Quit<";
+		break;
 	}
 
 
@@ -298,12 +330,13 @@ void renderPauseMenu(Console * handle) {
 	pos2.X = (consoleSize.X / 2) - (context2.length() / 2);
 	pos3.X = (consoleSize.X / 2) - (context3.length() / 2);
 	pos4.X = (consoleSize.X / 2) - (context4.length() / 2);
+	pos5.X = (consoleSize.X / 2) - (context5.length() / 2);
 
 	handle->writeToBuffer(pos, context1);
 	handle->writeToBuffer(pos2, context2);
 	handle->writeToBuffer(pos3, context3);
 	handle->writeToBuffer(pos4, context4);
-
+	handle->writeToBuffer(pos5, context5);
 }
 
 void renderGameOverMenu(Console * handle) {

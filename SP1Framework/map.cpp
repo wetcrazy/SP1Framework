@@ -263,3 +263,14 @@ void closeHalfMap() {
 	g_Map.clear();
 	file.close();
 }
+
+
+void closeMapOnly(){
+	if (g_Map.size() > 0){
+		g_Map.clear();
+	}
+	if (file.is_open()){
+		file.close();
+	}
+
+}
