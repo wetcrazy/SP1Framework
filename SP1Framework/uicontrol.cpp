@@ -11,21 +11,22 @@ extern bool gCanPress;
 // Controls logic for Main menu
 void updateMainMenu(double eTime, double dTime) {
 
-	static bool keyUp = false;
+	static bool keyUp = true;
 
 	if (keyUp) {
 
+		keyUp = false;
+
 		if (isKeyPressed(VK_UP)) {
-			selected_menu = 0;
-		}
-		else if ((isKeyPressed(VK_UP)) || (isKeyPressed(VK_DOWN)))
-		{
-			selected_menu = 1;
+			if (selected_menu > 0) {
+				selected_menu--;
+			}
 		}
 		else if (isKeyPressed(VK_DOWN)) {
-			selected_menu = 2;
+			if (selected_menu < 3) {
+				selected_menu++;
+			}
 		}
-
 		// Process selected menu
 		if (isKeyPressed(VK_RETURN)) {
 
@@ -35,7 +36,6 @@ void updateMainMenu(double eTime, double dTime) {
 				// Start Game
 				closeMap();
 				current_level = LEVEL_ONE;
-				keyUp = false;
 				break;
 
 			case 1:
@@ -43,20 +43,17 @@ void updateMainMenu(double eTime, double dTime) {
 				closeMap();
 				selected_Instuction = 0;
 				current_level = LEVEL_INSTRUCTION;
-				keyUp = false;
 				break;
 
 			case 2:
 				// Quit
 				g_bQuitGame = true;
 				break;
-
 			}
-
 		}
 	}
 
-	if (!isKeyPressed(VK_RETURN)) {
+	if ((!isKeyPressed(VK_UP)) && (!isKeyPressed(VK_DOWN))) {
 		keyUp = true;
 	}
 
