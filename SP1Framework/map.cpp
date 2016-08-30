@@ -66,6 +66,12 @@ void renderMap(Console *handle) {
 			g_eGameState = S_GAME;
 			file.open("level_" + to_string(current_level) + ".txt");
 			break;
+		case LEVEL_FOUR:
+		
+
+			g_eGameState = S_GAME;
+			file.open("level_" + to_string(current_level) + ".txt");
+			break;
 		}
 	}
 
@@ -127,6 +133,21 @@ void renderMap(Console *handle) {
 					break;
 
 				case LEVEL_THREE:
+					if (buffer[col] == AI::GHOST) {
+
+						buffer[col] = '7'; // Remove the ghost and let AI.cpp manually control it
+
+						_COLLECTION_AI_GHOST.push_back(AI_GHOST{
+							_COLLECTION_AI_GHOST.size(), pos, true
+						});
+					}
+					break;
+				case LEVEL_FOUR:
+					if (buffer[col] == I_PORTAL) {
+						_COLLECTION_OBJ_PORTAL.push_back(PORTAL{
+							_COLLECTION_OBJ_PORTAL.size(), pos, true
+						});
+					}
 					if (buffer[col] == AI::GHOST) {
 
 						buffer[col] = '7'; // Remove the ghost and let AI.cpp manually control it

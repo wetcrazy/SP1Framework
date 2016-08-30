@@ -26,6 +26,11 @@ void processcheat(bool *g_abKeyPressed) {
 			current_level = LEVEL_THREE;
 
 		}
+		else if (g_abKeyPressed[K_F4]) {
+			closeMap();
+			current_level = LEVEL_FOUR;
+
+		}
 		else if (g_abKeyPressed[K_F5]) {
 			closeMap();
 			current_level = LEVEL_FIVE;

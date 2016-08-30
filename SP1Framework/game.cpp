@@ -250,8 +250,9 @@ void renderGame() {
 		break;
 
 	case LEVEL_THREE:
+	case LEVEL_FOUR:
 		renderCharacter();  // renders the character into the buffer
-		renderBullets(&g_Console, g_dElapsedTime, g_dDeltaTime);
+	
 		renderAI(&g_Console); // we can still see AI even if they are in the fog
 		dialogue(&g_Console); // HUD interface
 		break;

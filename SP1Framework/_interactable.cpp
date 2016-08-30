@@ -154,9 +154,72 @@ void updateObjects(Console * handle, MAP map, double eTime) {
 		if (g_sChar.c_Below == I_EXIT_ACTIVE)
 		{
 			closeMap();
+			current_level = LEVEL_FOUR;
+		}
+		break;
+	case LEVEL_FOUR:
+		if (g_sChar.c_Below == I_PORTAL) {
+
+			PORTAL port = findPortalAt(g_sChar.m_cLocation);
+
+			// Is portal active?
+			if (port.active) {
+
+				// Reset all portals to active
+				resetPortals();
+
+				// Teleport to a random portal
+				srand(time(NULL));
+				int teleportIndex;
+
+				// Keep randomizing if we get teleported to the same portal that we stepped on
+				while ((teleportIndex = (rand() % _COLLECTION_OBJ_PORTAL.size())) == port.index) {
+				}
+
+				g_sChar.m_cLocation = _COLLECTION_OBJ_PORTAL[teleportIndex].pos;
+				_COLLECTION_OBJ_PORTAL[teleportIndex].active = false;
+
+			}
+
+		}
+		if (g_sChar.c_Below == ' ') {
+			g_sChar.m_bActive = false;
+		}
+
+		if (g_sChar.c_Below == I_STAR) {
+			g_Map[g_sChar.m_cLocation.Y][g_sChar.m_cLocation.X] = ' ';
+
+			if (_POINTS_ASTERISK > 0) {
+				_POINTS_ASTERISK--; // Decrement stars left by 1
+			}
+
+			if (_POINTS_ASTERISK == 0) {
+
+				COORD pos = getRandomMapLocation();
+				_COLLECTION_OBJ_EXIT.push_back(EXIT{
+					pos, true
+				});
+				for (size_t i = 0; i < _COLLECTION_OBJ_EXIT.size(); i++) {
+
+					COORD pos = _COLLECTION_OBJ_EXIT[i].pos;
+
+					_POINTS_ASTERISK--;
+					g_Map[pos.Y][pos.X] = I_EXIT_ACTIVE;
+
+
+
+				}
+			}
+
+		}
+		if (g_sChar.c_Below == I_EXIT_ACTIVE)
+		{
+			closeMap();
 			current_level = LEVEL_FIVE;
 		}
 		break;
+
+		
 
 	case LEVEL_FIVE:
 		if (g_sChar.c_Below == I_STAR) {
