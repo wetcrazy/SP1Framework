@@ -44,6 +44,9 @@ void unstunGhosts();
 // Despawn all ghosts
 void destroyGhosts();
 
+// Despawn the passed ghost
+void destroyGhost(vector<AI_GHOST>::const_iterator i);
+
 // Destroy all AI objects
 void destroyAI();
 
@@ -52,6 +55,9 @@ void spawn_ghost(COORD pos, bool active);
 
 // Not really spawning but initializing the boss's struct
 void spawn_boss(COORD pos);
+
+// Reset the static variables for the boss
+void resetBoss();
 
 // Sets the 'stunned' property in boss struct to true, duration denoted in boss.h
 void stunBoss();

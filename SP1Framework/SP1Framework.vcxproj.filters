@@ -113,9 +113,6 @@
     <ClInclude Include="dialogue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="star.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="score.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -156,6 +153,9 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="gameUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="star.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

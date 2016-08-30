@@ -10,12 +10,42 @@ AI_BOSS _AI_BOSS;
 double movementSpeed_GHOST = 0.6;
 bool isGStunned = false;
 
-// Clumsy ghost spawning animation
+// Boss Phase 1
+static double nextSpawnTime = 0.0;
 static bool transitioned1 = false;
 static int ghostIndex = 0;
-const double spawnInterval = 1;
+const double spawnInterval = 1; // Clumsy ghost spawning animation
 const short ghostSpawnRadiusX = 5;
 const short ghostSpawnRadiusY = 4;
+
+// Boss Phase 2
+const double bossP2MoveInterval = 2; // Moves to a new location every X seconds
+const double bossP2ShootInterval = 0.10; // Shoots a bullet every X seconds
+const short  bossP2StunInterval = 3;  // Stuns the boss after moving X amount of times
+const double bossP2StunDuration = 5; // How long will the boss be stunned for
+static COORD bossP2locationToMove = getRandomMapLocation();
+static double bossP2nextMoveTime = 0.0;
+static double bossP2nextShootTime = bossP2ShootInterval;
+static short bossP2movesBeforeStunned = bossP2StunInterval;
+
+// Boss Phase 3
+const double bossP3MoveInterval = 0.08; // Interval before boss moves to the next location
+const double bossP3ShootInterval = 0.05; // Shoots a bullet every X seconds
+const double bossP3StunDuration = 3; // How long will the boss be stunned for
+const double bossP3DirectionChangeInterval = 1.5;
+const COORD bossP3location1 = COORD{ 1, 1 };
+COORD bossP3location2;
+COORD bossP3location3;
+static double bossP3nextMoveTime = bossP3MoveInterval;
+static double bossP3nextShootTime = bossP3ShootInterval;
+static double bossP3nextDirectionChange = bossP3DirectionChangeInterval;
+static short bossP3Stage = 0;
+static bool movingLeft = false;
+static E_DIRECTION_BULLET direction1 = UP;
+static E_DIRECTION_BULLET direction2 = RIGHT;
+static E_DIRECTION_BULLET direction3 = DOWN;
+static E_DIRECTION_BULLET direction4 = LEFT;
+
 
 void stunGhosts() {
 	for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++) {
@@ -70,31 +100,7 @@ void updateAI(double eTime, double dTime) {
 
 	case LEVEL_FIVE: // Boss AI Logic
 
-		// Phase 1
-		static double nextSpawnTime = eTime;
 		movementSpeed_GHOST = 0.175; // increase movespeed of ghosts
-
-		// Phase 2
-		const double bossP2MoveInterval = 2; // Moves to a new location every X seconds
-		const double bossP2ShootInterval = 0.10; // Shoots a bullet every X seconds
-		const short  bossP2StunInterval = 5;  // Stuns the boss after moving X amount of times
-		const double bossP2StunDuration = 5; // How long will the boss be stunned for
-		static COORD bossP2locationToMove = getRandomMapLocation();
-		static double bossP2nextMoveTime = eTime + bossP2MoveInterval;
-		static double bossP2nextShootTime = eTime + bossP2ShootInterval;
-		static short bossP2movesBeforeStunned = bossP2StunInterval;
-
-		// Phase 3
-		const double bossP3MoveInterval = 0.08; // Interval before boss moves to the next location
-		const double bossP3ShootInterval = 0.10; // Shoots a bullet every X seconds
-		const double bossP3StunDuration = 3; // How long will the boss be stunned for
-		const COORD bossP3location1 = COORD{ 1, 1 };
-		const COORD bossP3location2 = COORD{ 1, g_Map.size() - header_offset - footer_offset };
-		static double bossP3nextMoveTime = eTime + bossP3MoveInterval;
-		static double bossP3nextShootTime = eTime + bossP3ShootInterval;
-		static short bossP3Stage = 0;
-
-
 
 		// Logics for all Boss phases
 		switch (_AI_BOSS.phase) {
@@ -222,7 +228,11 @@ void updateAI(double eTime, double dTime) {
 
 		case 3: // P3
 
+			bossP3location2 = COORD{ 1, g_Map.size() - header_offset - footer_offset };
+			bossP3location3 = COORD{ g_Map[0].size() / 2, g_Map.size() / 2 };
+
 			// Character on the Right side and Top of Boss
+			char b_char_Left = g_Map[_AI_BOSS.pos.Y][_AI_BOSS.pos.X - 1];
 			char b_char_Right = g_Map[_AI_BOSS.pos.Y][_AI_BOSS.pos.X + 1];
 			char b_char_Top = g_Map[_AI_BOSS.pos.Y - 1][_AI_BOSS.pos.X];
 
@@ -243,8 +253,8 @@ void updateAI(double eTime, double dTime) {
 				// Shoot bullets every set intervals
 				if (eTime >= bossP3nextShootTime && !_AI_BOSS.stunned && b_char_Right != '8') {
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::DOWN, false);
-					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::BOTTOMRIGHT, false);
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::RIGHT, false);
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::BOTTOMLEFT, false);
 					bossP3nextShootTime = eTime + bossP3ShootInterval;
 				}
 				else if (b_char_Right == '8' && !_AI_BOSS.stunned) {
@@ -266,7 +276,7 @@ void updateAI(double eTime, double dTime) {
 				break;
 			case 2:
 
-				// Move boss to the intial location
+				// Move boss to the next location
 				if (_AI_BOSS.pos.X != bossP3location2.X || _AI_BOSS.pos.Y != bossP3location2.Y) {
 
 					moveBossTo(bossP3location2, eTime, dTime); // Move slowly to the initial start point
@@ -300,6 +310,86 @@ void updateAI(double eTime, double dTime) {
 				if (eTime >= bossP3nextMoveTime && _AI_BOSS.stunned) { // Unstun after stun duration is over
 					unstunBoss();
 					bossP3Stage++; // Time to transition to next sub-stage
+				}
+
+				break;
+
+			case 4:
+
+				// Move boss to the next location
+				if (_AI_BOSS.pos.X != bossP3location3.X || _AI_BOSS.pos.Y != bossP3location3.Y) {
+
+					moveBossTo(bossP3location3, eTime, dTime); // Move slowly to the initial start point
+
+					if (_AI_BOSS.pos.X == bossP3location3.X && _AI_BOSS.pos.Y == bossP3location3.Y) { // Check if we have arrived at the start point
+						bossP3Stage++; // Go to next sub-stage
+					}
+				}
+
+				break;
+
+			case 5:
+
+				// Shoot bullets every set intervals
+				if (eTime >= bossP3nextShootTime) {
+					spawnBullet(_AI_BOSS.pos, direction1, false);
+					spawnBullet(_AI_BOSS.pos, direction2, false);
+					spawnBullet(_AI_BOSS.pos, direction3, false);
+					spawnBullet(_AI_BOSS.pos, direction4, false);
+					bossP3nextShootTime = eTime + bossP3ShootInterval;
+
+					if (eTime >= bossP3nextDirectionChange) {
+						direction1 = (E_DIRECTION_BULLET)(direction1 + 1);
+						direction2 = (E_DIRECTION_BULLET)(direction2 + 1);
+						direction3 = (E_DIRECTION_BULLET)(direction3 + 1);
+						direction4 = (E_DIRECTION_BULLET)(direction4 + 1);
+
+						// Reset the direction if it goes over the range
+						if (direction1 > E_DIRECTION_BULLET::TOPLEFT) {
+							direction1 = E_DIRECTION_BULLET::UP;
+						}
+
+						// Reset the direction if it goes over the range
+						if (direction2 > E_DIRECTION_BULLET::TOPLEFT) {
+							direction2 = E_DIRECTION_BULLET::UP;
+						}
+
+						// Reset the direction if it goes over the range
+						if (direction3 > E_DIRECTION_BULLET::TOPLEFT) {
+							direction3 = E_DIRECTION_BULLET::UP;
+						}
+
+						// Reset the direction if it goes over the range
+						if (direction4 > E_DIRECTION_BULLET::TOPLEFT) {
+							direction4 = E_DIRECTION_BULLET::UP;
+						}
+
+						bossP3nextDirectionChange = eTime + bossP3DirectionChangeInterval;
+
+					}
+
+				}
+
+
+				if (b_char_Right == '8') {
+					movingLeft = true;
+				}
+				else if (b_char_Left == '8') {
+					movingLeft = false;
+				}
+
+				// Move left & right
+				if (eTime >= bossP3nextMoveTime && !movingLeft) {
+					_AI_BOSS.pos.X++;
+					bossP3nextMoveTime = eTime + bossP3MoveInterval;
+				}
+				else if (eTime >= bossP3nextMoveTime && movingLeft) {
+					_AI_BOSS.pos.X--;
+					bossP3nextMoveTime = eTime + bossP3MoveInterval;
+				}
+
+				if (_AI_BOSS.pos.X == 1) {
+					resetBoss();
 				}
 
 				break;
@@ -499,10 +589,36 @@ void destroyGhosts() {
 	_COLLECTION_AI_GHOST.clear();
 }
 
+void destroyGhost(vector<AI_GHOST>::const_iterator i) {
+	_COLLECTION_AI_GHOST.erase(i);
+}
+
 void destroyAI() {
 	_COLLECTION_AI_GHOST.clear();
 	transitioned1 = false;
 	ghostIndex = 0;
+}
+
+void resetBoss() {
+
+	// Phase 1
+	nextSpawnTime = 0.0;
+	transitioned1 = false;
+	ghostIndex = 0;
+
+	// Phase 2
+	bossP2locationToMove = getRandomMapLocation();
+	bossP2nextMoveTime = 0.0;
+	bossP2nextShootTime = bossP2ShootInterval;
+	bossP2movesBeforeStunned = bossP2StunInterval;
+
+	// Phase 3
+	bossP3nextMoveTime = bossP3MoveInterval;
+	bossP3nextShootTime = bossP3ShootInterval;
+	bossP3Stage = 0;
+	bossP3nextDirectionChange = bossP3DirectionChangeInterval;
+	movingLeft = false;
+
 }
 
 void spawn_ghost(COORD pos, bool active) {

@@ -71,9 +71,10 @@ void updateBullets(double eTime, double dTime) {
 					_AI_BOSS.health--;
 
 					// Boss died, go phase 3!
-					if (_AI_BOSS.health <= 0) {
+					if (_AI_BOSS.health <= 0 && _AI_BOSS.phase == 2) {
 						_AI_BOSS.stunned = false;
 						_AI_BOSS.phase = 3;
+						_AI_BOSS.health = boss_HEALTH_DEFAULT_P3;
 					}
 
 				}
@@ -88,6 +89,7 @@ void updateBullets(double eTime, double dTime) {
 					if (g_sChar.health <= 0) {
 						closeMap();
 						_OBJ_COLLECTION_BULLET.clear();
+						resetBoss();
 						LEVEL_restart = current_level;
 						current_level = LEVEL_OVER;
 						return;

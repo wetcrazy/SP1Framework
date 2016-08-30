@@ -21,6 +21,7 @@ const WORD color_BOSS_P2_COLOR = 0xFC;
 const WORD color_BOSS_P3_COLOR = 0xC0;
 
 const short boss_HEALTH_DEFAULT = 2;
+const short boss_HEALTH_DEFAULT_P3 = 2;
 const double boss_STUN_DURATION = 5;
 
 
