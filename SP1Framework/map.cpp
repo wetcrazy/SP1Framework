@@ -191,7 +191,7 @@ void renderMap(Console *handle) {
 			char currentChar = g_Map.at(row).at(col);
 
 			// Change '8' to a mazey character
-			if (current_level == LEVEL_MENU || current_level == LEVEL_TITLE || current_level == LEVEL_PAUSE || current_level == LEVEL_OVER) {
+			if (current_level == LEVEL_MENU || current_level == LEVEL_TITLE || current_level == LEVEL_PAUSE || current_level == LEVEL_OVER || current_level == LEVEL_INSTRUCTION) {
 				colorToPrint = menuColor;
 			}
 
