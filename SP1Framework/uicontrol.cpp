@@ -5,15 +5,21 @@ unsigned short selected_menu = 0;
 unsigned short selected_pause = 0;
 unsigned short selected_gameover = 0;
 unsigned short selected_Instuction = 0;
+unsigned short selected_MainMenu = 0;
 
 extern bool gCanPress;
+static bool gKeyUp = true;
 
 // Controls logic for Main menu
 void updateMainMenu(double eTime, double dTime) {
 
 	static bool keyUp = true;
 
-	if (keyUp) {
+	if (!isKeyPressed(VK_RETURN)){
+		gKeyUp = true;
+	}
+
+	if (keyUp && gKeyUp) {
 
 		keyUp = false;
 
@@ -23,7 +29,7 @@ void updateMainMenu(double eTime, double dTime) {
 			}
 		}
 		else if (isKeyPressed(VK_DOWN)) {
-			if (selected_menu < 3) {
+			if (selected_menu < 2) {
 				selected_menu++;
 			}
 		}
@@ -50,7 +56,9 @@ void updateMainMenu(double eTime, double dTime) {
 				g_bQuitGame = true;
 				break;
 			}
+			selected_menu = 0;
 		}
+
 	}
 
 	if ((!isKeyPressed(VK_UP)) && (!isKeyPressed(VK_DOWN))) {
@@ -151,7 +159,9 @@ void updatePauseMenu(double eTime, double dTime) {
 			case 3:
 				// Main Menu
 				closeMap();
-				current_level = LEVEL_MENU;
+				gKeyUp = false;
+				current_level = LEVEL_MENU;		
+				selected_MainMenu = 1;
 				break;
 			case 4:
 				// Quit
