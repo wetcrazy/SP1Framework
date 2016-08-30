@@ -132,7 +132,7 @@ void update(double dt) {
 		break;
 	case S_GAMEOVER: updateGameOverMenu(g_dElapsedTime, dt);// game logic for gameover
 		break;
-	case S_WON:renderWinningMenu(g_dElapsedTime, dt);
+	case S_WON:updateWinningMenu(g_dElapsedTime, dt);
 		break;
 	}
 }
@@ -236,14 +236,14 @@ void renderGame() {
 		break;
 	case LEVEL_TITLE:
 		break;
+	case LEVEL_WON:
+		updateWinningMenu(g_dElapsedTime, g_dDeltaTime);
+		break;
 	case LEVEL_MENU:
 		renderMainMenu(&g_Console);
 		break;
 	case LEVEL_INSTRUCTION:
 		updateInstructionMenu(g_dElapsedTime, g_dDeltaTime);
-		break;
-	case LEVEL_WON:
-		renderWinningMenu(g_dElapsedTime, g_dDeltaTime);
 		break;
 	case LEVEL_ONE:
 	case LEVEL_TWO:

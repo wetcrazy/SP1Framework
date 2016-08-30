@@ -10,6 +10,9 @@
 // Controls logic Instuction to screen
 void updateInstructionMenu(double eTime, double dTime);
 
+// Controls logic for Winning Menu
+void updateWinningMenu(double eTime, double dTime);
+
 // Controls logic for Main menu
 void updateMainMenu(double eTime, double dTime);
 
@@ -28,7 +31,5 @@ void renderPauseMenu(Console * handle);
 // Draw Game Over menu to screen
 void renderGameOverMenu(Console * handle);
 
-// Draw winning screen
-void renderWinningMenu(double eTime, double dTime);
 
 #endif

@@ -31,6 +31,7 @@ void renderMap(Console *handle) {
 		case LEVEL_WON:
 			file.open("level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_WON;
+			break;
 		case LEVEL_PAUSE:
 			file.open("level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_PAUSE;
