@@ -87,6 +87,25 @@ void updateInstructionMenu(double eTime, double dTime)
 	canPress = true;
 }
 
+void renderWinningMenu(double eTime, double dTime)
+{
+	static bool canPress = true;
+
+	if (canPress)
+	{
+		if (isKeyPressed(VK_SPACE))
+		{
+			if (selected_Instuction == 0)
+			{
+				closeMap();
+				current_level = LEVEL_MENU;
+				canPress = false;
+			}
+		}
+	}
+	canPress = true;
+}
+
 // Controls logic for Pause menu
 void updatePauseMenu(double eTime, double dTime) {
 
