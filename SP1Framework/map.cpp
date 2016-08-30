@@ -197,7 +197,7 @@ void renderMap(Console *handle) {
 
 			if (currentChar == '8' || currentChar == '7') {
 				charToPrint = mapWalls;
-				if (current_level == LEVEL_THREE) {
+				if (current_level == LEVEL_THREE || current_level == LEVEL_FOUR) {
 					colorToPrint = level3WallColor;
 				}
 			}
