@@ -46,6 +46,9 @@ static E_DIRECTION_BULLET direction2 = RIGHT;
 static E_DIRECTION_BULLET direction3 = DOWN;
 static E_DIRECTION_BULLET direction4 = LEFT;
 
+// Boss Ending Phase
+COORD bossP4location;
+
 
 void stunGhosts() {
 	for (unsigned int i = 0; i < _COLLECTION_AI_GHOST.size(); i++) {
@@ -226,6 +229,21 @@ void updateAI(double eTime, double dTime) {
 
 			break;
 
+		// Boss dying phase
+		case 4:
+
+			// Move boss to the middle
+			bossP4location = { g_Map[0].size() / 2, g_Map.size() / 2 };
+			moveBossTo(bossP4location, eTime, dTime);
+
+			if (g_sChar.m_cLocation.X == _AI_BOSS.pos.X && g_sChar.m_cLocation.Y == _AI_BOSS.pos.Y) {
+				// Player defeated the game!!
+				closeMap();
+				current_level = LEVEL_WON;
+			}
+
+			break;
+
 		case 3: // P3
 
 			bossP3location2 = COORD{ 1, g_Map.size() - header_offset - footer_offset };
@@ -252,6 +270,7 @@ void updateAI(double eTime, double dTime) {
 
 				// Shoot bullets every set intervals
 				if (eTime >= bossP3nextShootTime && !_AI_BOSS.stunned && b_char_Right != '8') {
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::LEFT, false);
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::DOWN, false);
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::RIGHT, false);
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::BOTTOMLEFT, false);
@@ -291,6 +310,7 @@ void updateAI(double eTime, double dTime) {
 
 				// Shoot bullets every set intervals
 				if (eTime >= bossP3nextShootTime && !_AI_BOSS.stunned && b_char_Top != '8') {
+					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::DOWN, false);
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::TOPRIGHT, false);
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::RIGHT, false);
 					spawnBullet(_AI_BOSS.pos, E_DIRECTION_BULLET::BOTTOMRIGHT, false);
@@ -398,6 +418,7 @@ void updateAI(double eTime, double dTime) {
 
 			break;
 
+
 		}
 
 		break;
@@ -429,7 +450,7 @@ void moveBossTo(COORD dest, double eTime, double dTime) {
 			_AI_BOSS.pos.Y++;
 		}
 
-		if (_AI_BOSS.pos.X == g_sChar.m_cLocation.X && _AI_BOSS.pos.Y == g_sChar.m_cLocation.Y) {
+		if (_AI_BOSS.pos.X == g_sChar.m_cLocation.X && _AI_BOSS.pos.Y == g_sChar.m_cLocation.Y && _AI_BOSS.phase != 4) {
 			closeMap();
 			LEVEL_restart = current_level;
 			current_level = LEVEL_OVER;
@@ -560,8 +581,11 @@ void renderAI(Console * handle) {
 	}
 
 	if (_AI_BOSS.phase > 0 && current_level == LEVEL_FIVE) {
+
 		COORD bossPos = _AI_BOSS.pos;
 		WORD colorToPrint;
+		char charToPrint = AI::BOSS;
+
 		switch (_AI_BOSS.phase) {
 		case 1:
 			colorToPrint = color_BOSS_P1_COLOR;
@@ -572,6 +596,10 @@ void renderAI(Console * handle) {
 		case 3:
 			colorToPrint = color_BOSS_P3_COLOR;
 			break;
+		case 4:
+			colorToPrint = _OBJ_PORTAL_COLOR;
+			charToPrint = I_PORTAL;
+			break;
 		}
 
 		// Boss Stun Color
@@ -579,7 +607,7 @@ void renderAI(Console * handle) {
 			colorToPrint = color_BOSS_STUNNED;
 		}
 
-		handle->writeToBuffer(bossPos.X, bossPos.Y + header_offset, AI::BOSS, colorToPrint);
+		handle->writeToBuffer(bossPos.X, bossPos.Y + header_offset, charToPrint, colorToPrint);
 	}
 
 
@@ -600,6 +628,8 @@ void destroyAI() {
 }
 
 void resetBoss() {
+
+	_AI_BOSS.stunned = false;
 
 	// Phase 1
 	nextSpawnTime = 0.0;

@@ -77,6 +77,13 @@ void updateBullets(double eTime, double dTime) {
 						_AI_BOSS.health = boss_HEALTH_DEFAULT_P3;
 					}
 
+					// Player defeated phase 3
+					if (_AI_BOSS.health <= 0 && _AI_BOSS.phase == 3) {
+						resetBoss();
+						_AI_BOSS.phase = 4;
+					}
+
+
 				}
 
 			}
@@ -150,6 +157,10 @@ void renderBullets(Console * handle, double eTime, double dTime) {
 
 		case E_DIRECTION_BULLET::DOWN:
 			pos.Y += (header_offset * 2);
+			break;
+
+		case E_DIRECTION_BULLET::BOTTOMLEFT:
+			pos.Y += header_offset;
 			break;
 
 		}
