@@ -28,4 +28,7 @@ void renderPauseMenu(Console * handle);
 // Draw Game Over menu to screen
 void renderGameOverMenu(Console * handle);
 
+// Draw winning screen
+void renderWinningMenu(double eTime, double dTime);
+
 #endif

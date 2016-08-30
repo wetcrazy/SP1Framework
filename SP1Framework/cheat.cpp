@@ -37,6 +37,12 @@ void processcheat(bool *g_abKeyPressed) {
 
 		}
 
+		else if (g_abKeyPressed[K_F6]) {
+			closeMap();
+			current_level = LEVEL_WON;
+
+		}
+
 	}
 
 }
