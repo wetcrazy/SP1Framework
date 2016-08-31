@@ -17,7 +17,7 @@ void dialogue(Console * handle) {
 
 	case LEVEL_ONE:
 		strLeft = "Stage 1";
-		strCenter = "Avoid Ghosts & Collect Stars";
+		strCenter = (_POINTS_ASTERISK > 0) ? "Avoid Ghosts & Collect Stars" :  "The Gate has been Unlocked";
 		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 		strTopCenter = "Flash:";
 		if (getSkillStunCharges() == 0) {
@@ -33,7 +33,7 @@ void dialogue(Console * handle) {
 
 	case LEVEL_TWO:
 		strLeft = "Stage 2";
-		strCenter = "Avoid Ghosts & Collect Stars";
+		strCenter = (_POINTS_ASTERISK > 0) ? "Avoid Ghosts & Collect Stars" : "The Gate has been Unlocked";
 		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 		strTopCenter = "Flash:";
 		if (getSkillStunCharges() == 0) {
@@ -47,7 +47,7 @@ void dialogue(Console * handle) {
 		break;
 	case LEVEL_THREE:
 		strLeft = "Stage 3";
-		strCenter = "Mine the Blocks & Find the Stars";
+		strCenter = (_POINTS_ASTERISK > 0) ? "Mine the Blocks & Find the Stars" : "A mysterious portal has been spawned";
 		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 		if (_POINTS_ASTERISK < 0) {
 			strRight = "Stars left : 0";
@@ -55,7 +55,7 @@ void dialogue(Console * handle) {
 		break;
 	case LEVEL_FOUR:
 		strLeft = "Stage 4";
-		strCenter = "Mine the Blocks & Find the Stars";
+		strCenter = (_POINTS_ASTERISK > 0) ? "Mine the Blocks & Find the Stars" : "The same mysterious portal spawned again";
 		strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 		if (_POINTS_ASTERISK < 0) {
 			strRight = "Stars left : 0";
@@ -67,7 +67,7 @@ void dialogue(Console * handle) {
 
 		case 1:
 			strLeft = "-Phase 1-";
-			strCenter = "Collect Stars to break the barrier!";
+			strCenter = "Collect the Stars to break the barrier!";
 			strRight = "Stars left : " + to_string(_POINTS_ASTERISK);
 			strTopCenter = "Boss HP: Invulnerable";
 			break;

@@ -9,7 +9,7 @@
 #include "_AI.h"
 
 const WORD bulletPlayerColor = 0xF3;
-const WORD bulletBossColor = 0xF4;
+const WORD bulletBossColor = 0xFC;
 
 enum E_DIRECTION_BULLET {
 

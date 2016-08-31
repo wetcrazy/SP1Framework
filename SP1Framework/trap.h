@@ -14,4 +14,6 @@ struct TRAP {
 };
 
 
+const WORD _OBJ_TRAP_COLOR = 0xFC;
+
 #endif

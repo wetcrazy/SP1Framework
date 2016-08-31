@@ -1,6 +1,7 @@
 ﻿#include "map.h"
 #include "_interactable.h" 
 #include "score.h"
+#include "bullet.h"
 
 
 static ifstream file;
@@ -53,16 +54,23 @@ void renderMap(Console *handle) {
 			g_eGameState = S_INSTRUCTION;
 			break;
 		case LEVEL_ONE:
+			g_sChar.m_cLocation = handle->getConsoleSize(); // Spawn player at middle
+			g_sChar.m_cLocation.X /= 2;
+			g_sChar.m_cLocation.Y /= 2;
+			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_ONE;
+			g_eGameState = S_GAME;
+			file.open("level_" + to_string(current_level) + ".txt");
+			break;
 		case LEVEL_TWO:
 			g_sChar.m_cLocation = handle->getConsoleSize(); // Spawn player at middle
 			g_sChar.m_cLocation.X /= 2;
 			g_sChar.m_cLocation.Y /= 2;
-
+			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_TWO;
 			g_eGameState = S_GAME;
 			file.open("level_" + to_string(current_level) + ".txt");
 			break;
 		case LEVEL_THREE:
-		case LEVEL_FIVE:
+			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_THREE;
 			g_sChar.m_cLocation = handle->getConsoleSize();
 			g_sChar.m_cLocation.X /= 2;
 			(g_sChar.m_cLocation.Y /= 2) += 9; // hard coded y offset
@@ -71,8 +79,15 @@ void renderMap(Console *handle) {
 			file.open("level_" + to_string(current_level) + ".txt");
 			break;
 		case LEVEL_FOUR:
-		
-
+			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_FOUR;
+			g_eGameState = S_GAME;
+			file.open("level_" + to_string(current_level) + ".txt");
+			break;
+		case LEVEL_FIVE:
+			g_sChar.m_cLocation = handle->getConsoleSize();
+			g_sChar.m_cLocation.X /= 2;
+			(g_sChar.m_cLocation.Y /= 2) += 9; // hard coded y offset
+			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_FIVE;
 			g_eGameState = S_GAME;
 			file.open("level_" + to_string(current_level) + ".txt");
 			break;
@@ -194,11 +209,37 @@ void renderMap(Console *handle) {
 
 			char currentChar = g_Map.at(row).at(col);
 
-			// Change '8' to a mazey character
 			if (current_level == LEVEL_MENU || current_level == LEVEL_TITLE || current_level == LEVEL_PAUSE || current_level == LEVEL_OVER || current_level == LEVEL_INSTRUCTION || current_level == LEVEL_WON) {
 				colorToPrint = menuColor;
 			}
+			else {
+				// Color the interactive objects
+				switch (currentChar) {
 
+				case I_STAR:
+					colorToPrint = bulletPlayerColor;
+					break;
+
+				case I_TRAP:
+					colorToPrint = _OBJ_TRAP_COLOR;
+					break;
+
+				case I_EXIT_ACTIVE:
+					colorToPrint = _OBJ_EXIT_COLOR_ACTIVE;
+					break;
+
+				case I_EXIT_INACTIVE:
+					colorToPrint = _OBJ_EXIT_COLOR_INACTIVE;
+					break;
+
+				case I_PORTAL:
+					colorToPrint = _OBJ_PORTAL_COLOR;
+					break;
+
+				}
+			}
+
+			// Change '8' to a mazey character
 			if (currentChar == '8' || currentChar == '7') {
 				charToPrint = mapWalls;
 				if (current_level == LEVEL_THREE || current_level == LEVEL_FOUR) {
@@ -208,7 +249,6 @@ void renderMap(Console *handle) {
 			else {
 				charToPrint = currentChar;
 			}
-
 
 			g_Map[row][col] = currentChar;
 
@@ -282,7 +322,6 @@ void closeMap() {
 	destroyAI();
 	destroyObjects();
 	resetSkillStunCharges();
-	resetScoreSystem();
 	g_sChar.m_bStunned = false;
 	g_Map.clear();
 	file.close();

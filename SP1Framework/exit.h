@@ -4,7 +4,6 @@
 #include "Framework\console.h"
 
 
-
 struct EXIT {
 
 	COORD pos;
@@ -12,8 +11,8 @@ struct EXIT {
 
 };
 
-const WORD _OBJECT_EXIT_COLOR_ACTIVE = 0x1F;
-const WORD _OBJECT_EXIT_COLOR_INACTIVE = 0xDF;
+const WORD _OBJ_EXIT_COLOR_ACTIVE = 0xA0;
+const WORD _OBJ_EXIT_COLOR_INACTIVE = 0xFC;
 
 
 #endif 

@@ -3,7 +3,7 @@
 
 #include "Framework\console.h"
 
-const WORD _OBJ_PORTAL_COLOR = 0xAF;
+const WORD _OBJ_PORTAL_COLOR = 0xA0;
 
 struct PORTAL {
 
