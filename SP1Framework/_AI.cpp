@@ -258,6 +258,8 @@ void updateAI(double eTime, double dTime) {
 				// Player defeated the game!!
 				closeMap();
 				current_level = LEVEL_WON;
+				// Reset the Phase
+				_AI_BOSS.phase = 1;
 			}
 
 			break;

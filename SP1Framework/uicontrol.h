@@ -4,7 +4,7 @@
 
 #include "Framework\console.h"
 #include "map.h"
-
+#include "_AI.h"
 
 
 // Controls logic Instuction to screen

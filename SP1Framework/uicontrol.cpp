@@ -162,6 +162,10 @@ void updatePauseMenu(double eTime, double dTime) {
 				gKeyUp = false;
 				current_level = LEVEL_MENU;		
 				selected_MainMenu = 1;
+				if (_AI_BOSS.phase > 1)
+				{
+					_AI_BOSS.phase = 1;
+				}
 				break;
 			case 4:
 				// Quit
