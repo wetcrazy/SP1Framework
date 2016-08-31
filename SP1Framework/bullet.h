@@ -44,5 +44,6 @@ void renderBullets(Console * handle, double eTime, double dTime);
 // Removes the bullet with the specific index
 void destroyBullet(vector<BULLET>::const_iterator i);
 
+void destroyAllBullet();
 
 #endif

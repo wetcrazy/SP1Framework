@@ -322,6 +322,7 @@ void closeMap() {
 	destroyAI();
 	destroyObjects();
 	resetSkillStunCharges();
+	destroyAllBullet(); 
 	g_sChar.m_bStunned = false;
 	g_Map.clear();
 	file.close();

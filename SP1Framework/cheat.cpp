@@ -17,24 +17,25 @@ void processcheat(bool *g_abKeyPressed) {
 		if (g_abKeyPressed[K_F1]) {
 			closeMap();
 			current_level = LEVEL_ONE;
+			_AI_BOSS.phase = 1;
 		}
 		// Skip to level two
 		else if (g_abKeyPressed[K_F2]) {
 			closeMap();
 			current_level = LEVEL_TWO;
-
+			_AI_BOSS.phase = 1;
 		}
 		// Skip to Level Three
 		else if (g_abKeyPressed[K_F3]) {
 			closeMap();
 			current_level = LEVEL_THREE;
-
+			_AI_BOSS.phase = 1;
 		}
 		// Skip to Level Four 
 		else if (g_abKeyPressed[K_F4]) {
 			closeMap();
 			current_level = LEVEL_FOUR;
-
+			_AI_BOSS.phase = 1;
 		}
 		// Skip to Level Five
 		else if (g_abKeyPressed[K_F5]) {
