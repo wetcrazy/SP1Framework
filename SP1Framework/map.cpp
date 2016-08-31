@@ -240,7 +240,7 @@ void renderMap(Console *handle) {
 			}
 
 			// Change '8' to a mazey character
-			if (currentChar == '8' || currentChar == '7') {
+			if ((currentChar == '8' || currentChar == '7') && current_level != LEVEL_INSTRUCTION) {
 				charToPrint = mapWalls;
 				if (current_level == LEVEL_THREE || current_level == LEVEL_FOUR) {
 					colorToPrint = level3WallColor;
@@ -335,11 +335,11 @@ void closeHalfMap() {
 }
 
 
-void closeMapOnly(){
-	if (g_Map.size() > 0){
+void closeMapOnly() {
+	if (g_Map.size() > 0) {
 		g_Map.clear();
 	}
-	if (file.is_open()){
+	if (file.is_open()) {
 		file.close();
 	}
 

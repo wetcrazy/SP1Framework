@@ -1,24 +1,27 @@
-  _____ _   _  _____ _______ _____  _    _  _____ _______ _____ ____  _   _  _____ 
- |_   _| \ | |/ ____|__   __|  __ \| |  | |/ ____|__   __|_   _/ __ \| \ | |/ ____|
-   | | |  \| | (___    | |  | |__) | |  | | |       | |    | || |  | |  \| | (___  
-   | | | . ` |\___ \   | |  |  _  /| |  | | |       | |    | || |  | | . ` |\___ \ 
-  _| |_| |\  |____) |  | |  | | \ \| |__| | |____   | |   _| || |__| | |\  |____) |
- |_____|_| \_|_____/   |_|  |_|  \_\\____/ \_____|  |_|  |_____\____/|_| \_|_____/ 
+ _____ _   _  _____ _______ _____  _    _  _____ _______ _____ ____  _   _  _____ 
+|_   _| \ | |/ ____|__   __|  __ \| |  | |/ ____|__   __|_   _/ __ \| \ | |/ ____|
+  | | |  \| | (___    | |  | |__) | |  | | |       | |    | || |  | |  \| | (___  
+  | | | . ` |\___ \   | |  |  _  /| |  | | |       | |    | || |  | | . ` |\___ \ 
+ _| |_| |\  |____) |  | |  | | \ \| |__| | |____   | |   _| || |__| | |\  |____) |
+|_____|_| \_|_____/   |_|  |_|  \_\\____/ \_____|  |_|  |_____\____/|_| \_|_____/ 
                                                                                    
                                                                                    
 
-  1.Use ARROW KEYS to MOVE
+  1. <ARROW KEY> to MOVE
 
-  2.Use the SPACE KEY to MINE 
+  2. <SPACEBAR> to use SKILLS
 
-  3.Collect the amount of STARS that look like * stated to go to the next level
+  3. <*> Collect these to progress
  
-  4.Avoid TRAPS that look like !
+  4. <!> Stuns you upon contact
 
-  5.Press the ESC BUTTON to access the PAUSE MENU
+  5. <@> Enemy Ghost
 
-  6.Avoid the GHOSTS that look like @
-                       
+  6. <O> Teleports you to a random PORTAL
   
-
+  7. <o> Opened exit
+  
+  8. <#> Closed exit
+                       
+ 
                            Press <SPACE> to continue
