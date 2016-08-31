@@ -215,7 +215,9 @@ void updateGameOverMenu(double eTime, double dTime) {
 			case 1:
 				// Main Menu
 				closeMap();
+				gKeyUp = false;
 				current_level = LEVEL_MENU;
+				selected_MainMenu = 1;
 				break;
 
 			case 2:
