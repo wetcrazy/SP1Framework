@@ -91,10 +91,28 @@ void updateAI(double eTime, double dTime) {
 	switch (current_level) {
 
 	case LEVEL_ONE:
+		movementSpeed_GHOST = 0.45;
+		updateGhostMovement(eTime, dTime);
+		if (!isGhostStunned()) {
+			updateGhostTouch();
+		}
+		break;
 	case LEVEL_TWO:
+		movementSpeed_GHOST = 0.4;
+		updateGhostMovement(eTime, dTime);
+		if (!isGhostStunned()) {
+			updateGhostTouch();
+		}
+		break;
 	case LEVEL_THREE:
+		movementSpeed_GHOST = 0.35;
+		updateGhostMovement(eTime, dTime);
+		if (!isGhostStunned()) {
+			updateGhostTouch();
+		}
+		break;
 	case LEVEL_FOUR:
-		movementSpeed_GHOST = 0.6;
+		movementSpeed_GHOST = 0.3;
 		updateGhostMovement(eTime, dTime);
 		if (!isGhostStunned()) {
 			updateGhostTouch();

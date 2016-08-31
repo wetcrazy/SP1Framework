@@ -39,7 +39,7 @@ void processSkill(Console * handle, double dTime) {
 	case LEVEL_FOUR:
 		if (isKeyPressed(VK_SPACE) && g_Map.size() > 0) {
 			COORD PlayerCord = g_sChar.m_cLocation;// PLAYER COORDINATES
-			size_t rng = rand() % 40;
+			size_t rng = rand() % 60;
 			static size_t Num_Stars = 0;
 			static size_t Max_Stars = 30;
 			static COORD Position;
