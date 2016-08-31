@@ -16,7 +16,7 @@
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 bool    g_abKeyPressed[K_COUNT];
-bool Cheat_FPS = true;
+bool Cheat_FPS = false;
 
 
 // Game specific variables here
