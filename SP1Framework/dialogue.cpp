@@ -100,6 +100,10 @@ void dialogue(Console * handle) {
 			}
 			break;
 
+		case 4:
+			strCenter = "A portal appears in the middle";
+			break;
+
 		}
 
 		break;

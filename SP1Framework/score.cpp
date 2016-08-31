@@ -1,11 +1,29 @@
 #include "score.h"
 
 
-int _POINTS_ASTERISK = 1;
+int _POINTS_ASTERISK = 8;
 
 
 void resetScoreSystem() {
 
-	_POINTS_ASTERISK = 1;
+	switch (current_level) {
+
+	case LEVEL_ONE:
+		_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_ONE;
+		break;
+
+	case LEVEL_TWO:
+		_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_TWO;
+		break;
+
+	case LEVEL_THREE:
+		_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_THREE;
+		break;
+
+	case LEVEL_FOUR:
+		_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_FOUR;
+		break;
+
+	}
 
 }
