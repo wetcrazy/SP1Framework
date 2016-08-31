@@ -39,6 +39,7 @@ enum EKEYS {
 	K_F9,
 	K_F10,
 	K_F11,
+	k_F12,
 	K_1,
 	K_2,
 	K_3,

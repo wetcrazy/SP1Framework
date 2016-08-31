@@ -263,7 +263,7 @@ void renderFog(Console * handle) {
 
 	string str = " ";
 
-	if ((!isGhostStunned() || _AI_BOSS.phase == 1) && _AI_BOSS.phase < 2) {
+	if ((!isGhostStunned() || _AI_BOSS.phase == 1) && _AI_BOSS.phase < 2){
 
 		for (short row = 0; row < g_Map.size(); row++) {
 
@@ -322,6 +322,7 @@ void closeMap() {
 	destroyAI();
 	destroyObjects();
 	resetSkillStunCharges();
+	destroyAllBullet(); 
 	g_sChar.m_bStunned = false;
 	g_Map.clear();
 	file.close();

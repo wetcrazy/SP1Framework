@@ -16,6 +16,8 @@
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 bool    g_abKeyPressed[K_COUNT];
+bool Cheat_FPS = false;
+
 
 // Game specific variables here
 SGameChar g_sChar;
@@ -95,6 +97,7 @@ void getInput(void) {
 	g_abKeyPressed[K_F9] = isKeyPressed(VK_F9);
 	g_abKeyPressed[K_F10] = isKeyPressed(VK_F10);
 	g_abKeyPressed[K_F11] = isKeyPressed(VK_F11);
+	g_abKeyPressed[k_F12] = isKeyPressed(VK_F12);
 	g_abKeyPressed[K_1] = isKeyPressed(0x31);
 	g_abKeyPressed[K_2] = isKeyPressed(0x32);
 	g_abKeyPressed[K_3] = isKeyPressed(0x33);
@@ -282,21 +285,24 @@ void renderCharacter() {
 
 
 void renderFramerate() {
-	COORD c;
-	// displays the framerate
-	std::ostringstream ss;
-	ss << std::fixed << std::setprecision(3);
-	ss << 1.0 / g_dDeltaTime << "fps";
-	c.X = g_Console.getConsoleSize().X - 9;
-	c.Y = 0;
-	g_Console.writeToBuffer(c, ss.str());
+	if (Cheat_FPS)
+	{
+		COORD c;
+		// displays the framerate
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(3);
+		ss << 1.0 / g_dDeltaTime << "fps";
+		c.X = g_Console.getConsoleSize().X - 9;
+		c.Y = 0;
+		g_Console.writeToBuffer(c, ss.str());
 
-	// displays the elapsed time
-	ss.str("");
-	ss << g_dElapsedTime << "secs";
-	c.X = 0;
-	c.Y = 0;
-	g_Console.writeToBuffer(c, ss.str());
+		// displays the elapsed time
+		ss.str("");
+		ss << g_dElapsedTime << "secs";
+		c.X = 0;
+		c.Y = 0;
+		g_Console.writeToBuffer(c, ss.str());
+	}
 }
 void renderToScreen() {
 	// Writes the buffer to the console, hence you will see what you have written
