@@ -30,27 +30,27 @@ void renderMap(Console *handle) {
 	if (!file.is_open()) {
 		switch (current_level) {
 		case LEVEL_WON:
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_WON;
 			break;
 		case LEVEL_PAUSE:
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_PAUSE;
 			break;
 		case LEVEL_OVER:
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_GAMEOVER;
 			break;
 		case LEVEL_TITLE:
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_TITLESCREEN;
 			break;
 		case LEVEL_MENU:
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_MENU;
 			break;
 		case LEVEL_INSTRUCTION:
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			g_eGameState = S_INSTRUCTION;
 			break;
 		case LEVEL_ONE:
@@ -59,7 +59,7 @@ void renderMap(Console *handle) {
 			g_sChar.m_cLocation.Y /= 2;
 			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_ONE;
 			g_eGameState = S_GAME;
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			break;
 		case LEVEL_TWO:
 			g_sChar.m_cLocation = handle->getConsoleSize(); // Spawn player at middle
@@ -67,7 +67,7 @@ void renderMap(Console *handle) {
 			g_sChar.m_cLocation.Y /= 2;
 			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_TWO;
 			g_eGameState = S_GAME;
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			break;
 		case LEVEL_THREE:
 			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_THREE;
@@ -76,12 +76,12 @@ void renderMap(Console *handle) {
 			(g_sChar.m_cLocation.Y /= 2) += 9; // hard coded y offset
 
 			g_eGameState = S_GAME;
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			break;
 		case LEVEL_FOUR:
 			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_FOUR;
 			g_eGameState = S_GAME;
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			break;
 		case LEVEL_FIVE:
 			g_sChar.m_cLocation = handle->getConsoleSize();
@@ -89,7 +89,7 @@ void renderMap(Console *handle) {
 			(g_sChar.m_cLocation.Y /= 2) += 9; // hard coded y offset
 			_POINTS_ASTERISK = _POINTS_ASTERISK_DEFAULT_LEVEL_FIVE;
 			g_eGameState = S_GAME;
-			file.open("level_" + to_string(current_level) + ".txt");
+			file.open("maps/level_" + to_string(current_level) + ".txt");
 			break;
 		}
 	}

@@ -1,7 +1,7 @@
 #ifndef _BOSS_H
 #define _BOSS_H
 
-#include <Windows.h>
+#include "Framework\console.h"
 
 struct AI_BOSS {
 
