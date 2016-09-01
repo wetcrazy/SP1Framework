@@ -74,7 +74,7 @@ void dialogue(Console * handle) {
 
 		case 2:
 			strLeft = "-Phase 2-";
-			strCenter = "Weaken the Boss!";
+			strCenter = "<Spacebar> Shoot the Boss!";
 			strRight = "My HP: ";
 			strTopCenter = "Boss HP: ";
 
